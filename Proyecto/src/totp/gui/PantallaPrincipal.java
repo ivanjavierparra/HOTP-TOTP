@@ -144,7 +144,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(menuItemVerQR);
 
-        menuItemActivarA2F.setText("Activar doble autenticación");
+        menuItemActivarA2F.setText("Activar autenticación multifactor");
         menuItemActivarA2F.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemActivarA2FActionPerformed(evt);
@@ -152,7 +152,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(menuItemActivarA2F);
 
-        menuItemDesactivarA2F.setText("Desactivar doble autenticación");
+        menuItemDesactivarA2F.setText("Desactivar autenticación multifactor");
         menuItemDesactivarA2F.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemDesactivarA2FActionPerformed(evt);

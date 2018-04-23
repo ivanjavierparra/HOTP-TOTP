@@ -65,6 +65,11 @@ public class ManagerDB {
         this.mensaje_error = mensaje_error;
     }
     
-    
+    public static void main(String [] args) {
+        ManagerDB mdb = new ManagerDB();
+        String mje = mdb.establecerConexion();
+        System.out.println(mje);
+        mdb.cerrarConexion();
+    }
     
 }

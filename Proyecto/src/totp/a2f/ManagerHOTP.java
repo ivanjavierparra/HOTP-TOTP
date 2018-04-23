@@ -162,13 +162,13 @@ public class ManagerHOTP {
      */
     final String generarOTP(byte[] secreto, int counter) {
         
-        int digitos = this.addChecksum ? (this.nroDigitos + 1) : this.nroDigitos;
+        int digitos = this.addChecksum ? (this.nroDigitos + 1) : this.nroDigitos; //si addChekSum es verdadero entonces incrementame nroDigitos, sino devolvemos nroDigitos como esta.
         
         // el valor del counter (pasado como parametro) se convierte en un arreglo de bytes.
         byte[] text = new byte[8];
         for (int i = text.length - 1; i >= 0; i--) {
             text[i] = (byte) (counter & 0xff);
-            counter >>= 8;
+            counter >>= 8; // arithmetic shift right
         }
         
         // Paso 1: Generar el hash HMAC-SHA-1.
@@ -264,7 +264,7 @@ public class ManagerHOTP {
      * @return the Hmac as byte[].
      */
     
-    private byte[] getShaHash(byte[] key, byte[] text) {
+    public byte[] getShaHash(byte[] key, byte[] text) {
         try {
                 Mac hmac = Mac.getInstance(this.algoritmo);
                 SecretKeySpec macKey = new SecretKeySpec(key, "RAW");

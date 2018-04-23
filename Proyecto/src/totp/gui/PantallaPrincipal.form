@@ -35,7 +35,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuItemActivarA2F">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Activar doble autenticaci&#xf3;n"/>
+                <Property name="text" type="java.lang.String" value="Activar autenticaci&#xf3;n multifactor"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemActivarA2FActionPerformed"/>
@@ -43,7 +43,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuItemDesactivarA2F">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Desactivar doble autenticaci&#xf3;n"/>
+                <Property name="text" type="java.lang.String" value="Desactivar autenticaci&#xf3;n multifactor"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemDesactivarA2FActionPerformed"/>

@@ -59,7 +59,7 @@ public abstract class GoogleAuthenticator {
         private static String getAlgoritmo(Configuracion configuracion){
             if(configuracion.getAlgoritmo().compareToIgnoreCase("HmacSHA1")==0)return "SHA1";
             else if(configuracion.getAlgoritmo().compareToIgnoreCase("HmacSHA256")==0)return "SHA256";
-            else return "HmacSHA512";
+            else return "SHA512";
         }
 	
         
