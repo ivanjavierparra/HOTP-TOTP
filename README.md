@@ -1,2 +1,2 @@
 # HOTP-TOTP
-Autentificación Multifactor con HOTP y TOTP
+Autenticación Multifactor con HOTP y TOTP
