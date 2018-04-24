@@ -26,17 +26,12 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     public PantallaPrincipal() {
         initComponents();
         inicializarFrame();
-        
-        
     }
 
     private void inicializarFrame(){
-        
-        
         this.setLocationRelativeTo(null);
         this.lblUsuario.setVisible(false);
         itemsInicializar();
-
     }
     
     private void itemsInicializar(){
@@ -46,8 +41,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         menuItemCerrar.setVisible(false);
     }
 
-    
-    
     public void mostrarSesion(){
         this.lblUsuario.setText("Bienvenid@ " + Main.usuario.getNombre() + "!");
         menuItemCerrar.setVisible(true);
@@ -55,7 +48,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         if(Main.usuario.isA2f_activado()){
             menuItemVerQR.setVisible(true);
             menuItemDesactivarA2F.setVisible(true);
-            
         }
         else{
             menuItemActivarA2F.setVisible(true);
@@ -185,10 +177,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
     private void menuItemIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemIniciarActionPerformed
         // TODO add your handling code here:
-        
         DialogIniciarSesion dis = new DialogIniciarSesion(this, true);
         dis.setVisible(true);
-        
     }//GEN-LAST:event_menuItemIniciarActionPerformed
 
     private void menuItemRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemRegistrarActionPerformed
@@ -204,7 +194,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             DialogClaveSecreta dcs = new DialogClaveSecreta(this, true);
             dcs.setVisible(true);
         }
-        
     }//GEN-LAST:event_menuItemVerQRActionPerformed
 
     private void menuItemActivarA2FActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemActivarA2FActionPerformed

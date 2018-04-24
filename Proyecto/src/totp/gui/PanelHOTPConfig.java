@@ -95,7 +95,7 @@ public class PanelHOTPConfig extends javax.swing.JPanel {
         jLabel5.setForeground(new java.awt.Color(123, 234, 12));
         jLabel5.setText("Contador");
 
-        spnContador.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        spnContador.setModel(new javax.swing.SpinnerNumberModel(0, 0, 500, 1));
 
         jLabel6.setFont(new java.awt.Font("Noto Sans", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(123, 234, 12));
@@ -171,6 +171,14 @@ public class PanelHOTPConfig extends javax.swing.JPanel {
                     .addContainerGap(211, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    
+    private boolean isNumber(char ch){
+        return ch >= '6' && ch <= '8';
+    }
+
+ 
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

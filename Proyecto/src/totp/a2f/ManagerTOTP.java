@@ -2,6 +2,7 @@ package totp.a2f;
 
 import java.nio.ByteBuffer;
 import java.security.GeneralSecurityException;
+import java.util.Scanner;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -89,7 +90,7 @@ public class ManagerTOTP {
     
     
 	/**
-	 * Número de dígitos del código OTP.     
+	 * Número de dígitos del código HOTP.     
 	 */
 	public static final int DEFAULT_LENGTH = 6;
 	
@@ -317,8 +318,11 @@ public class ManagerTOTP {
 	final String generarOTP(byte[] secreto, long intervalo_tiempo) {
 		// Paso 1: Generar el hash HMAC-SHA-1.
                 byte[] message = ByteBuffer.allocate(8).putLong(intervalo_tiempo).array();
-		byte[] hash = getShaHash(secreto, message);
 		
+                HMAC hmac = new HMAC();
+                hmac.setAlgoritmo(this.getAlgoritmo());
+		byte[] hash = hmac.getShaHash(secreto, message);
+                
                 // Paso 2: Truncamiento. 
 		int off = hash[hash.length-1] & 0xf;
 		int bin = ((hash[off] & 0x7f) << 24) | ((hash[off + 1] & 0xff) << 16) | ((hash[off + 2] & 0xff) << 8) | (hash[off + 3] & 0xff);
@@ -348,24 +352,8 @@ public class ManagerTOTP {
 	}
 	
         
-        /**
-         * This method uses the JCE to provide the crypto algorithm.
-         * HMAC computes a Hashed Message Authentication Code with the
-         * crypto hash algorithm that is in the variable "algoritmo".
-         * @param key: the bytes to use for the HMAC key.
-         * @param text: the message or text to be authenticated.
-         * @return the Hmac as byte[].
-         */
-	private byte[] getShaHash(byte[] key, byte[] text) {
-		try {
-			Mac mac = Mac.getInstance(getAlgoritmo());
-			SecretKeySpec spec = new SecretKeySpec(key, "RAW");
-			mac.init(spec);
-			return mac.doFinal(text);
-		} catch (GeneralSecurityException e) {
-			throw new IllegalStateException(e);
-		}
-	}
+        
+	
 	
         
         
@@ -392,4 +380,82 @@ public class ManagerTOTP {
 		return getTimeInterval(System.currentTimeMillis());
 	}
 	
+        
+        
+        
+        
+        /**
+         * Se testean los métodos de la clase TOTPManager. 
+         * @param args 
+         */
+        public static void main(String[] args) {
+        
+        // Genero una instancia de TOTP.
+        ManagerTOTP manager = new ManagerTOTP();
+        
+        // Creo la clave secreta.
+        byte[] secreto = Secreto.generar();
+        
+        // Genero el Google Authenticator QR Code
+        String secretoCodificado = Secreto.toBase32(secreto);
+        String qr = GoogleAuthenticator.getQRUrl("alissa", "example.com", secretoCodificado);
+        System.out.println(qr); //Imprime el enlace al codigo QR.
+        //NOTA: Copiando el "encoded" que aparece en el QR, lo ponemos todo en 
+        //minuscula en google authenticator manualmente y funciona, sin tener que 
+        //leer el QR.
+        //http://www.asaph.org/2016/04/google-authenticator-2fa-java.html
+        
+        
+        
+        // Creo el Menú.
+        int opcion = 0;
+        String codigo = "";
+        
+        Scanner scanner = new Scanner(System.in);
+        do{
+            System.out.println("1.Ingresar codigo.");
+            System.out.println("2.Ver time.");
+            System.out.println("3.Salir.");
+            opcion = scanner.nextInt();
+            switch(opcion){
+                case 1:{
+                    System.out.println(qr); //Imprime el enlace al codigo QR.
+
+                    // itero hasta que el código tenga un valor.
+                    while(codigo.compareToIgnoreCase("")==0){
+                        System.out.println("Codigo: ");
+                        codigo = scanner.nextLine();
+                    }
+                    
+                    // Valido si el código es correcto.
+                    boolean valid = manager.validar(secreto, codigo);
+                    if(valid)System.out.println("exito!");
+                    else System.out.println("fracaso!");
+                    
+                    codigo = "";
+                    break;
+                }
+                case 2:{
+                    long time = (System.currentTimeMillis()/1000)/30;
+                    System.out.println(""+time);
+                    break;
+                }
+                case 3:{
+                    System.out.println("Chau.");
+                    break;
+                }
+                default:{
+                    System.out.println("Opcion incorrecta.");
+                    break;
+                }
+            }
+        }while(opcion != 3);
+    }
+        
+        
+        
+        
+        
+        
+        
 }

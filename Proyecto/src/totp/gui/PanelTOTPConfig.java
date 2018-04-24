@@ -75,7 +75,7 @@ public class PanelTOTPConfig extends javax.swing.JPanel {
         jLabel3.setForeground(new java.awt.Color(123, 234, 12));
         jLabel3.setText("Configuración TOTP");
 
-        spnTiempo.setModel(new javax.swing.SpinnerNumberModel(30, 30, 60, 1));
+        spnTiempo.setModel(new javax.swing.SpinnerNumberModel(30, 30, 60, 15));
 
         jLabel6.setFont(new java.awt.Font("Noto Sans", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(123, 234, 12));

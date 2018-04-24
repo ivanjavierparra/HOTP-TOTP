@@ -4,15 +4,21 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/unpsjb/2016/Administracion%20de%20Redes%20y%20Seguridad/Final/HOTP-TOTP/Proyecto/src/totp/gui/Dialog2AF.java</file>
-            <file>file:/D:/unpsjb/2016/Administracion%20de%20Redes%20y%20Seguridad/Final/HOTP-TOTP/Proyecto/src/totp/gui/PanelHOTPConfig.java</file>
             <file>file:/D:/unpsjb/2016/Administracion%20de%20Redes%20y%20Seguridad/Final/HOTP-TOTP/Proyecto/src/totp/a2f/ManagerHOTP.java</file>
-            <file>file:/D:/unpsjb/2016/Administracion%20de%20Redes%20y%20Seguridad/Final/HOTP-TOTP/Proyecto/src/totp/gui/PantallaPrincipal.java</file>
-            <file>file:/D:/unpsjb/2016/Administracion%20de%20Redes%20y%20Seguridad/Final/HOTP-TOTP/Proyecto/src/totp/a2f/MainHOTP.java</file>
-            <file>file:/D:/unpsjb/2016/Administracion%20de%20Redes%20y%20Seguridad/Final/HOTP-TOTP/Proyecto/src/totp/gui/DialogClaveSecreta.java</file>
+            <file>file:/D:/unpsjb/2016/Administracion%20de%20Redes%20y%20Seguridad/Final/HOTP-TOTP/Proyecto/src/totp/gui/PanelQR.java</file>
+            <file>file:/D:/unpsjb/2016/Administracion%20de%20Redes%20y%20Seguridad/Final/HOTP-TOTP/Proyecto/src/totp/a2f/Secreto.java</file>
+            <file>file:/D:/unpsjb/2016/Administracion%20de%20Redes%20y%20Seguridad/Final/HOTP-TOTP/Proyecto/src/totp/gui/DialogRegistrarUsuario.java</file>
+            <file>file:/D:/unpsjb/2016/Administracion%20de%20Redes%20y%20Seguridad/Final/HOTP-TOTP/Proyecto/src/totp/gui/PanelCodigo.java</file>
             <file>file:/D:/unpsjb/2016/Administracion%20de%20Redes%20y%20Seguridad/Final/HOTP-TOTP/Proyecto/src/totp/gui/DialogIniciarSesion.java</file>
             <file>file:/D:/unpsjb/2016/Administracion%20de%20Redes%20y%20Seguridad/Final/HOTP-TOTP/Proyecto/src/totp/gui/PanelEleccion.java</file>
             <file>file:/D:/unpsjb/2016/Administracion%20de%20Redes%20y%20Seguridad/Final/HOTP-TOTP/Proyecto/src/totp/a2f/GoogleAuthenticator.java</file>
             <file>file:/D:/unpsjb/2016/Administracion%20de%20Redes%20y%20Seguridad/Final/HOTP-TOTP/Proyecto/src/totp/principal/Main.java</file>
+            <file>file:/D:/unpsjb/2016/Administracion%20de%20Redes%20y%20Seguridad/Final/HOTP-TOTP/Proyecto/src/totp/gui/PanelHOTPConfig.java</file>
+            <file>file:/D:/unpsjb/2016/Administracion%20de%20Redes%20y%20Seguridad/Final/HOTP-TOTP/Proyecto/src/totp/gui/PantallaPrincipal.java</file>
+            <file>file:/D:/unpsjb/2016/Administracion%20de%20Redes%20y%20Seguridad/Final/HOTP-TOTP/Proyecto/src/totp/a2f/MainHOTP.java</file>
+            <file>file:/D:/unpsjb/2016/Administracion%20de%20Redes%20y%20Seguridad/Final/HOTP-TOTP/Proyecto/src/totp/gui/PanelLogin.java</file>
+            <file>file:/D:/unpsjb/2016/Administracion%20de%20Redes%20y%20Seguridad/Final/HOTP-TOTP/Proyecto/src/totp/gui/DialogClaveSecreta.java</file>
+            <file>file:/D:/unpsjb/2016/Administracion%20de%20Redes%20y%20Seguridad/Final/HOTP-TOTP/Proyecto/src/totp/bd/Usuario.java</file>
         </group>
     </open-files>
 </project-private>
