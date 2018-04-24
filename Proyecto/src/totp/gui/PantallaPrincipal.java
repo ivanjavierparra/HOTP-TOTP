@@ -6,6 +6,8 @@
 package totp.gui;
 
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 import totp.bd.ManagerConfiguracionDB;
 import totp.bd.ManagerUsuarioDB;
@@ -29,7 +31,12 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }
 
     private void inicializarFrame(){
-        this.setLocationRelativeTo(null);
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = pantalla.width;
+        int height = pantalla.height;
+        setSize(900,900);		
+        setLocationRelativeTo(null);
+        
         this.lblUsuario.setVisible(false);
         itemsInicializar();
     }

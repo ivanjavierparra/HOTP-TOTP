@@ -398,7 +398,7 @@ public class ManagerTOTP {
         
         // Genero el Google Authenticator QR Code
         String secretoCodificado = Secreto.toBase32(secreto);
-        String qr = GoogleAuthenticator.getQRUrl("alissa", "example.com", secretoCodificado);
+        String qr = GoogleAuthenticator.getQRUrlTOTP("alissa", "example.com", secretoCodificado);
         System.out.println(qr); //Imprime el enlace al codigo QR.
         //NOTA: Copiando el "encoded" que aparece en el QR, lo ponemos todo en 
         //minuscula en google authenticator manualmente y funciona, sin tener que 
@@ -442,6 +442,9 @@ public class ManagerTOTP {
                 }
                 case 3:{
                     System.out.println("Chau.");
+                    byte[] secret = Secreto.generar(Secreto.Size.LARGE);
+                    String secretC = Secreto.toBase32(secret);
+                    System.out.println(secretC);
                     break;
                 }
                 default:{

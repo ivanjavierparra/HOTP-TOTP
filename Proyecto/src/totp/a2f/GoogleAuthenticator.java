@@ -17,50 +17,61 @@ import totp.bd.Configuracion;
 public abstract class GoogleAuthenticator {
 
 	
-	public static final String getQRUrl(String username, String host, String secret) {
-		String format = "https://chart.googleapis.com/chart?chs=200x200&chld=M%%7C0&cht=qr&chl=otpauth://totp/%s@%s?secret=%s";
-		return String.format(format, username, host, secret);
-                //String format = "https://chart.googleapis.com/chart?chs=200x200&chld=M%%7C0&cht=qr&chl=otpauth://totp/%s?secret=%s";
-		//return String.format(format, "kari@mail.com", secret);
-	}
+    /**
+     * Genera un QR para el algoritmo TOTP, sólo con los parámetros que acepta Google Authenticator.
+     * @param username
+     * @param host
+     * @param secret
+     * @return 
+     */
+    public static final String getQRUrlTOTP(String username, String host, String secret) {
+        String format = "https://chart.googleapis.com/chart?chs=200x200&chld=M%%7C0&cht=qr&chl=otpauth://totp/%s@%s?secret=%s";
+        return String.format(format, username, host, secret);
+    }
         
-        public static final String getQRUrl(String email, String secret) {
-                String format = "https://chart.googleapis.com/chart?chs=200x200&chld=M%%7C0&cht=qr&chl=otpauth://totp/%s?secret=%s";
-		return String.format(format, email, secret);
-	}
-        
-        public static final String getQRUrlHOTP(String email, String secret) {
-                //String format = "https://chart.googleapis.com/chart?chs=200x200&chld=M%%7C0&cht=qr&chl=otpauth://hotp/%s?secret=%s&counter=%s";
-                String format = "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://hotp/"+email+"%3Fsecret="+secret+"%26counter=893";
-                //String format2 = "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://hotp/"+email+"?secret="+secret+"&counter=893";
-		//return String.format(format, email, secret);
-                return format;
-                //https://chart.googleapis.com/chart?chs=400x400&chld=M|0&cht=qr&chl=otpauth://hotp/S000011%3Fsecret=TF2M6VZ7E666I57VILOI4XV324DMHUXA%26counter=893
-                //otpauth://totp/TOTP00017410?secret=O6LVCAVTS2IJ25NKXKOOGCNTJIOFNUXA&counter=1&digits=6&issuer=privacyIDEA
-                // otpauth://hotp/Name%20of%20Secret?secret=<secret>&issuer=Company&counter=123456&algorithm=SHA512&digits=6
+    
+    /**
+     * Genera un QR para el algoritmo hOTP, sólo con los parámetros que acepta Google Authenticator.
+     * @param username
+     * @param host
+     * @param secret
+     * @return 
+     */
+    public static final String getQRUrlHOTP(String email, String secret, int contador) {
+        String format = "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://hotp/"+email+"%3Fsecret="+secret+"%26counter="+contador;
+        return format;
+    }
 
-	}
+
+    /**
+     * Genera un QR para el algoritmo HOTP/TOTP, con TODOS los parámetros posibles, 
+     * pero algunos de ellos no son reconocidos por Google Authenticator.
+     * Nota: NO funciona con DUO, y Google Authenticator me toma los parámetros que reconce según https://github.com/google/google-authenticator/wiki/Key-Uri-Format
+     * @param username
+     * @param host
+     * @param secret
+     * @return 
+     */
+    public static final String getQRUrlConfiguracion(String secret,Configuracion configuracion){
+        String format="";
+        String algoritmo = getAlgoritmo(configuracion);
+        if(configuracion.getTipo().compareToIgnoreCase("HOTP")==0)format = "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://hotp/"+configuracion.getEmail()+"%3Fsecret="+secret+"%26algorithm="+configuracion.getAlgoritmo()+"%26digits="+configuracion.getDigitos()+"%26counter="+configuracion.getContador_hotp();
+        else format = "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://totp/"+configuracion.getEmail()+"%3Fsecret="+secret+"%26algorithm="+algoritmo+"%26digits="+configuracion.getDigitos()+"%26period="+configuracion.getTiempo_totp();
+        return format;
+    }
         
-        public static final String getQRUrlHOTP(String email, String secret, int contador) {
-            String format = "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://hotp/"+email+"%3Fsecret="+secret+"%26counter="+contador;
-            return format;
-        }
         
-        
-        public static final String getQRUrlConfiguracion(String secret,Configuracion configuracion){
-            String format="";
-            String algoritmo = getAlgoritmo(configuracion);
-            if(configuracion.getTipo().compareToIgnoreCase("HOTP")==0)format = "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://hotp/"+configuracion.getEmail()+"%3Fsecret="+secret+"%26algorithm="+configuracion.getAlgoritmo()+"%26digits="+configuracion.getDigitos()+"%26counter="+configuracion.getContador_hotp();
-            else format = "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://totp/"+configuracion.getEmail()+"%3Fsecret="+secret+"%26algorithm="+algoritmo+"%26digits="+configuracion.getDigitos()+"%26period="+configuracion.getTiempo_totp();
-            return format;
-        }
-        
-        
-        private static String getAlgoritmo(Configuracion configuracion){
-            if(configuracion.getAlgoritmo().compareToIgnoreCase("HmacSHA1")==0)return "SHA1";
-            else if(configuracion.getAlgoritmo().compareToIgnoreCase("HmacSHA256")==0)return "SHA256";
-            else return "SHA512";
-        }
+    /**
+     * Devuelve un String que representa el algoritmo (SHA-1,SHA-256,SHA-512) que está 
+     * en el objeto "configuración" pasado como parámetro.
+     * @param configuracion
+     * @return 
+     */
+    private static String getAlgoritmo(Configuracion configuracion){
+        if(configuracion.getAlgoritmo().compareToIgnoreCase("HmacSHA1")==0)return "SHA1";
+        else if(configuracion.getAlgoritmo().compareToIgnoreCase("HmacSHA256")==0)return "SHA256";
+        else return "SHA512";
+    }
 	
         
 }
