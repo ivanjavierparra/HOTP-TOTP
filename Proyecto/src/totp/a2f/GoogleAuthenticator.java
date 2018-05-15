@@ -31,10 +31,10 @@ public abstract class GoogleAuthenticator {
         
     
     /**
-     * Genera un QR para el algoritmo hOTP, sólo con los parámetros que acepta Google Authenticator.
+     * Genera un QR para el algoritmo HOTP, sólo con los parámetros que acepta Google Authenticator.
      * @param username
      * @param host
-     * @param secret
+     * @param secret: en base32
      * @return 
      */
     public static final String getQRUrlHOTP(String email, String secret, int contador) {
