@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import qr.QRGenerador;
 import static sun.applet.AppletResourceLoader.getImage;
 import totp.a2f.GoogleAuthenticator;
 import totp.bd.Configuracion;
@@ -47,21 +48,27 @@ public class PanelQR extends javax.swing.JPanel {
     public void mostrarQR(){
         ManagerConfiguracionDB mcdb = new ManagerConfiguracionDB();
         Configuracion configuracion = mcdb.consultarRegistro(Main.usuario.getEmail());
-        String qr;
+        
+        byte [] qr;
+        String text = "otpauth://totp/Example:alice@google.com?secret=JBSWY3DPEHPK3PXP&issuer=Example";
+        QRGenerador qr_generador = new QRGenerador(text, 200, 200);
+        
         if(configuracion.getTipo().compareToIgnoreCase("HOTP")==0) {
-            qr = GoogleAuthenticator.getQRUrlHOTP(configuracion.getEmail(),Main.usuario.getClave_secreta(),configuracion.getContador_hotp());
+            //qr = GoogleAuthenticator.getQRUrlHOTP(configuracion.getEmail(),Main.usuario.getClave_secreta(),configuracion.getContador_hotp());
+            qr = qr_generador.generar();
         }
         else {
-            qr = GoogleAuthenticator.getQRUrlTOTP(Main.usuario.getNombre(), Main.usuario.getEmail(), Main.usuario.getClave_secreta());
+            //qr = GoogleAuthenticator.getQRUrlTOTP(Main.usuario.getNombre(), Main.usuario.getEmail(), Main.usuario.getClave_secreta());
+            qr = qr_generador.generar();
         }
-        lblClaveSecreta.setText(Main.usuario.getClave_secreta());
-        try {
-            Image img=getImage(new URL(qr));
-            lblImagen.setIcon(new ImageIcon(img));
-            repaint();
-        } catch (MalformedURLException ex) {
-            System.out.println("Error" + ex.getMessage());
-        }
+        txtClaveSecreta.setText(Main.usuario.getClave_secreta());
+        
+        //Image img=getImage(new URL(qr));
+        //lblImagen.setIcon(new ImageIcon(img));
+        //repaint();
+        ImageIcon icono = new ImageIcon(qr);
+        lblImagen.setIcon(icono);
+        
     }
     
     
@@ -71,7 +78,7 @@ public class PanelQR extends javax.swing.JPanel {
      */
     public void mostrarQR(Configuracion configuracion){
         String qr = GoogleAuthenticator.getQRUrlConfiguracion(Main.usuario.getClave_secreta(),configuracion);
-        lblClaveSecreta.setText(Main.usuario.getClave_secreta());
+        txtClaveSecreta.setText(Main.usuario.getClave_secreta());
         try {
             Image img=getImage(new URL(qr));
             lblImagen.setIcon(new ImageIcon(img));
@@ -96,9 +103,11 @@ public class PanelQR extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        lblImagen = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        lblClaveSecreta = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        lblImagen = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtClaveSecreta = new javax.swing.JTextArea();
 
         setBackground(java.awt.Color.darkGray);
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -108,26 +117,32 @@ public class PanelQR extends javax.swing.JPanel {
         jLabel1.setText("Escanear el siguiente código QR con Google Authenticator:");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
-        lblImagen.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        add(lblImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, -1, -1));
-
         jLabel3.setFont(new java.awt.Font("Noto Sans", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(123, 234, 12));
         jLabel3.setText("Nota: si no puedes escanear el código, ingrésalo manualmente:");
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, -1, -1));
 
-        lblClaveSecreta.setFont(new java.awt.Font("Noto Sans", 1, 12)); // NOI18N
-        lblClaveSecreta.setForeground(java.awt.Color.white);
-        lblClaveSecreta.setText("RQCS4KLYL7HJFP54JI4YZQPU5U442PVD");
-        lblClaveSecreta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        add(lblClaveSecreta, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, -1, -1));
+        jPanel1.setBackground(java.awt.Color.darkGray);
+
+        lblImagen.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(lblImagen);
+
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 390, 230));
+
+        txtClaveSecreta.setColumns(20);
+        txtClaveSecreta.setRows(5);
+        jScrollPane1.setViewportView(txtClaveSecreta);
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 390, 40));
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel lblClaveSecreta;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblImagen;
+    private javax.swing.JTextArea txtClaveSecreta;
     // End of variables declaration//GEN-END:variables
 }
