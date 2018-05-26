@@ -90,7 +90,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         menuItemSalir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Examen Final - Administración de Redes y Seguridad - TOTP");
+        setTitle("Exámen Final - Administración de Redes y Seguridad - HOTP - TOTP");
         setBackground(java.awt.Color.darkGray);
         setExtendedState(6);
 

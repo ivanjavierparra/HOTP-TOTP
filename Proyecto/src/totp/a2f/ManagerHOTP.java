@@ -331,7 +331,7 @@ public class ManagerHOTP {
         
         // genero el código QR compatible con Google Authenticator.
         String secretoCodificado = Secreto.toBase32(secreto);
-        String qr = GoogleAuthenticator.getQRUrlHOTP("hotpexample@mail.com", secretoCodificado,893);
+        String qr = GoogleAuthenticator.getQRUrlHOTP("hotpexample@mail.com","example", secretoCodificado,893);
         System.out.println(qr); //Imprime el enlace al codigo QR.
         //NOTA: Copiando el "secretoCodificado" que aparece en el QR, lo ponemos todo en 
         //minuscula en google authenticator manualmente y funciona, sin tener que 

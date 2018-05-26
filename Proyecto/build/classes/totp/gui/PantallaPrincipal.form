@@ -72,7 +72,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="Examen Final - Administraci&#xf3;n de Redes y Seguridad - TOTP"/>
+    <Property name="title" type="java.lang.String" value="Ex&#xe1;men Final - Administraci&#xf3;n de Redes y Seguridad - HOTP - TOTP"/>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="40" green="40" id="darkGray" palette="1" red="40" type="palette"/>
     </Property>

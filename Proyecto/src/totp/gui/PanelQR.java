@@ -43,49 +43,57 @@ public class PanelQR extends javax.swing.JPanel {
     
     
     /**
-     * Genera un QR solamente con los parámetros que acepta Google Authenticar.
+     * Genera un QR solamente con los parámetros que acepta Google Authenticator y DUO.
+     * https://github.com/google/google-authenticator/wiki/Key-Uri-Format.
      */
-    public void mostrarQR(){
+    public final void mostrarQR(){
+        //Obtengo de la BD el objeto configuracion
         ManagerConfiguracionDB mcdb = new ManagerConfiguracionDB();
         Configuracion configuracion = mcdb.consultarRegistro(Main.usuario.getEmail());
         
-        byte [] qr;
-        String text = "otpauth://totp/Example:alice@google.com?secret=JBSWY3DPEHPK3PXP&issuer=Example";
-        QRGenerador qr_generador = new QRGenerador(text, 200, 200);
+        String text = "";
         
         if(configuracion.getTipo().compareToIgnoreCase("HOTP")==0) {
-            //qr = GoogleAuthenticator.getQRUrlHOTP(configuracion.getEmail(),Main.usuario.getClave_secreta(),configuracion.getContador_hotp());
-            qr = qr_generador.generar();
+            //obtengo url de configuracion
+            text = GoogleAuthenticator.getQRUrlHOTP(configuracion.getEmail(),Main.usuario.getNombre(),Main.usuario.getClave_secreta(),configuracion.getContador_hotp());
         }
         else {
-            //qr = GoogleAuthenticator.getQRUrlTOTP(Main.usuario.getNombre(), Main.usuario.getEmail(), Main.usuario.getClave_secreta());
-            qr = qr_generador.generar();
+            //obtengo url de configuracion
+            text = GoogleAuthenticator.getQRUrlTOTP(configuracion.getEmail(),Main.usuario.getNombre(),Main.usuario.getClave_secreta());
         }
-        txtClaveSecreta.setText(Main.usuario.getClave_secreta());
         
-        //Image img=getImage(new URL(qr));
-        //lblImagen.setIcon(new ImageIcon(img));
-        //repaint();
+        //genero el qr con los datos de la configuracion
+        byte [] qr;
+        QRGenerador qr_generador = new QRGenerador(text, 200, 200);
+        qr = qr_generador.generar();
+        
+        //agrego el qr al lblImagen y pongo la clave en base32 en el txtClaveSecreta
         ImageIcon icono = new ImageIcon(qr);
         lblImagen.setIcon(icono);
-        
+        txtClaveSecreta.setText(Main.usuario.getClave_secreta());
     }
     
     
+    
+    
     /**
-     * Genera un QR con todos los parámetros de configuración, aunque algunos de ellos no son reconocidos por Google Authenticator.
+     * Genera un QR con todos los parámetros de configuración, aunque algunos de ellos no son reconocidos por Google Authenticator ni por DUO.
      * @param configuracion 
      */
-    public void mostrarQR(Configuracion configuracion){
-        String qr = GoogleAuthenticator.getQRUrlConfiguracion(Main.usuario.getClave_secreta(),configuracion);
+    public final void mostrarQR(Configuracion configuracion){
+        //obtengo url de configuracion 
+        String text = GoogleAuthenticator.getQRUrlConfiguracion(Main.usuario.getNombre(),Main.usuario.getClave_secreta(),configuracion);
+        
+        //genero el qr con los datos de la configuracion
+        byte [] qr;
+        QRGenerador qr_generador = new QRGenerador(text, 200, 200);
+        qr = qr_generador.generar();
+        
+        //agrego el qr al lblImagen y pongo la clave en base32 en el txtClaveSecreta
+        ImageIcon icono = new ImageIcon(qr);
+        lblImagen.setIcon(icono);
         txtClaveSecreta.setText(Main.usuario.getClave_secreta());
-        try {
-            Image img=getImage(new URL(qr));
-            lblImagen.setIcon(new ImageIcon(img));
-            repaint();
-        } catch (MalformedURLException ex) {
-            System.out.println("Error" + ex.getMessage());
-        }
+        
     }
     
     
@@ -129,12 +137,32 @@ public class PanelQR extends javax.swing.JPanel {
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 390, 230));
 
+        txtClaveSecreta.setBackground(java.awt.Color.lightGray);
         txtClaveSecreta.setColumns(20);
+        txtClaveSecreta.setFont(new java.awt.Font("Monospaced", 1, 15)); // NOI18N
         txtClaveSecreta.setRows(5);
+        txtClaveSecreta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtClaveSecretaKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtClaveSecretaKeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(txtClaveSecreta);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 390, 40));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtClaveSecretaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClaveSecretaKeyTyped
+        // TODO add your handling code here:
+        evt.consume();
+    }//GEN-LAST:event_txtClaveSecretaKeyTyped
+
+    private void txtClaveSecretaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClaveSecretaKeyPressed
+        // TODO add your handling code here:
+        evt.consume();
+    }//GEN-LAST:event_txtClaveSecretaKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

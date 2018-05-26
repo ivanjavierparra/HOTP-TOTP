@@ -19,45 +19,52 @@ public abstract class GoogleAuthenticator {
 	
     /**
      * Genera un QR para el algoritmo TOTP, sólo con los parámetros que acepta Google Authenticator.
-     * @param username
-     * @param host
-     * @param secret
+     * @param email
+     * @param nombre
+     * @param clave_secreta
      * @return 
      */
-    public static final String getQRUrlTOTP(String username, String host, String secret) {
-        String format = "https://chart.googleapis.com/chart?chs=200x200&chld=M%%7C0&cht=qr&chl=otpauth://totp/%s@%s?secret=%s";
-        return String.format(format, username, host, secret);
+    public static final String getQRUrlTOTP(String email, String nombre, String clave_secreta) {
+        String cadena = "otpauth://totp/%s?secret=%s&issuer=%s";
+        return String.format(cadena, email, clave_secreta, nombre);
     }
         
     
     /**
      * Genera un QR para el algoritmo HOTP, sólo con los parámetros que acepta Google Authenticator.
-     * @param username
-     * @param host
-     * @param secret: en base32
+     * @param email
+     * @param nombre
+     * @param clave_secreta: en base32
+     * @param contador
      * @return 
      */
-    public static final String getQRUrlHOTP(String email, String secret, int contador) {
-        String format = "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://hotp/"+email+"%3Fsecret="+secret+"%26counter="+contador;
-        return format;
+    public static final String getQRUrlHOTP(String email, String nombre, String clave_secreta, int contador) {
+        String cadena = "otpauth://hotp/%s?secret=%s&issuer=%s&counter=%s";
+        return String.format(cadena, email, clave_secreta, nombre, contador);
     }
 
 
     /**
      * Genera un QR para el algoritmo HOTP/TOTP, con TODOS los parámetros posibles, 
-     * pero algunos de ellos no son reconocidos por Google Authenticator.
-     * Nota: NO funciona con DUO, y Google Authenticator me toma los parámetros que reconce según https://github.com/google/google-authenticator/wiki/Key-Uri-Format
-     * @param username
-     * @param host
+     * pero algunos de ellos no son reconocidos por Google Authenticator ni por DUO.
+     * https://github.com/google/google-authenticator/wiki/Key-Uri-Format
+     * @param nombre
      * @param secret
+     * @param configuracion
      * @return 
      */
-    public static final String getQRUrlConfiguracion(String secret,Configuracion configuracion){
-        String format="";
+    public static final String getQRUrlConfiguracion(String nombre, String secret, Configuracion configuracion){
+        String cadena="";
         String algoritmo = getAlgoritmo(configuracion);
-        if(configuracion.getTipo().compareToIgnoreCase("HOTP")==0)format = "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://hotp/"+configuracion.getEmail()+"%3Fsecret="+secret+"%26algorithm="+configuracion.getAlgoritmo()+"%26digits="+configuracion.getDigitos()+"%26counter="+configuracion.getContador_hotp();
-        else format = "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://totp/"+configuracion.getEmail()+"%3Fsecret="+secret+"%26algorithm="+algoritmo+"%26digits="+configuracion.getDigitos()+"%26period="+configuracion.getTiempo_totp();
-        return format;
+        if(configuracion.getTipo().compareToIgnoreCase("HOTP")==0){
+            cadena = "otpauth://hotp/%s?secret=%s&issuer=%s&counter=%s&algorithm=%s&digits=%s";
+            cadena = String.format(cadena,configuracion.getEmail(),secret,nombre,configuracion.getContador_hotp(),algoritmo,configuracion.getDigitos());
+        }
+        else {
+            cadena = "otpauth://totp/%s?secret=%s&issuer=%s&algorithm=%s&digits=%s&period=%s";
+            cadena = String.format(cadena,configuracion.getEmail(),secret,nombre,algoritmo,configuracion.getDigitos(),configuracion.getTiempo_totp());
+        }
+        return cadena;
     }
         
         

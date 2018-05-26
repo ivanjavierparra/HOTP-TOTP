@@ -51,6 +51,7 @@ public class DialogRegistrarUsuario extends javax.swing.JDialog {
         txtRepetirPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Registrar Usuario");
 
         pnlHeader.setBackground(java.awt.Color.black);
 

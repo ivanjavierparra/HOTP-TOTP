@@ -5,6 +5,8 @@
  */
 package totp.bd;
 
+import encriptacion.CesarEncrypter;
+import encriptacion.Encrypter;
 import java.sql.*;
 
 /**
@@ -25,7 +27,12 @@ public class ManagerUsuarioDB {
         mensaje_error = mdb.establecerConexion();
         if(mensaje_error.compareToIgnoreCase("")!=0) return false;
         
+        //recibo una password y la encripto usando el algoritmo de Cesar
+        //Encrypter enc = new CesarEncrypter(password);
+        //password = enc.code();
+        //System.out.println("Password encriptado: " + password);
         
+        //https://es.stackoverflow.com/questions/54098/que-algoritmo-de-cifrado-se-puede-usar-para-guardar-datos-en-java
         
         String s = "insert into usuario (nombre, email, password, clavesecreta, a2f) ";
         s = s + " values ('"+nombre+"','"+email+"','"+password+"','"+clavesecreta+"','false')";
@@ -89,6 +96,12 @@ public class ManagerUsuarioDB {
         mdb.cerrarConexion();
         return usuario;
         
+    }
+    
+    private String desencriptar_password(String clave){
+        //recibo una clave en Base32 y la encripto usando el algoritmo de Cesar
+        Encrypter enc = new CesarEncrypter(clave);
+        return enc.decode();
     }
     
     public boolean actualizarA2F(String email, boolean activar){

@@ -71,6 +71,7 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
         pnlBody = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Iniciar Sesión");
 
         pnlHeader.setBackground(java.awt.Color.black);
 

@@ -30,19 +30,22 @@ import javax.swing.ImageIcon;
  *
  * @author ivanj
  */
-public class GeneradorQR extends javax.swing.JFrame {
+public class QRGeneradorTest extends javax.swing.JFrame {
 
     /**
      * Creates new form GeneradorQR
      */
-    public GeneradorQR() {
+    public QRGeneradorTest() {
         initComponents();
         agregarGrafico();
     }
     
     private void agregarGrafico(){
         try {
-            String text = "otpauth://totp/Example:alice@google.com?secret=JBSWY3DPEHPK3PXP&issuer=Example";
+            //String text = "otpauth://totp/Example:alice@google.com?secret=JBSWY3DPEHPK3PXP&issuer=Example";
+            //String text = "otpauth://totp/Acme%20Corporation:Alice%20Smith?secret=GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ&issuer=Acme%20Corporation&digits=6&period=45";
+            String text = "otpauth://totp/%s?secret=%s&issuer=%s&algorithm=%s&digits=%s&period=%s";
+            text = String.format(text,"eric@mail.com","JBSWY3DPEHPK3PXP","eric","SHA1",6,30);
             int w = 300;
             int h = 300;
             
@@ -81,7 +84,7 @@ public class GeneradorQR extends javax.swing.JFrame {
             lblQR.setIcon(icono);
             
         } catch (Exception ex) {
-            Logger.getLogger(GeneradorQR.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QRGeneradorTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -155,20 +158,21 @@ public class GeneradorQR extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GeneradorQR.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QRGeneradorTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GeneradorQR.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QRGeneradorTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GeneradorQR.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QRGeneradorTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GeneradorQR.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QRGeneradorTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GeneradorQR().setVisible(true);
+                new QRGeneradorTest().setVisible(true);
             }
         });
     }

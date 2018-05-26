@@ -79,6 +79,7 @@ public class Dialog2AF extends javax.swing.JDialog {
         pnlBody = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Autenticación Multifactor");
 
         pnlHeader.setBackground(java.awt.Color.black);
 

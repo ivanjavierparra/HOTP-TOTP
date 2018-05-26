@@ -58,6 +58,7 @@ public class DialogClaveSecreta extends javax.swing.JDialog {
         pnlBody = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Clave Secreta");
 
         pnlHeader.setBackground(java.awt.Color.black);
 
