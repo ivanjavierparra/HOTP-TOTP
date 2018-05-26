@@ -7,6 +7,7 @@ package totp.gui;
 
 
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 import totp.bd.ManagerConfiguracionDB;
@@ -93,6 +94,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         setTitle("Exámen Final - Administración de Redes y Seguridad - HOTP - TOTP");
         setBackground(java.awt.Color.darkGray);
         setExtendedState(6);
+        setIconImage(getIconImage());
 
         pnlFooter.setBackground(java.awt.Color.black);
 
@@ -257,6 +259,16 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         menuItemActivarA2F.setVisible(false);
         menuItemDesactivarA2F.setVisible(true);
         menuItemVerQR.setVisible(true);
+    }
+    
+    
+    @Override
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().
+                getImage(ClassLoader.getSystemResource("totp/imagenes/icono.png"));
+
+
+        return retValue;
     }
     
     /**
