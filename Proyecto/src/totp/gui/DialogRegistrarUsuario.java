@@ -6,8 +6,9 @@
 package totp.gui;
 
 
+import encriptacion.Hash;
 import javax.swing.JOptionPane;
-import totp.a2f.Secreto;
+import totp.a2f.SecretGenerator;
 import totp.bd.ManagerUsuarioDB;
 
 /**
@@ -227,8 +228,8 @@ public class DialogRegistrarUsuario extends javax.swing.JDialog {
      * @return una clave secreta en Base32.
      */
     private String obtenerClaveSecreta(){
-        byte[] secreto = Secreto.generar();
-        return Secreto.toBase32(secreto);
+        byte[] secreto = SecretGenerator.generar();
+        return SecretGenerator.toBase32(secreto);
     }
     
     
@@ -243,7 +244,12 @@ public class DialogRegistrarUsuario extends javax.swing.JDialog {
      */
     private String agregarUsuario(String nombre,String email,String password,String clave_secreta){
         ManagerUsuarioDB mdb = new ManagerUsuarioDB();
-        boolean exito = mdb.insertarRegistro(nombre, email, password, clave_secreta);
+        
+        //encripto password con SHA1
+        String password_encriptado = Hash.getHash(password, "SHA1");
+        
+        
+        boolean exito = mdb.insertarRegistro(nombre, email, password_encriptado, clave_secreta);
         if(exito)return "";
         else return mdb.getMensaje_error();
     }

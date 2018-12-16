@@ -85,5 +85,15 @@ public class Configuracion {
         this.tiempo_totp = tiempo_totp;
     }
     
+    /**
+     * Devuelve un String que representa el algoritmo (SHA-1,SHA-256,SHA-512) que está 
+     * en el objeto "configuración" pasado como parámetro.
+     * @return: nombre del algoritmo de encriptación.
+     */
+    public String getAlgoritmoEncriptacion(){
+        if(this.getAlgoritmo().compareToIgnoreCase("HmacSHA1")==0)return "SHA1";
+        else if(this.getAlgoritmo().compareToIgnoreCase("HmacSHA256")==0)return "SHA256";
+        else return "SHA512";
+    }
     
 }

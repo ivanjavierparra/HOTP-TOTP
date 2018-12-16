@@ -327,11 +327,11 @@ public class ManagerHOTP {
         ManagerHOTP manager = new ManagerHOTP();
         
         //Creo la clave unica.
-        byte[] secreto = Secreto.generar();
+        byte[] secreto = SecretGenerator.generar();
         
         // genero el código QR compatible con Google Authenticator.
-        String secretoCodificado = Secreto.toBase32(secreto);
-        String qr = GoogleAuthenticator.getQRUrlHOTP("hotpexample@mail.com","example", secretoCodificado,893);
+        String secretoCodificado = SecretGenerator.toBase32(secreto);
+        String qr = URIGenerator.getQRUrlHOTP("hotpexample@mail.com","example", secretoCodificado,893);
         System.out.println(qr); //Imprime el enlace al codigo QR.
         //NOTA: Copiando el "secretoCodificado" que aparece en el QR, lo ponemos todo en 
         //minuscula en google authenticator manualmente y funciona, sin tener que 
@@ -383,8 +383,8 @@ public class ManagerHOTP {
                 }
                 case 3:{
                     String email="ejemplo@mail.com";
-                    byte[] secret = Secreto.generar(Secreto.Size.MEDIUM); 
-                    String secretoCod = Secreto.toBase32(secret);
+                    byte[] secret = SecretGenerator.generar(SecretGenerator.Size.MEDIUM); 
+                    String secretoCod = SecretGenerator.toBase32(secret);
                     String algoritmo = "SHA256";
                     int digits = 7;
                     int contador = 894;

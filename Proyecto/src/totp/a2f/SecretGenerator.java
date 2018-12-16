@@ -13,7 +13,7 @@ import org.apache.commons.codec.binary.Base32;
  */
 
 
-public abstract class Secreto {
+public abstract class SecretGenerator {
 
 	private static final Random RAND = new Random();
 	

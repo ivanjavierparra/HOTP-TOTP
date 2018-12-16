@@ -32,7 +32,7 @@ public class MiCipher {
         return null;
     }
 
-    public static String decriptar(String clave, byte[] iv, String encriptado) {
+    public static String desencriptar(String clave, byte[] iv, String encriptado) {
         try {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
             SecretKeySpec sks = new SecretKeySpec(clave.getBytes("UTF-8"), "AES");
@@ -46,12 +46,23 @@ public class MiCipher {
         return null;
     }
 
+    /**
+     * 
+     * @param args 
+     */
     public static void main(String[] args) {
         String clave = "FooBar1234567890"; // 128 bit
         byte[] iv = new byte[16];
         sr.nextBytes(iv);
         String encriptado = encriptar(clave, iv, "Demasiados Secretos!");
         System.out.println(String.format("encriptado: %s", encriptado));
-        System.out.println(decriptar(clave, iv, encriptado));
+        System.out.println(desencriptar(clave, iv, encriptado));
+        
+        
+        String base64 = "7IXQR7RPOPS6B4CNNFGIFKBFYIQNWTAL";
+        System.out.println("Clave Secreta en BASE64: " + base64);
+        String e = encriptar(clave, iv, base64);
+        System.out.println(String.format("encriptado: %s", e));
+        System.out.println("desencriptado: " + desencriptar(clave, iv, e));
     }
 }

@@ -1,6 +1,6 @@
 package encriptacion;
 
-import totp.a2f.Secreto;
+import totp.a2f.SecretGenerator;
 
 public class Principal
 {

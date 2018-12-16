@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import qr.QRGenerador;
 import static sun.applet.AppletResourceLoader.getImage;
-import totp.a2f.GoogleAuthenticator;
+import totp.a2f.URIGenerator;
 import totp.bd.Configuracion;
 import totp.bd.ManagerConfiguracionDB;
 import totp.bd.ManagerUsuarioDB;
@@ -55,11 +55,11 @@ public class PanelQR extends javax.swing.JPanel {
         
         if(configuracion.getTipo().compareToIgnoreCase("HOTP")==0) {
             //obtengo url de configuracion
-            text = GoogleAuthenticator.getQRUrlHOTP(configuracion.getEmail(),Main.usuario.getNombre(),Main.usuario.getClave_secreta(),configuracion.getContador_hotp());
+            text = URIGenerator.getQRUrlHOTP(configuracion.getEmail(),Main.usuario.getNombre(),Main.usuario.getClave_secreta(),configuracion.getContador_hotp());
         }
         else {
             //obtengo url de configuracion
-            text = GoogleAuthenticator.getQRUrlTOTP(configuracion.getEmail(),Main.usuario.getNombre(),Main.usuario.getClave_secreta());
+            text = URIGenerator.getQRUrlTOTP(configuracion.getEmail(),Main.usuario.getNombre(),Main.usuario.getClave_secreta());
         }
         
         //genero el qr con los datos de la configuracion
@@ -82,7 +82,7 @@ public class PanelQR extends javax.swing.JPanel {
      */
     public final void mostrarQR(Configuracion configuracion){
         //obtengo url de configuracion 
-        String text = GoogleAuthenticator.getQRUrlConfiguracion(Main.usuario.getNombre(),Main.usuario.getClave_secreta(),configuracion);
+        String text = URIGenerator.getQRUrlConfiguracion(Main.usuario.getNombre(),Main.usuario.getClave_secreta(),configuracion);
         
         //genero el qr con los datos de la configuracion
         byte [] qr;

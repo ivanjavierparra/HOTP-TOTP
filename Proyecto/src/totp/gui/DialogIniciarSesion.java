@@ -5,12 +5,13 @@
  */
 package totp.gui;
 
+import encriptacion.Hash;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JOptionPane;
 import totp.a2f.ManagerHOTP;
 import totp.a2f.ManagerTOTP;
-import totp.a2f.Secreto;
+import totp.a2f.SecretGenerator;
 import totp.bd.Configuracion;
 import totp.bd.ManagerConfiguracionDB;
 import totp.bd.ManagerUsuarioDB;
@@ -35,7 +36,7 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
 
     
     /**
-     * Configura atributos del diálogo.
+     * Configura atributos del JDialog.
      * Agrega 2 paneles: PanelLogin y PanelCOdigo.
      */
     private void inicializarDialog(){
@@ -135,9 +136,12 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
             return;
         }
         
+        //encripto password con SHA1
+        String password_encriptado = Hash.getHash(password, "SHA1");
+        
         //consultamos a la bd
         ManagerUsuarioDB mdb = new ManagerUsuarioDB();
-        Main.usuario = mdb.consultarRegistro(email, password);
+        Main.usuario = mdb.consultarRegistro(email, password_encriptado);
         
         
         // Valido usuario y password, Verifico si tiene activado a2f.
@@ -173,7 +177,7 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
         }
         
         // Obtenemos la clave secreta del usuario.
-        byte[] secreto = Secreto.fromBase32(Main.usuario.getClave_secreta());
+        byte[] secreto = SecretGenerator.fromBase32(Main.usuario.getClave_secreta());
         
         System.out.println("El secreto es: " + Main.usuario.getClave_secreta());
         

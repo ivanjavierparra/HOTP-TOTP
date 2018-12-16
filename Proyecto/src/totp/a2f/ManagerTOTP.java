@@ -90,7 +90,7 @@ public class ManagerTOTP {
     
     
 	/**
-	 * Número de dígitos del código HOTP.     
+	 * Número de dígitos del código TOTP.     
 	 */
 	public static final int DEFAULT_LENGTH = 6;
 	
@@ -324,11 +324,11 @@ public class ManagerTOTP {
 		byte[] hash = hmac.getShaHash(secreto, message);
                 
                 // Paso 2: Truncamiento. 
-		int off = hash[hash.length-1] & 0xf;
-		int bin = ((hash[off] & 0x7f) << 24) | ((hash[off + 1] & 0xff) << 16) | ((hash[off + 2] & 0xff) << 8) | (hash[off + 3] & 0xff);
+		int offset = hash[hash.length-1] & 0xf;
+		int binary = ((hash[offset] & 0x7f) << 24) | ((hash[offset + 1] & 0xff) << 16) | ((hash[offset + 2] & 0xff) << 8) | (hash[offset + 3] & 0xff);
 
                 // Paso 3: Calcular el código TOTP y asegurarse de que contenga la cantidad de dígitos configurados.
-		int otp = bin % DIGITS_POWER[getLongitudCodigo()]; // código TOTP = TOTP mod 10^d, where d is the desired number of digits of the one-time password.
+		int otp = binary % DIGITS_POWER[getLongitudCodigo()]; // código TOTP = TOTP mod 10^d, where d is the desired number of digits of the one-time password.
 		String result = Integer.toString(otp);
 		while (result.length() < getLongitudCodigo()) {
 			result = "0" + result;
@@ -394,11 +394,11 @@ public class ManagerTOTP {
         ManagerTOTP manager = new ManagerTOTP();
         
         // Creo la clave secreta.
-        byte[] secreto = Secreto.generar();
+        byte[] secreto = SecretGenerator.generar();
         
         // Genero el Google Authenticator QR Code
-        String secretoCodificado = Secreto.toBase32(secreto);
-        String qr = GoogleAuthenticator.getQRUrlTOTP("alissa", "example.com", secretoCodificado);
+        String secretoCodificado = SecretGenerator.toBase32(secreto);
+        String qr = URIGenerator.getQRUrlTOTP("alissa", "example.com", secretoCodificado);
         System.out.println(qr); //Imprime el enlace al codigo QR.
         //NOTA: Copiando el "encoded" que aparece en el QR, lo ponemos todo en 
         //minuscula en google authenticator manualmente y funciona, sin tener que 
@@ -442,8 +442,8 @@ public class ManagerTOTP {
                 }
                 case 3:{
                     System.out.println("Chau.");
-                    byte[] secret = Secreto.generar(Secreto.Size.LARGE);
-                    String secretC = Secreto.toBase32(secret);
+                    byte[] secret = SecretGenerator.generar(SecretGenerator.Size.LARGE);
+                    String secretC = SecretGenerator.toBase32(secret);
                     System.out.println(secretC);
                     break;
                 }
