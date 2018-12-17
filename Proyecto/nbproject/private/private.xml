@@ -3,17 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Final/HOTP-TOTP/Proyecto/src/totp/a2f/URIGenerator.java</file>
-            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Final/HOTP-TOTP/Proyecto/src/totp/gui/PanelQR.java</file>
-            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Final/HOTP-TOTP/Proyecto/src/totp/gui/DialogIniciarSesion.java</file>
-            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Final/HOTP-TOTP/Proyecto/src/totp/gui/Dialog2AF.java</file>
-            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Final/HOTP-TOTP/Proyecto/src/encriptacion/Hash.java</file>
-            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Final/HOTP-TOTP/Proyecto/src/totp/a2f/HMAC.java</file>
-            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Final/HOTP-TOTP/Proyecto/src/encriptacion/Principal.java</file>
-            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Final/HOTP-TOTP/Proyecto/src/totp/gui/DialogRegistrarUsuario.java</file>
-            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Final/HOTP-TOTP/Proyecto/src/totp/a2f/ManagerTOTP.java</file>
-            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Final/HOTP-TOTP/Proyecto/src/encriptacion/MiCipher.java</file>
-            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Final/HOTP-TOTP/Proyecto/src/totp/a2f/ManagerHOTP.java</file>
+            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Codigo/HOTP-TOTP/Proyecto/src/vista/PanelHOTPConfig.java</file>
+            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Codigo/HOTP-TOTP/Proyecto/src/vista/PanelQR.java</file>
+            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Codigo/HOTP-TOTP/Proyecto/src/vista/DialogIniciarSesion.java</file>
+            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Codigo/HOTP-TOTP/Proyecto/src/vista/PanelCodigo.java</file>
+            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Codigo/HOTP-TOTP/Proyecto/src/vista/DialogClaveSecreta.java</file>
+            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Codigo/HOTP-TOTP/Proyecto/src/vista/PanelTOTPConfig.java</file>
+            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Codigo/HOTP-TOTP/Proyecto/src/a2f/ManagerTOTP.java</file>
+            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Codigo/HOTP-TOTP/Proyecto/src/vista/Dialog2AF.java</file>
+            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Codigo/HOTP-TOTP/Proyecto/src/a2f/URIGenerator.java</file>
+            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Codigo/HOTP-TOTP/Proyecto/src/vista/PantallaPrincipal.java</file>
         </group>
     </open-files>
 </project-private>
