@@ -11,7 +11,7 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import qr.QRGenerador;
+import qr.QRGenerator;
 import static sun.applet.AppletResourceLoader.getImage;
 import a2f.URIGenerator;
 import modelo.Configuracion;
@@ -64,7 +64,7 @@ public class PanelQR extends javax.swing.JPanel {
         
         //genero el qr con los datos de la configuracion
         byte [] qr;
-        QRGenerador qr_generador = new QRGenerador(text, 200, 200);
+        QRGenerator qr_generador = new QRGenerator(text, 200, 200);
         qr = qr_generador.generar();
         
         //agrego el qr al lblImagen y pongo la clave en base32 en el txtClaveSecreta
@@ -86,7 +86,7 @@ public class PanelQR extends javax.swing.JPanel {
         
         //genero el qr con los datos de la configuracion
         byte [] qr;
-        QRGenerador qr_generador = new QRGenerador(text, 200, 200);
+        QRGenerator qr_generador = new QRGenerator(text, 200, 200);
         qr = qr_generador.generar();
         
         //agrego el qr al lblImagen y pongo la clave en base32 en el txtClaveSecreta

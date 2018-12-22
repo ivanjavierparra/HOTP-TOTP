@@ -12,6 +12,10 @@ import modelo.Configuracion;
 import modelo.ManagerConfiguracionDB;
 import modelo.ManagerUsuarioDB;
 import principal.Main;
+import vista.PanelEleccion;
+import vista.PanelHOTPConfig;
+import vista.PanelQR;
+import vista.PanelTOTPConfig;
 
 /**
  *

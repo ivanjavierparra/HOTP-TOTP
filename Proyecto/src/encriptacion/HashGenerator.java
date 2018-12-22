@@ -9,7 +9,7 @@ package encriptacion;
  *
  * @author Asus
  */
-public class Hash {
+public class HashGenerator {
     /**
      * Retorna un hash a partir de un tipo y un texto.
      * @param txt
@@ -33,12 +33,12 @@ public class Hash {
  
     /* Retorna un hash MD5 a partir de un texto */
     public static String md5(String txt) {
-        return Hash.getHash(txt, "MD5");
+        return HashGenerator.getHash(txt, "MD5");
     }
  
     /* Retorna un hash SHA1 a partir de un texto */
     public static String sha1(String txt) {
-        return Hash.getHash(txt, "SHA1");
+        return HashGenerator.getHash(txt, "SHA1");
     }
     
     public static boolean compararHash(String hash_1, String hash_2) {
@@ -48,10 +48,10 @@ public class Hash {
     
     /* Prueba */
     public static void main(String[] args){
-        System.out.println(Hash.md5("Hola Mundo!"));
-        String a = Hash.md5("Hola Mundo!");
-        String b = Hash.md5("Hola Mundo!");
+        System.out.println(HashGenerator.md5("Hola Mundo!"));
+        String a = HashGenerator.md5("Hola Mundo!");
+        String b = HashGenerator.md5("Hola Mundo!");
         if(a.equals(b))System.out.println("Buenisimo");
-        System.out.println(Hash.sha1("Hola Mundo!")); 
+        System.out.println(HashGenerator.sha1("Hola Mundo!")); 
     }
 }

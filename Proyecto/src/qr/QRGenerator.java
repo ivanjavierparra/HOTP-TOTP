@@ -14,12 +14,12 @@ import java.io.ByteArrayOutputStream;
  *
  * @author ivanj
  */
-public class QRGenerador {
+public class QRGenerator {
     private String texto;
     private int ancho;
     private int alto;
     
-    public QRGenerador(String texto, int ancho, int alto){
+    public QRGenerator(String texto, int ancho, int alto){
         this.texto = texto;
         this.ancho = ancho;
         this.alto = alto;

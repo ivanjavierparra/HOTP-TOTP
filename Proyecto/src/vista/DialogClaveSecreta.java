@@ -9,6 +9,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JOptionPane;
 import principal.Main;
+import vista.PanelQR;
 
 /**
  *

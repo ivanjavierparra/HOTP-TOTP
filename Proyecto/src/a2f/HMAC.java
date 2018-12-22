@@ -11,7 +11,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 /**
  *
- * @author ivanj
+ * @author Iván Javier Parra
  */
 public class HMAC {
     

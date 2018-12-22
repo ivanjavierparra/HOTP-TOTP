@@ -6,7 +6,7 @@
 package vista;
 
 
-import encriptacion.Hash;
+import encriptacion.HashGenerator;
 import javax.swing.JOptionPane;
 import a2f.SecretGenerator;
 import modelo.ManagerUsuarioDB;
@@ -246,7 +246,7 @@ public class DialogRegistrarUsuario extends javax.swing.JDialog {
         ManagerUsuarioDB mdb = new ManagerUsuarioDB();
         
         //encripto password con SHA1
-        String password_encriptado = Hash.getHash(password, "SHA1");
+        String password_encriptado = HashGenerator.getHash(password, "SHA1");
         
         
         boolean exito = mdb.insertarRegistro(nombre, email, password_encriptado, clave_secreta);

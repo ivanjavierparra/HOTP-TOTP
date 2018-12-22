@@ -75,7 +75,7 @@ public abstract class SecretGenerator {
         
         
 	/**
-	 * Decodifica la clave secreta que está en String a bytes.
+	 * Decodifica la clave secreta que está en Base32 a bytes.
          * 
 	 * @param base32: la clave secreta codificada en Base32. 
 	 * @return la clave secreta decodificada.

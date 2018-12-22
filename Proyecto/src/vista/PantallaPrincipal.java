@@ -9,6 +9,7 @@ package vista;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
+import javax.swing.Box;
 import javax.swing.JOptionPane;
 import modelo.ManagerConfiguracionDB;
 import modelo.ManagerUsuarioDB;
@@ -43,6 +44,10 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }
     
     private void itemsInicializar(){
+        jMenuBar1.add(Box.createHorizontalGlue());
+        jMenuBar1.add(menuSesion);
+        menuSesion.setVisible(false);
+        
         menuItemVerQR.setVisible(false);
         menuItemActivarA2F.setVisible(false);
         menuItemDesactivarA2F.setVisible(false);
@@ -51,14 +56,21 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
     public void mostrarSesion(){
         this.lblUsuario.setText("Bienvenid@ " + Main.usuario.getNombre() + "!");
+        
+        menuSesion.setText(Main.usuario.getNombre());
+        menuSesion.setVisible(true);
+        separadorIniciarSesion.setVisible(false);
+        
         menuItemCerrar.setVisible(true);
         menuItemIniciar.setVisible(false);
         if(Main.usuario.isA2f_activado()){
             menuItemVerQR.setVisible(true);
             menuItemDesactivarA2F.setVisible(true);
+            separadorQR.setVisible(true);
         }
         else{
             menuItemActivarA2F.setVisible(true);
+            separadorQR.setVisible(false);
         }
         this.lblUsuario.setVisible(true);
     }
@@ -81,14 +93,19 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         lblUsuario = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        menuArchivo = new javax.swing.JMenu();
         menuItemRegistrar = new javax.swing.JMenuItem();
+        separadorRegistrarUsuario = new javax.swing.JPopupMenu.Separator();
         menuItemIniciar = new javax.swing.JMenuItem();
+        separadorIniciarSesion = new javax.swing.JPopupMenu.Separator();
+        menuItemSalir = new javax.swing.JMenuItem();
+        menuSesion = new javax.swing.JMenu();
         menuItemVerQR = new javax.swing.JMenuItem();
+        separadorQR = new javax.swing.JPopupMenu.Separator();
         menuItemActivarA2F = new javax.swing.JMenuItem();
         menuItemDesactivarA2F = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
         menuItemCerrar = new javax.swing.JMenuItem();
-        menuItemSalir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Exámen Final - Administración de Redes y Seguridad - HOTP - TOTP");
@@ -119,7 +136,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
-        jMenu1.setText("Archivo");
+        menuArchivo.setText("Archivo");
 
         menuItemRegistrar.setText("Registrar Usuario");
         menuItemRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -127,7 +144,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
                 menuItemRegistrarActionPerformed(evt);
             }
         });
-        jMenu1.add(menuItemRegistrar);
+        menuArchivo.add(menuItemRegistrar);
+        menuArchivo.add(separadorRegistrarUsuario);
 
         menuItemIniciar.setText("Iniciar Sesión");
         menuItemIniciar.addActionListener(new java.awt.event.ActionListener() {
@@ -135,39 +153,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
                 menuItemIniciarActionPerformed(evt);
             }
         });
-        jMenu1.add(menuItemIniciar);
-
-        menuItemVerQR.setText("Ver QR");
-        menuItemVerQR.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemVerQRActionPerformed(evt);
-            }
-        });
-        jMenu1.add(menuItemVerQR);
-
-        menuItemActivarA2F.setText("Activar autenticación multifactor");
-        menuItemActivarA2F.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemActivarA2FActionPerformed(evt);
-            }
-        });
-        jMenu1.add(menuItemActivarA2F);
-
-        menuItemDesactivarA2F.setText("Desactivar autenticación multifactor");
-        menuItemDesactivarA2F.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemDesactivarA2FActionPerformed(evt);
-            }
-        });
-        jMenu1.add(menuItemDesactivarA2F);
-
-        menuItemCerrar.setText("Cerrar Sesión");
-        menuItemCerrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemCerrarActionPerformed(evt);
-            }
-        });
-        jMenu1.add(menuItemCerrar);
+        menuArchivo.add(menuItemIniciar);
+        menuArchivo.add(separadorIniciarSesion);
 
         menuItemSalir.setText("Salir");
         menuItemSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -175,9 +162,48 @@ public class PantallaPrincipal extends javax.swing.JFrame {
                 menuItemSalirActionPerformed(evt);
             }
         });
-        jMenu1.add(menuItemSalir);
+        menuArchivo.add(menuItemSalir);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(menuArchivo);
+
+        menuSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/sesion_usuario2.png"))); // NOI18N
+        menuSesion.setText("Iván Parra");
+
+        menuItemVerQR.setText("Ver QR");
+        menuItemVerQR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemVerQRActionPerformed(evt);
+            }
+        });
+        menuSesion.add(menuItemVerQR);
+        menuSesion.add(separadorQR);
+
+        menuItemActivarA2F.setText("Activar autenticación multifactor");
+        menuItemActivarA2F.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemActivarA2FActionPerformed(evt);
+            }
+        });
+        menuSesion.add(menuItemActivarA2F);
+
+        menuItemDesactivarA2F.setText("Desactivar autenticación multifactor");
+        menuItemDesactivarA2F.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemDesactivarA2FActionPerformed(evt);
+            }
+        });
+        menuSesion.add(menuItemDesactivarA2F);
+        menuSesion.add(jSeparator4);
+
+        menuItemCerrar.setText("Cerrar Sesión");
+        menuItemCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemCerrarActionPerformed(evt);
+            }
+        });
+        menuSesion.add(menuItemCerrar);
+
+        jMenuBar1.add(menuSesion);
 
         setJMenuBar(jMenuBar1);
 
@@ -221,6 +247,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
     
     private void itemsCerrar(){
+        menuSesion.setVisible(false);
         menuItemVerQR.setVisible(false);
         menuItemActivarA2F.setVisible(false);
         menuItemDesactivarA2F.setVisible(false);
@@ -228,6 +255,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         menuItemIniciar.setVisible(true);
         menuItemRegistrar.setVisible(true);
         menuItemVerQR.setVisible(false);
+        separadorIniciarSesion.setVisible(true);
+        
     }
     
     private void menuItemDesactivarA2FActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemDesactivarA2FActionPerformed
@@ -247,6 +276,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         menuItemDesactivarA2F.setVisible(false);
         menuItemActivarA2F.setVisible(true);
         menuItemVerQR.setVisible(false);
+        separadorQR.setVisible(false);
     }
     
     private void menuItemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSalirActionPerformed
@@ -259,6 +289,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         menuItemActivarA2F.setVisible(false);
         menuItemDesactivarA2F.setVisible(true);
         menuItemVerQR.setVisible(true);
+        separadorQR.setVisible(true);
     }
     
     
@@ -309,10 +340,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JLabel lblUsuario;
+    private javax.swing.JMenu menuArchivo;
     private javax.swing.JMenuItem menuItemActivarA2F;
     private javax.swing.JMenuItem menuItemCerrar;
     private javax.swing.JMenuItem menuItemDesactivarA2F;
@@ -320,7 +352,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemRegistrar;
     private javax.swing.JMenuItem menuItemSalir;
     private javax.swing.JMenuItem menuItemVerQR;
+    private javax.swing.JMenu menuSesion;
     private javax.swing.JPanel pnlFooter;
+    private javax.swing.JPopupMenu.Separator separadorIniciarSesion;
+    private javax.swing.JPopupMenu.Separator separadorQR;
+    private javax.swing.JPopupMenu.Separator separadorRegistrarUsuario;
     // End of variables declaration//GEN-END:variables
 }
 

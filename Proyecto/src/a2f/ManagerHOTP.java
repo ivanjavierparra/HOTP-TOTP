@@ -1,9 +1,6 @@
 package a2f;
 
-import java.security.GeneralSecurityException;
 import java.util.Scanner;
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 
 /**
  * Clase que permite crear y validar códigos HOTP.

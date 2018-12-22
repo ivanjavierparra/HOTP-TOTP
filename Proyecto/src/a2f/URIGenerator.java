@@ -25,8 +25,8 @@ public abstract class URIGenerator {
      * @return 
      */
     public static final String getQRUrlTOTP(String email, String nombre, String clave_secreta) {
-        String url = "otpauth://totp/%s?secret=%s&issuer=%s";
-        return String.format(url, email, clave_secreta, nombre);
+        String uri = "otpauth://totp/%s?secret=%s&issuer=%s";
+        return String.format(uri, email, clave_secreta, nombre);
     }
         
     
@@ -39,8 +39,8 @@ public abstract class URIGenerator {
      * @return 
      */
     public static final String getQRUrlHOTP(String email, String nombre, String clave_secreta, int contador) {
-        String url = "otpauth://hotp/%s?secret=%s&issuer=%s&counter=%s";
-        return String.format(url, email, clave_secreta, nombre, contador);
+        String uri = "otpauth://hotp/%s?secret=%s&issuer=%s&counter=%s";
+        return String.format(uri, email, clave_secreta, nombre, contador);
     }
 
 
@@ -54,18 +54,18 @@ public abstract class URIGenerator {
      * @return 
      */
     public static final String getQRUrlConfiguracion(String nombre, String secret, Configuracion configuracion){
-        String url="";
+        String uri="";
         String algoritmo = configuracion.getAlgoritmoEncriptacion();
         
         if(configuracion.getTipo().compareToIgnoreCase("HOTP")==0){
-            url = "otpauth://hotp/%s?secret=%s&issuer=%s&counter=%s&algorithm=%s&digits=%s";
-            url = String.format(url,configuracion.getEmail(),secret,nombre,configuracion.getContador_hotp(),algoritmo,configuracion.getDigitos());
+            uri = "otpauth://hotp/%s?secret=%s&issuer=%s&counter=%s&algorithm=%s&digits=%s";
+            uri = String.format(uri,configuracion.getEmail(),secret,nombre,configuracion.getContador_hotp(),algoritmo,configuracion.getDigitos());
         }
         else {
-            url = "otpauth://totp/%s?secret=%s&issuer=%s&algorithm=%s&digits=%s&period=%s";
-            url = String.format(url,configuracion.getEmail(),secret,nombre,algoritmo,configuracion.getDigitos(),configuracion.getTiempo_totp());
+            uri = "otpauth://totp/%s?secret=%s&issuer=%s&algorithm=%s&digits=%s&period=%s";
+            uri = String.format(uri,configuracion.getEmail(),secret,nombre,algoritmo,configuracion.getDigitos(),configuracion.getTiempo_totp());
         }
-        return url;
+        return uri;
     }
 	
         

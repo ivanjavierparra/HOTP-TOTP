@@ -5,7 +5,7 @@
  */
 package vista;
 
-import encriptacion.Hash;
+import encriptacion.HashGenerator;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JOptionPane;
@@ -16,6 +16,8 @@ import modelo.Configuracion;
 import modelo.ManagerConfiguracionDB;
 import modelo.ManagerUsuarioDB;
 import principal.Main;
+import vista.PanelCodigo;
+import vista.PanelLogin;
 
 /**
  *
@@ -137,7 +139,7 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
         }
         
         //encripto password con SHA1
-        String password_encriptado = Hash.getHash(password, "SHA1");
+        String password_encriptado = HashGenerator.getHash(password, "SHA1");
         
         //consultamos a la bd
         ManagerUsuarioDB mdb = new ManagerUsuarioDB();

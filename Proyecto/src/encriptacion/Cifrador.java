@@ -15,7 +15,7 @@ import javax.xml.bind.DatatypeConverter;
  * @author ivanj
  * https://es.stackoverflow.com/questions/54098/que-algoritmo-de-cifrado-se-puede-usar-para-guardar-datos-en-java
  */
-public class MiCipher {
+public class Cifrador {
     public static SecureRandom sr = new SecureRandom();
 
     public static String encriptar(String clave, byte[] iv, String value) {
@@ -47,7 +47,7 @@ public class MiCipher {
     }
 
     /**
-     * 
+     * Test de los métodos de la clase.
      * @param args 
      */
     public static void main(String[] args) {

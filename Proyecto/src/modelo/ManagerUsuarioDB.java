@@ -5,8 +5,6 @@
  */
 package modelo;
 
-import encriptacion.CesarEncrypter;
-import encriptacion.Encrypter;
 import java.sql.*;
 
 /**
@@ -98,12 +96,7 @@ public class ManagerUsuarioDB {
         
     }
     
-    private String desencriptar_password(String clave){
-        //recibo una clave en Base32 y la encripto usando el algoritmo de Cesar
-        Encrypter enc = new CesarEncrypter(clave);
-        return enc.decode();
-    }
-    
+      
     public boolean actualizarA2F(String email, boolean activar){
         boolean exito = true;
         ManagerDB mdb = new ManagerDB();
