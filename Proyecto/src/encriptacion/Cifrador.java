@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package encriptacion;
 
 import java.security.SecureRandom;
@@ -10,14 +5,25 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
+
+
 /**
  *
- * @author ivanj
- * https://es.stackoverflow.com/questions/54098/que-algoritmo-de-cifrado-se-puede-usar-para-guardar-datos-en-java
+ * @author Iván Javier Parra
+ * Ver: https://es.stackoverflow.com/questions/54098/que-algoritmo-de-cifrado-se-puede-usar-para-guardar-datos-en-java
  */
+
+
 public class Cifrador {
     public static SecureRandom sr = new SecureRandom();
 
+    /**
+     * Encripta un mensaje a partir de una clave, con el algoritmo AES.
+     * @param clave
+     * @param iv
+     * @param value
+     * @return 
+     */
     public static String encriptar(String clave, byte[] iv, String value) {
         try {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
@@ -32,6 +38,14 @@ public class Cifrador {
         return null;
     }
 
+    
+    /**
+     * Desencripta una clave, usando la clave.
+     * @param clave
+     * @param iv
+     * @param encriptado
+     * @return 
+     */
     public static String desencriptar(String clave, byte[] iv, String encriptado) {
         try {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
@@ -46,8 +60,9 @@ public class Cifrador {
         return null;
     }
 
+    
     /**
-     * Test de los métodos de la clase.
+     * Test de los métodos de la clase Cifrador.
      * @param args 
      */
     public static void main(String[] args) {

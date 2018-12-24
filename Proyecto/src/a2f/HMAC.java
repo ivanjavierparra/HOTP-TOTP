@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package a2f;
 
 import java.security.GeneralSecurityException;
@@ -22,12 +17,11 @@ public class HMAC {
     
     
     /**
-         * This method uses the JCE to provide the crypto algorithm.
-         * HMAC computes a Hashed Message Authentication Code with the
-         * crypto hash algorithm that is in the variable "algoritmo".
-         * @param key: the bytes to use for the HMAC key.
-         * @param text: the message or text to be authenticated.
-         * @return the Hmac as byte[].
+         * HMAC computa una MAC con la función hash
+         * que está en el atributo "algoritmo".
+         * @param key: representa la clave secreta.
+         * @param text: representa el mensaje a ser autenticado.
+         * @return el HMAC como arreglo de bytes.
     */
     public byte[] getShaHash(byte[] key, byte[] text) {
             try {

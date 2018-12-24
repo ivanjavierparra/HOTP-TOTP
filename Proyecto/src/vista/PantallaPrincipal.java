@@ -1,10 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista;
-
 
 import java.awt.Dimension;
 import java.awt.Image;
@@ -18,20 +12,18 @@ import principal.Main;
 
 /**
  *
- * @author ivancho
+ * @author Iván Javier Parra
  */
+
 public class PantallaPrincipal extends javax.swing.JFrame {
 
     
-    
-    /**
-     * Creates new form PantallaPrincipal
-     */
     public PantallaPrincipal() {
         initComponents();
         inicializarFrame();
     }
 
+    
     private void inicializarFrame(){
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         int width = pantalla.width;
@@ -42,6 +34,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         this.lblUsuario.setVisible(false);
         itemsInicializar();
     }
+    
     
     private void itemsInicializar(){
         jMenuBar1.add(Box.createHorizontalGlue());
@@ -54,6 +47,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         menuItemCerrar.setVisible(false);
     }
 
+    
     public void mostrarSesion(){
         this.lblUsuario.setText("Bienvenid@ " + Main.usuario.getNombre() + "!");
         
@@ -75,9 +69,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         this.lblUsuario.setVisible(true);
     }
 
-    
-    
-    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -259,6 +250,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         
     }
     
+    
     private void menuItemDesactivarA2FActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemDesactivarA2FActionPerformed
         // TODO add your handling code here:
         ManagerUsuarioDB mudb = new ManagerUsuarioDB();
@@ -279,6 +271,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         separadorQR.setVisible(false);
     }
     
+    
     private void menuItemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSalirActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(this,"Chau!","Mensaje",JOptionPane.INFORMATION_MESSAGE);
@@ -298,9 +291,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         Image retValue = Toolkit.getDefaultToolkit().
                 getImage(ClassLoader.getSystemResource("imagenes/icono2.png"));
 
-
         return retValue;
     }
+    
     
     /**
      * @param args the command line arguments
@@ -360,4 +353,3 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 }
 
-//dialog = new dialog

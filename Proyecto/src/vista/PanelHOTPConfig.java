@@ -1,33 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista;
 
 import javax.swing.ButtonGroup;
 
 /**
  *
- * @author ivancho
+ * @author Iván Javier Parra
  */
+
 public class PanelHOTPConfig extends javax.swing.JPanel {
 
-    /**
-     * Creates new form PanelCodigo
-     */
+    
     public PanelHOTPConfig() {
         initComponents();
         inicializarPanel();
     }
 
+    
     private void inicializarPanel(){
        ButtonGroup grupo = new ButtonGroup();
        grupo.add(rbtnSHA1);
        grupo.add(rbtnSHA256);
        grupo.add(rbtnSHA512);
        rbtnSHA1.setSelected(true);
-   }
+    }
+    
     
     public String getAlgoritmo(){
         if(rbtnSHA1.isSelected())return "HmacSHA1";
@@ -35,13 +31,16 @@ public class PanelHOTPConfig extends javax.swing.JPanel {
         else return "HmacSHA512";
     }
    
+    
     public int getDigitos(){
         return (Integer) spnDigitos.getValue();
     }
     
+    
     public int getContador(){
         return (Integer) spnContador.getValue();
     }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.

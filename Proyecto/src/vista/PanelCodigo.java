@@ -1,23 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista;
 
 /**
  *
- * @author ivancho
+ * @author Iván Javier Parra
  */
+
 public class PanelCodigo extends javax.swing.JPanel {
 
-    /**
-     * Creates new form PanelCodigo
-     */
+    
     public PanelCodigo() {
         initComponents();
     }
 
+    
     public void setFocusCodigo(){
         txtCodigo.requestFocus();
     }
@@ -27,10 +22,12 @@ public class PanelCodigo extends javax.swing.JPanel {
         return txtCodigo.getText();
     }
     
+    
     public String validarTxt(){
         if(txtCodigo.getText().compareToIgnoreCase("")==0) return "Debe ingresar el código";
         else return "";
     }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.

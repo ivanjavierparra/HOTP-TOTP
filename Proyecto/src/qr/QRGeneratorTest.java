@@ -1,41 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package qr;
 
-import com.google.zxing.BinaryBitmap;
-import com.google.zxing.LuminanceSource;
-import com.google.zxing.Result;
-import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
-import com.google.zxing.common.HybridBinarizer;
-import com.google.zxing.qrcode.QRCodeReader;
 import com.google.zxing.qrcode.QRCodeWriter;
- 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
  
 /**
- *
- * @author ivanj
+ * Clase de Testing para la clase QRGenerator.
+ * @author Iván Javier Parra
  */
 public class QRGeneratorTest extends javax.swing.JFrame {
 
-    /**
-     * Creates new form GeneradorQR
-     */
+    
     public QRGeneratorTest() {
         initComponents();
         jMenuBar1.add(Box.createHorizontalGlue());
@@ -43,6 +23,7 @@ public class QRGeneratorTest extends javax.swing.JFrame {
 
         agregarGrafico();
     }
+    
     
     private void agregarGrafico(){
         try {
@@ -92,6 +73,7 @@ public class QRGeneratorTest extends javax.swing.JFrame {
         }
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

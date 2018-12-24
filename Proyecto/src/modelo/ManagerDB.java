@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo;
 
 import java.sql.Connection;
@@ -10,13 +5,20 @@ import java.sql.DriverManager;
 
 
 /**
- *
- * @author ivancho
+ * Clase que permite conectarse y desconectarse de una BD.
+ * @author Iván Javier Parra
  */
+
 public class ManagerDB {
+    
     private Connection conexion;
     private String mensaje_error;
     
+    
+    /**
+     * Permite conectarse a una BD PostgreSQL.
+     * @return un String que contiene el resultado de la operación.
+     */
     public String establecerConexion(){
         if (conexion != null)return "";
         String url = "jdbc:postgresql://localhost:5432/logina2f";
@@ -37,6 +39,7 @@ public class ManagerDB {
     }
     
     
+    /* Cierra la conexión a una BD. */
     public void cerrarConexion()
       {
           try
@@ -49,22 +52,28 @@ public class ManagerDB {
           }
       }
 
+    
     public Connection getConexion() {
         return conexion;
     }
 
+    
     public void setConexion(Connection conexion) {
         this.conexion = conexion;
     }
 
+    
     public String getMensaje_error() {
         return mensaje_error;
     }
 
+    
     public void setMensaje_error(String mensaje_error) {
         this.mensaje_error = mensaje_error;
     }
     
+    
+    /* Prueba los métodos de la clase ManagerDB */
     public static void main(String [] args) {
         ManagerDB mdb = new ManagerDB();
         String mje = mdb.establecerConexion();

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista;
 
 import encriptacion.HashGenerator;
@@ -16,20 +11,19 @@ import modelo.Configuracion;
 import modelo.ManagerConfiguracionDB;
 import modelo.ManagerUsuarioDB;
 import principal.Main;
-import vista.PanelCodigo;
-import vista.PanelLogin;
+
 
 /**
  *
- * @author ivancho
+ * @author Iván Javier Parra
  */
+
 public class DialogIniciarSesion extends javax.swing.JDialog {
     GridBagLayout layout = new GridBagLayout();
     PanelLogin panelLogin;
     PanelCodigo panelCodigo;
-    /**
-     * Creates new form NewJDialog
-     */
+    
+    
     public DialogIniciarSesion(javax.swing.JFrame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -57,6 +51,7 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
         
         this.setLocationRelativeTo(null);
     }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -161,11 +156,13 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
         
     }
     
+    
     private void iniciarSesion(){
         JOptionPane.showMessageDialog(this,"Inicio de Sesión correcto!","Mensaje",JOptionPane.INFORMATION_MESSAGE);
         Main.pantallaPrincipal.mostrarSesion();
         this.dispose();
     }
+    
     
     private void validarCodigo(){
         // Obtenemos el código ingresado por el usuario.
@@ -206,8 +203,6 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
             if(valid==-1) bloquearCuenta(valid);
             else iniciarSesion();
             
-            
-            
         }
         else{ // El usuario ha elegido TOTP.
             ManagerTOTP manager = new ManagerTOTP();
@@ -216,13 +211,10 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
             
                     //... manager = new ManagerTOTP(configuracion.getAlgoritmo(),configuracion.getDigitos(),configuracion.getTiempo_totp());
                     
-            
             // Validamos.
             boolean valid = manager.validar(secreto, codigo);
             if(!valid)JOptionPane.showMessageDialog(this,"Código incorrecto.","Error", JOptionPane.ERROR_MESSAGE);
             else iniciarSesion();
-                
-            
         }
     }
     
@@ -237,9 +229,6 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
         ManagerConfiguracionDB mcdb = new ManagerConfiguracionDB();
         mcdb.actualizarRegistro(Main.usuario.getEmail(), counter);
     }
-    
-    
-    
     
     
     /**

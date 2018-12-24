@@ -1,40 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista;
 
-import java.awt.Image;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import qr.QRGenerator;
-import static sun.applet.AppletResourceLoader.getImage;
 import a2f.URIGenerator;
 import modelo.Configuracion;
 import modelo.ManagerConfiguracionDB;
-import modelo.ManagerUsuarioDB;
-import modelo.Usuario;
 import principal.Main;
-//import totp.ui.MostrarQR;
-//import totp.ui.PantallaPrincipal;
+
 
 /**
  *
- * @author ivancho
+ * @author Iván Javier Parra
  */
+
 public class PanelQR extends javax.swing.JPanel {
 
-    /**
-     * Creates new form PanelQR
-     */
+    
     public PanelQR() {
         initComponents();
         mostrarQR();
     }
+    
     
     public PanelQR(Configuracion configuracion){
         initComponents();
@@ -74,8 +60,6 @@ public class PanelQR extends javax.swing.JPanel {
     }
     
     
-    
-    
     /**
      * Genera un QR con todos los parámetros de configuración, aunque algunos de ellos no son reconocidos por Google Authenticator ni por DUO.
      * @param configuracion 
@@ -95,15 +79,6 @@ public class PanelQR extends javax.swing.JPanel {
         txtClaveSecreta.setText(Main.usuario.getClave_secreta());
         
     }
-    
-    
-    
-    
-    
-    
-    
-
-
     
     
     @SuppressWarnings("unchecked")

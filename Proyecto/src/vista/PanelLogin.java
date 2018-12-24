@@ -1,40 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista;
 
 /**
  *
- * @author ivancho
+ * @author Iván Javier Parra
  */
 public class PanelLogin extends javax.swing.JPanel {
 
-    /**
-     * Creates new form PanelLogin
-     */
+    
     public PanelLogin() {
         initComponents();
     }
 
     
-    
-    
     public String getEmail(){
         return txtEmail.getText();
     }
     
+    
     public String getPassword(){
         return txtPassword.getText();
     }
+    
     
     public String validarTxt(){
         if(txtEmail.getText().compareToIgnoreCase("")==0)return "Debe ingresar el email.";
         else if(txtPassword.getText().compareToIgnoreCase("")==0)return "Debe ingresar el password";
         else return "";
     }
-    
     
     
     /**

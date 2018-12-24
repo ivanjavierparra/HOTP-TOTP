@@ -1,15 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package encriptacion;
 
 /**
- *
- * @author Asus
+ * Clase que genera hash a partir de la función hash pasada 
+ * como parámetro.
+ * @author Iván Javier Parra
  */
+
+
 public class HashGenerator {
+    
+    
     /**
      * Retorna un hash a partir de un tipo y un texto.
      * @param txt
@@ -31,22 +31,26 @@ public class HashGenerator {
         return null;
     }
  
+    
     /* Retorna un hash MD5 a partir de un texto */
     public static String md5(String txt) {
         return HashGenerator.getHash(txt, "MD5");
     }
  
+    
     /* Retorna un hash SHA1 a partir de un texto */
     public static String sha1(String txt) {
         return HashGenerator.getHash(txt, "SHA1");
     }
+    
     
     public static boolean compararHash(String hash_1, String hash_2) {
         if(hash_1.equals(hash_2)) return true;
         return false;
     }
     
-    /* Prueba */
+    
+    /* Prueba los métodos de la clase HashGenerator */
     public static void main(String[] args){
         System.out.println(HashGenerator.md5("Hola Mundo!"));
         String a = HashGenerator.md5("Hola Mundo!");

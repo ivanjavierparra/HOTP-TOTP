@@ -6,15 +6,16 @@ import java.util.Scanner;
 /**
  * Clase que permite crear y validar códigos TOTP.
  * 
- * @author ivancho
+ * @author Iván Javier Parra
  *
  */
 
 
-
-
 public class ManagerTOTP {
-
+            
+                    /* ********** INICIO CONSTANTES ********** */
+                    /* --------------------------------------- */
+    
         /**
          * Esto es el mod_divisor, es decir, si mi código es de 6 caracteres, elijo el 6 (1000000).
          * Ver: https://github.com/jchambers/java-otp/blob/master/src/main/java/com/eatthepath/otp/HmacOneTimePasswordGenerator.java    
@@ -24,24 +25,19 @@ public class ManagerTOTP {
         = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000};
 
     
-    
         /**
-         * Algoritmo por defecto (Compatible con Google Authenticator).
+         * Algoritmo HMAC por defecto.
          * En este caso el algoritmo por defecto es HmacSHA1.
-         * The crypto algorithm (HmacSHA1, HmacSHA256, HmacSHA512).
+         * Algoritmos disponibles: { HmacSHA1, HmacSHA256, HmacSHA512 }.
          */
         public static final String DEFAULT_ALGORITHM = "HmacSHA1";
 
     
-    
-
         /**
          * Intervalo de tiempo por defecto (en segundos) durante el cuál la clave será válida.
          */
         public static final int DEFAULT_INTERVAL = 30;
 	
-    
-    
     
         /**
          * Default time interval steps to check into past for validity. 
@@ -84,13 +80,11 @@ public class ManagerTOTP {
 	
     
     
-    
 	/**
 	 * Número de dígitos del código TOTP.     
 	 */
 	public static final int DEFAULT_LENGTH = 6;
 	
-        
         
 	/**
 	 * Default time 0 for the interval
@@ -98,8 +92,14 @@ public class ManagerTOTP {
 	public static final int DEFAULT_T0 = 0;
         
         
-        
+                    /* *********** FIN CONSTANTES ************ */
+                    /* --------------------------------------- */
 	
+        
+        
+        
+                    /* ********** INICIO VARIABLES ********** */
+                    /* --------------------------------------- */
 	
         private final String algoritmo;
 	
@@ -112,16 +112,21 @@ public class ManagerTOTP {
 	private final int t0;
 	
 	
+                    /* ************* FIN VARIABLES ********** */
+                    /* --------------------------------------- */
+    
+    
+                    /* ************* INICIO CONSTRUCTORES ********** */
+                    /* --------------------------------------------- */
         
         /**
-	 * Crea una instancia TOTP por defecto que es compatible con Google Authenticator.
+	 * Crea una instancia TOTP por defecto.
 	 */
 	public ManagerTOTP() {
 		this(DEFAULT_ALGORITHM, DEFAULT_INTERVAL, DEFAULT_LENGTH, DEFAULT_STEPS, DEFAULT_T0);
 	}
 	
         
-	
         /**
          * Crea una instancia TOTP con algortimo e intervalo propios.
          * 
@@ -133,7 +138,6 @@ public class ManagerTOTP {
 	}
 	
                 
-        
 	/**
 	 * Crea una instancia TOTP con intervalo de tiempo propio.
 	 * 
@@ -143,8 +147,6 @@ public class ManagerTOTP {
 		this(DEFAULT_ALGORITHM, intervalo, DEFAULT_LENGTH, DEFAULT_STEPS, DEFAULT_T0);
 	}
 
-        
-        
         
 	/**
          * Crea una instancia TOTP con intervalo de tiempo propio, longitud de còdigo y steps.
@@ -158,7 +160,6 @@ public class ManagerTOTP {
 	}
 	
               
-        
 	/**
 	 * Crea una instancia TOTP con configuración propia.
          * 
@@ -181,6 +182,7 @@ public class ManagerTOTP {
 		}
 	}
 	
+        
         /**
          * Crea una instancia TOTP con configuración propia: cantidad de digitos y periodo.
          * @param algoritmo
@@ -199,7 +201,11 @@ public class ManagerTOTP {
 		}
         }
         
+        
+                    /* ************* FIN CONSTRUCTORES ********** */
+                    /* ------------------------------------------ */
                
+        
         
 	/**
 	 * @return el algoritmo usado.
@@ -208,6 +214,7 @@ public class ManagerTOTP {
 		return algoritmo;
 	}
 	
+        
 	/**
 	 * @return el intervalo de tiempo usado.
 	 */
@@ -215,6 +222,7 @@ public class ManagerTOTP {
 		return intervaloTiempo;
 	}
 	
+        
 	/**
 	 * @return la longitud del código usada.
 	 */
@@ -222,13 +230,15 @@ public class ManagerTOTP {
 		return longitudCodigo;
 	}
 	
+        
 	/**
-	 * @return the steps being used
+	 * @return el steps que está siendo usado.
 	 */
 	public int getSteps() {
 		return steps;
 	}
 	
+        
 	/**
 	 * @return the time 0 to be used for interval
 	 */
@@ -237,9 +247,6 @@ public class ManagerTOTP {
 	}
 	
        
-                
-        
-        
 	/**
 	 * Genera el código TOTP para el intervalo de tiempo actual.
          * 
@@ -251,7 +258,6 @@ public class ManagerTOTP {
 		return generarOTP(secreto, getCurrentTimeInterval());
 	}
 	
-        
         
 	/**
 	 * Genera el código TOTP para el tiempo dado.
@@ -266,7 +272,6 @@ public class ManagerTOTP {
 	}
 	
         
-        
 	/**
 	 * Valida el código TOTP para el intervalo de tiempo actual.
 	 * 
@@ -279,7 +284,6 @@ public class ManagerTOTP {
 		return validar(secreto, codigo, System.currentTimeMillis());
 	}
 	
-        
         
 	/**
 	 * Valida el código TOTP para el intervalo de tiempo actual.
@@ -304,9 +308,6 @@ public class ManagerTOTP {
 		return false;
 	}
 	
-        
-        
-        
         
 	/**
 	 * Genera el código TOTP para el intervalo de tiempo pasado como parámetro.
@@ -338,7 +339,6 @@ public class ManagerTOTP {
 	}
 	
         
-        
         /**
          * Genera el código TOTP a partir de "secreto" y "intervalo_tiempo" y lo compara con "codigo".
          * 
@@ -352,11 +352,6 @@ public class ManagerTOTP {
 		return hash.equals(codigo);
 	}
 	
-        
-        
-	
-	
-        
         
         /**
          * Esta fórmula surge de RFC 6238. 
@@ -372,7 +367,6 @@ public class ManagerTOTP {
 	}
 	
 	
-        
         /**
          * Devuelve el intervalo de tiempo actual en segundos.
          * @return tiempo actual en segundos.
@@ -382,78 +376,73 @@ public class ManagerTOTP {
 	}
 	
         
-        
-        
-        
         /**
          * Se testean los métodos de la clase TOTPManager. 
-         * @param args 
          */
         public static void main(String[] args) {
         
-        // Genero una instancia de TOTP.
-        ManagerTOTP manager = new ManagerTOTP();
-        
-        // Creo la clave secreta.
-        byte[] secreto = SecretGenerator.generar();
-        
-        // Genero el Google Authenticator QR Code
-        String secretoCodificado = SecretGenerator.toBase32(secreto);
-        String qr = URIGenerator.getQRUrlTOTP("alissa", "example.com", secretoCodificado);
-        System.out.println(qr); //Imprime el enlace al codigo QR.
-        //NOTA: Copiando el "encoded" que aparece en el QR, lo ponemos todo en 
-        //minuscula en google authenticator manualmente y funciona, sin tener que 
-        //leer el QR.
-        //http://www.asaph.org/2016/04/google-authenticator-2fa-java.html
-        
-        
-        
-        // Creo el Menú.
-        int opcion = 0;
-        String codigo = "";
-        
-        Scanner scanner = new Scanner(System.in);
-        do{
-            System.out.println("1.Ingresar codigo.");
-            System.out.println("2.Ver time.");
-            System.out.println("3.Salir.");
-            opcion = scanner.nextInt();
-            switch(opcion){
-                case 1:{
-                    System.out.println(qr); //Imprime el enlace al codigo QR.
+            // Genero una instancia de TOTP.
+            ManagerTOTP manager = new ManagerTOTP();
 
-                    // itero hasta que el código tenga un valor.
-                    while(codigo.compareToIgnoreCase("")==0){
-                        System.out.println("Codigo: ");
-                        codigo = scanner.nextLine();
+            // Creo la clave secreta.
+            byte[] secreto = SecretGenerator.generar();
+
+            // Genero el QR Code
+            String secretoCodificado = SecretGenerator.toBase32(secreto);
+            String qr = URIGenerator.getQRUrlTOTP("alissa", "example.com", secretoCodificado);
+            System.out.println(qr); //Imprime el enlace al codigo QR.
+            //NOTA: Copiando el "encoded" que aparece en el QR, lo ponemos todo en 
+            //minuscula en google authenticator manualmente y funciona, sin tener que 
+            //leer el QR.
+            //http://www.asaph.org/2016/04/google-authenticator-2fa-java.html
+        
+        
+            // Creo el Menú.
+            int opcion = 0;
+            String codigo = "";
+
+            Scanner scanner = new Scanner(System.in);
+            do{
+                System.out.println("1.Ingresar codigo.");
+                System.out.println("2.Ver time.");
+                System.out.println("3.Salir.");
+                opcion = scanner.nextInt();
+                switch(opcion){
+                    case 1:{
+                        System.out.println(qr); //Imprime el enlace al codigo QR.
+
+                        // itero hasta que el código tenga un valor.
+                        while(codigo.compareToIgnoreCase("")==0){
+                            System.out.println("Codigo: ");
+                            codigo = scanner.nextLine();
+                        }
+
+                        // Valido si el código es correcto.
+                        boolean valid = manager.validar(secreto, codigo);
+                        if(valid)System.out.println("exito!");
+                        else System.out.println("fracaso!");
+
+                        codigo = "";
+                        break;
                     }
-                    
-                    // Valido si el código es correcto.
-                    boolean valid = manager.validar(secreto, codigo);
-                    if(valid)System.out.println("exito!");
-                    else System.out.println("fracaso!");
-                    
-                    codigo = "";
-                    break;
+                    case 2:{
+                        long time = (System.currentTimeMillis()/1000)/30;
+                        System.out.println(""+time);
+                        break;
+                    }
+                    case 3:{
+                        System.out.println("Chau.");
+                        byte[] secret = SecretGenerator.generar(SecretGenerator.Size.LARGE);
+                        String secretC = SecretGenerator.toBase32(secret);
+                        System.out.println(secretC);
+                        break;
+                    }
+                    default:{
+                        System.out.println("Opcion incorrecta.");
+                        break;
+                    }
                 }
-                case 2:{
-                    long time = (System.currentTimeMillis()/1000)/30;
-                    System.out.println(""+time);
-                    break;
-                }
-                case 3:{
-                    System.out.println("Chau.");
-                    byte[] secret = SecretGenerator.generar(SecretGenerator.Size.LARGE);
-                    String secretC = SecretGenerator.toBase32(secret);
-                    System.out.println(secretC);
-                    break;
-                }
-                default:{
-                    System.out.println("Opcion incorrecta.");
-                    break;
-                }
-            }
-        }while(opcion != 3);
+            }while(opcion != 3);
     }
         
         

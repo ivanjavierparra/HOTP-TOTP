@@ -9,7 +9,7 @@ import org.apache.commons.codec.binary.Base32;
 /**
  * Clase que genera claves secretas para HOTP y TOTP.
  * 
- * @author ivancho
+ * @author Iván Javier Parra
  */
 
 
@@ -34,7 +34,6 @@ public abstract class SecretGenerator {
 	}
 	
 	
-        
         /**
 	 * Genera una clave secreta aleatoria de 20 bytes.
          * 
@@ -44,8 +43,6 @@ public abstract class SecretGenerator {
 		return generar(Size.DEFAULT);
 	}
 	
-        
-        
         
 	/**
 	 * Genera una clave secreta aleatoria cuyo tamaño es pasado por paràmetro.
@@ -60,7 +57,6 @@ public abstract class SecretGenerator {
 	
         
         
-        
 	/**
 	 * Codifica la clave secreta a Base32.
          * 
@@ -72,7 +68,6 @@ public abstract class SecretGenerator {
 		return new String(new Base32().encode(claveSecreta));
 	}
 	
-        
         
 	/**
 	 * Decodifica la clave secreta que está en Base32 a bytes.
@@ -86,7 +81,6 @@ public abstract class SecretGenerator {
 	}
 	
         
-        
         /**
          * Codifica la clave secreta que esta en Byte[] a Hexa.
          * @param claveSecreta
@@ -97,23 +91,21 @@ public abstract class SecretGenerator {
 	}
 	
         
-        
-        
         /**
          * Decodifica la clave secreta que está en Hexa a Byte[].
          * @param hex
          * @return 
          */
 	public static final byte[] fromHex(String hex) {
-		// Adding one byte to get the right conversion
-        // Values starting with "0" can be converted
-        byte[] bArray = new BigInteger("10" + hex,16).toByteArray();
+            // Adding one byte to get the right conversion
+            // Values starting with "0" can be converted
+            byte[] bArray = new BigInteger("10" + hex,16).toByteArray();
 
-        // Copy all the REAL bytes, not the "first"
-        byte[] ret = new byte[bArray.length - 1];
-        for (int i = 0; i < ret.length; i++)
-            ret[i] = bArray[i+1];
-        return ret;
+            // Copy all the REAL bytes, not the "first"
+            byte[] ret = new byte[bArray.length - 1];
+            for (int i = 0; i < ret.length; i++)
+                ret[i] = bArray[i+1];
+            return ret;
 	}
 	
 }

@@ -1,25 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo;
 
 import java.sql.*;
 
 /**
- *
- * @author ivancho
+ * Esta clase permite manejar objetos Usuario sobre una BD.
+ * @author Iván Javier Parra
  */
+
 public class ManagerUsuarioDB {
+   
     private Statement st;
     private String mensaje_error;
     
    
-    
-    
+    /**
+     * Almacena un objeto Usuario en la BD.
+     * @param nombre
+     * @param email
+     * @param password
+     * @param clavesecreta
+     * @return True si la transacción fue exitosa, False sino.
+     */
     public boolean insertarRegistro(String nombre,String email,String password,String clavesecreta){
-        
         
         ManagerDB mdb = new ManagerDB();
         mensaje_error = mdb.establecerConexion();
@@ -47,14 +49,20 @@ public class ManagerUsuarioDB {
 
         mdb.cerrarConexion();
         
-        
-
         return true;
         
     }
     
     
+    /**
+     * Busca en la tabla "usuario" el usuario con email
+     * pasado como parámetro.
+     * @param email
+     * @param password
+     * @return 
+     */
     public Usuario consultarRegistro(String email,String password){
+      
         Usuario usuario = new Usuario();
         ManagerDB mdb = new ManagerDB();
         mensaje_error = mdb.establecerConexion();
@@ -97,6 +105,13 @@ public class ManagerUsuarioDB {
     }
     
       
+    /**
+     * Actualiza el campo a2f del registro con email especifícado 
+     * por parámetro en la tabla "usuario".
+     * @param email
+     * @param activar
+     * @return True si se pudo ejecutar la transacción, False sino.
+     */
     public boolean actualizarA2F(String email, boolean activar){
         boolean exito = true;
         ManagerDB mdb = new ManagerDB();
@@ -122,24 +137,17 @@ public class ManagerUsuarioDB {
     }
     
     
-    
-    
-    
-    
-    
-    
-
     public String getMensaje_error() {
         return mensaje_error;
     }
 
+    
     public void setMensaje_error(String mensaje_error) {
         this.mensaje_error = mensaje_error;
     }
     
     
-    
-    
+    /* Test de los métodos de la clase ManagerUsuarioDB */
     public static void main(String[] args) {
         ManagerUsuarioDB mdb_usuario = new ManagerUsuarioDB();
         mdb_usuario.insertarRegistro("pappo","pappo@mail.com","1234","111111");

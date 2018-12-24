@@ -1,33 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import javax.swing.JOptionPane;
-import principal.Main;
-import vista.PanelQR;
+
 
 /**
  *
- * @author ivancho
+ * @author Iván Javier Parra
  */
+
 public class DialogClaveSecreta extends javax.swing.JDialog {
     GridBagLayout layout = new GridBagLayout();
     PanelQR panelQR;
 
-    /**
-     * Creates new form NewJDialog
-     */
+    
     public DialogClaveSecreta(javax.swing.JFrame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         inicializarDialog();
     }
 
+    
     private void inicializarDialog(){
         panelQR = new PanelQR();
         pnlBody.setLayout(layout);
@@ -39,8 +32,6 @@ public class DialogClaveSecreta extends javax.swing.JDialog {
         
         this.setLocationRelativeTo(null);
     }
-    
-    
     
     
     /**

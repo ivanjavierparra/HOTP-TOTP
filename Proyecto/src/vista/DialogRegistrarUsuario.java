@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista;
 
 
@@ -13,18 +8,18 @@ import modelo.ManagerUsuarioDB;
 
 /**
  *
- * @author ivancho
+ * @author Iván Javier Parra
  */
 public class DialogRegistrarUsuario extends javax.swing.JDialog {
-    /**
-     * Creates new form NewJDialog
-     */
+    
+    
     public DialogRegistrarUsuario(javax.swing.JFrame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         inicializarDialog();
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -187,6 +182,7 @@ public class DialogRegistrarUsuario extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
     }
     
+    
     /**
      * Se regitra un usuario.
      * @param evt 
@@ -204,7 +200,6 @@ public class DialogRegistrarUsuario extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this,mensaje_validacion,"Mensaje",JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        
         
         //Obtenemos secret key para la validación 2af.
         String clave_secreta = obtenerClaveSecreta();
@@ -255,12 +250,6 @@ public class DialogRegistrarUsuario extends javax.swing.JDialog {
     }
     
     
-    
-    
-    
-    
-    
-    
     private String validarTxt(){
         if(txtNombre.getText().compareToIgnoreCase("")==0)return "Debe ingresar el nombre.";
         else if(txtEmail.getText().compareToIgnoreCase("")==0)return "Debe ingresar el email.";
@@ -270,10 +259,6 @@ public class DialogRegistrarUsuario extends javax.swing.JDialog {
         }
         return "";
     }
-    
-    
-    
-    
     
     
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package qr;
 
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -12,18 +7,21 @@ import java.io.ByteArrayOutputStream;
 
 /**
  *
- * @author ivanj
+ * @author Iván Javier Parra
  */
 public class QRGenerator {
+    
     private String texto;
     private int ancho;
     private int alto;
+    
     
     public QRGenerator(String texto, int ancho, int alto){
         this.texto = texto;
         this.ancho = ancho;
         this.alto = alto;
     }
+    
     
     /**
      * Método que utiliza la librería zxing para generar un código qr.

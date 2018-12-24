@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista;
 
 import java.awt.GridBagConstraints;
@@ -12,31 +7,27 @@ import modelo.Configuracion;
 import modelo.ManagerConfiguracionDB;
 import modelo.ManagerUsuarioDB;
 import principal.Main;
-import vista.PanelEleccion;
-import vista.PanelHOTPConfig;
-import vista.PanelQR;
-import vista.PanelTOTPConfig;
+
 
 /**
  *
- * @author ivancho
+ * @author Ivan Javier Parra
  */
+
 public class Dialog2AF extends javax.swing.JDialog {
     GridBagLayout layout = new GridBagLayout();
     PanelEleccion panelEleccion;
     PanelHOTPConfig panelHOTPConfig;
     PanelTOTPConfig panelTOTPConfig;
     PanelQR panelQR;
-    /**
-     * Creates new form NewJDialog
-     */
+    
+    
     public Dialog2AF(javax.swing.JFrame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         inicializarDialog();
     }
 
-    
     
     private void inicializarDialog(){
         panelEleccion = new PanelEleccion();
@@ -63,8 +54,6 @@ public class Dialog2AF extends javax.swing.JDialog {
         panelQR.setVisible(false);
         this.setLocationRelativeTo(null);
     }
-    
-    
     
     
     /**
@@ -150,7 +139,6 @@ public class Dialog2AF extends javax.swing.JDialog {
         int digitos = panelHOTPConfig.getDigitos();
         int contador = panelHOTPConfig.getContador();
         
-        
         insertarConfiguracion(Main.usuario.getEmail(),algoritmo,"HOTP",digitos,contador,0);
         
     }
@@ -166,13 +154,10 @@ public class Dialog2AF extends javax.swing.JDialog {
     }
     
     
-    
     private void insertarConfiguracion(String email, String algoritmo, String tipo, int digitos, int contador, int tiempo ){
         Configuracion configuracion = new Configuracion(email,algoritmo,tipo,digitos,contador,tiempo);
         ManagerConfiguracionDB mcdb = new ManagerConfiguracionDB();
         boolean exito = mcdb.insertarRegistro(configuracion);
-        
-        
         
         if (!exito){
             JOptionPane.showMessageDialog(this,"Fallo la inserción en la BD","Error en la BD", JOptionPane.ERROR_MESSAGE);
@@ -193,8 +178,10 @@ public class Dialog2AF extends javax.swing.JDialog {
     
     
     private void actualizarA2Fusuario(){
+        
         ManagerUsuarioDB mudb = new ManagerUsuarioDB();
         mudb.actualizarA2F(Main.usuario.getEmail(), true);
+        
     }
     
     

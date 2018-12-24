@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo;
 
 import java.sql.ResultSet;
@@ -10,15 +5,23 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- *
- * @author ivancho
+ * Esta clase permite manejar objetos Configuracion sobre una BD.
+ * @author Iván Javier Parra
  */
+
 public class ManagerConfiguracionDB {
+
+
     private Statement st;
     private String mensaje_error;
     
-    
-    
+
+    /**
+     * Busca en la tabla "configuraciona2f" la configuracion que
+     * tenga el email pasado como parámetro.
+     * @param email
+     * @return un objeto Configuracion.
+     */
     public Configuracion consultarRegistro(String email){
         Configuracion configuracion = new Configuracion();
         ManagerDB mdb = new ManagerDB();
@@ -62,8 +65,12 @@ public class ManagerConfiguracionDB {
     }
     
     
-    
-    
+    /**
+     * Actualiza el contador de una configuracion en la BD.
+     * @param email
+     * @param contador
+     * @return True si se pudo ejecutar la transacción, False sino.
+     */
     public boolean actualizarRegistro(String email, int contador){
         boolean exito = true;
         ManagerDB mdb = new ManagerDB();
@@ -88,8 +95,12 @@ public class ManagerConfiguracionDB {
     }
     
     
+    /**
+     * Almacena un objeto Configuración en la BD.
+     * @param configuracion
+     * @return True si la transacción fue exitosa, False sino.
+     */
     public boolean insertarRegistro(Configuracion configuracion){
-        
         
         ManagerDB mdb = new ManagerDB();
         mensaje_error = mdb.establecerConexion();
@@ -113,12 +124,15 @@ public class ManagerConfiguracionDB {
         mdb.cerrarConexion();
         
         
-
         return true;
     }
     
     
-    
+    /**
+     * Elimina una configuración en la BD a partir del email.
+     * @param email
+     * @return True si la transacción fue exitosa, False sino.
+     */
     public boolean eliminarRegistro(String email){
         ManagerDB mdb = new ManagerDB();
         mensaje_error = mdb.establecerConexion();
@@ -142,12 +156,14 @@ public class ManagerConfiguracionDB {
         mdb.cerrarConexion();
         
         
-
         return true;
     }
     
     
-    
+    /**
+     * Prueba los métodos de la clase ManagerConfiguracionDB
+     * @param args 
+     */
     public static void main(String[] args) {
         ManagerConfiguracionDB mcdb = new ManagerConfiguracionDB();
         //mcdb.actualizarRegistro("kari@mail.com", 3);

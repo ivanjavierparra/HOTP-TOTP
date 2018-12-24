@@ -9,13 +9,19 @@ import java.util.Scanner;
  *      https://github.com/picketbox/picketbox/blob/master/security-spi/spi/src/main/java/org/jboss/security/otp/HOTP.java
  *      https://github.com/johnnymongiat/oath/blob/master/oath-otp/src/main/java/com/lochbridge/oath/otp/HOTPBuilder.java
  *      https://github.com/link-nv/oath/blob/master/src/main/java/net/link/oath/HOTP.java
- * Ejemplo funcionando: http://asecuritysite.com/encryption/hotp
  * 
- * @author ivancho
+ * Ejemplo funcionando: 
+ *      http://asecuritysite.com/encryption/hotp
+ * 
+ * @author Iván Javier Parra
  */
 
 
 public class ManagerHOTP {
+    
+    
+                    /* ********** INICIO CONSTANTES ********** */
+                    /* --------------------------------------- */
     
     /**
      * Usado para calcular el checksum.
@@ -23,38 +29,35 @@ public class ManagerHOTP {
     private static final int[] DOUBLE_DIGITS = { 0, 2, 4, 6, 8, 1, 3, 5, 7, 9 };
     
     
-    
     /**
      * Esto es el mod_divisor, es decir, si mi código es de 6 caracteres, elijo el 6 (1000000).
      * Ver: https://github.com/jchambers/java-otp/blob/master/src/main/java/com/eatthepath/otp/HmacOneTimePasswordGenerator.java    
      */
-                                             // 0  1   2    3     4      5       6        7         8
-    private static final int[] DIGITS_POWER = { 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000 };
+                                             
+    private static final int[] DIGITS_POWER
+    // 0  1   2    3     4      5       6        7         8
+    = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000};
    
     
-    
     /**
-     * Algoritmo por defecto (Compatible con Google Authenticator).
+     * Algoritmo HMAC por defecto.
      * En este caso el algoritmo por defecto es HmacSHA1.
-     * The crypto algorithm (HmacSHA1, HmacSHA256, HmacSHA512).
+     * Puede tomar los valores { HmacSHA1, HmacSHA256, HmacSHA512 }.
      */
     public static final String DEFAULT_ALGORITHM = "HmacSHA1";
     
     
-    
     /**
-     * Es el contador de HOTP, el cual cambia según el uso. 
+     * Es el contador (factor de movimiento) de HOTP, el cual cambia según el uso. 
      * Por defecto, el contador arranca en 0.
      */
     public static final int DEFAULT_COUNT = 0;
-    
-    
+
     
     /**
      * Es el número de dígitos del código HOTP.     
      */
     public static final int DEFAULT_CODE_DIGITS = 6;
-    
     
     
     /**
@@ -65,29 +68,37 @@ public class ManagerHOTP {
     public static final boolean DEFAULT_ADD_CHECKSUM = false;
     
     
-    
     /**
+     * La RFC define la variable "truncationOffset" que indica cuándo
+     * se debe activar el truncamiento dinámico (Yo decidí no usarlo).
+     * 
      * The offset into the MAC result to begin truncation.
      * If this value is out of the range of 0 ... 15, then dynamic truncation will be used.
      * Dynamic truncation is when the last 4 bits of the last byte of the MAC are used to 
      * determine the start offset.
      */
-    //public static final int DEFAULT_TRUNCATION_OFFSET = 0;
-    
-    
+    // public static final int DEFAULT_TRUNCATION_OFFSET = 0;
     
     
     /**
      * Esta constante indica cuántos OTP adicionales se pueden generar antes de que la validación falle.
      * Este parámetro trata de lidiar con la desincronización de contadores.
-     * Yo establecí una ventana de 10, es decir, genero 10 códigos consecutivos y espero que el cliente ingrese un código que esté dentro de esos 10 para que la validación sea exitosa.
+     * Yo establecí una ventana de 10, es decir, genero 10 códigos consecutivos y espero 
+     * que el cliente ingrese un código que esté dentro de esos 10 para que la validación sea exitosa.
      * Explicación: http://mx.thirdvisit.co.uk/2014/01/02/getting-the-otpkeyprov-hotp-plug-in-to-work-with-google-authenitcator/
      */
     public static final int DEFAULT_WINDOW = 10;
     
     
+                    /* *********** FIN CONSTANTES ************ */
+                    /* --------------------------------------- */
     
-       
+    
+    
+    
+                    /* ********** INICIO VARIABLES ********** */
+                    /* --------------------------------------- */
+    
     
     private final String algoritmo;
     
@@ -102,10 +113,15 @@ public class ManagerHOTP {
     private final int window;
     
     
+                    /* ************* FIN VARIABLES ********** */
+                    /* --------------------------------------- */
     
+    
+                    /* ************* INICIO CONSTRUCTORES ********** */
+                    /* --------------------------------------------- */
     
     /**
-     * Constructor: Crea una instancia HOTP por defecto, la cual es compatible con Google Authenticator.     
+     * Constructor: Crea una instancia HOTP por defecto.     
      */
     public ManagerHOTP(){
         this.algoritmo = DEFAULT_ALGORITHM;
@@ -126,6 +142,8 @@ public class ManagerHOTP {
     }
     
     
+                    /* ************* FIN CONSTRUCTORES ********** */
+                    /* ------------------------------------------ */
     
     
     /**
@@ -136,7 +154,6 @@ public class ManagerHOTP {
     public final String generar(byte[] secreto) {
         return generarOTP(secreto, this.contador);
     }
-    
     
     
     /**
@@ -150,8 +167,6 @@ public class ManagerHOTP {
     }
     
     
-    
-    
     /**
      * Genera el código HOTP a partir del secreto y el contador.
      * @param secreto: es la clave secreta compartida entre el cliente y el servidor.
@@ -162,7 +177,7 @@ public class ManagerHOTP {
         
         int digitos = this.addChecksum ? (this.nroDigitos + 1) : this.nroDigitos; //si addChekSum es verdadero entonces incrementame nroDigitos, sino devolvemos nroDigitos como esta.
         
-        // el valor del counter (pasado como parametro) se convierte en un arreglo de bytes.
+        // el valor del counter (pasado como parámetro) se convierte en un arreglo de bytes.
         byte[] text = new byte[8];
         for (int i = text.length - 1; i >= 0; i--) {
             text[i] = (byte) (counter & 0xff);
@@ -189,8 +204,6 @@ public class ManagerHOTP {
                         | (hash[offset + 3] & 0xff);
         
         
-        
-        
         // Paso 3: Calcular el valor de HOTP y asegurarse de que contenga la cantidad de dígitos configurados.
         int otp = binary % DIGITS_POWER[nroDigitos];
         if (addChecksum) {
@@ -207,7 +220,6 @@ public class ManagerHOTP {
         
         return resultado;
     }
-    
     
     
     /**
@@ -232,10 +244,9 @@ public class ManagerHOTP {
     //
     
     
-    
     /**
      * Valida si el código ingresado se corresponde con el secreto y el contador que está en el servidor.
-     * Se valida para un window=10, es decir, el usuario ingresa hasta 10 codigos.
+     * Se valida para un window=10, es decir, el usuario ingresa hasta 10 códigos.
      * @param secreto: valor del secreto que fue guardado por el service provider.
      * @param counter; valor del contador que fue guarado por el service provider.
      * @param codigo: el valor OTP que fue provisto por el cliente.
@@ -250,14 +261,6 @@ public class ManagerHOTP {
         }
         return -1;
     }
-    
-    
-    
-    
-    
-   
-    
-    
     
     
     /**
@@ -293,30 +296,29 @@ public class ManagerHOTP {
         return algoritmo;
     }
 
+    
     public int getContador() {
         return contador;
     }
 
+    
     public int getNroDigitos() {
         return nroDigitos;
     }
 
+    
     public boolean isAddChecksum() {
         return addChecksum;
     }
 
+    
     public int getWindow() {
         return window;
     }
     
     
-    
-    
-    
     /**
-    *  Se testean los métodos de la clase HOTPManager.
-    * 
-    * @author ivancho
+    *  Se testean los métodos de la clase HOTPManager. 
     */
     public static void main(String[] args) {
         
@@ -326,7 +328,7 @@ public class ManagerHOTP {
         //Creo la clave unica.
         byte[] secreto = SecretGenerator.generar();
         
-        // genero el código QR compatible con Google Authenticator.
+        // genero el código QR.
         String secretoCodificado = SecretGenerator.toBase32(secreto);
         String qr = URIGenerator.getQRUrlHOTP("hotpexample@mail.com","example", secretoCodificado,893);
         System.out.println(qr); //Imprime el enlace al codigo QR.
