@@ -218,7 +218,10 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
         }
     }
     
-    
+    /**
+     * Implementar algún protocolo de bloqueo de cuenta.
+     * @param contador 
+     */
     private void bloquearCuenta(int contador){
         JOptionPane.showMessageDialog(this,"Problema de sincronización con el contador. Contador = " + contador,"Error", JOptionPane.ERROR_MESSAGE);
         this.dispose();

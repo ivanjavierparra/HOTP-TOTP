@@ -52,7 +52,7 @@ public class PanelCodigo extends javax.swing.JPanel {
 
         jLabel3.setFont(new java.awt.Font("Noto Sans", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(123, 234, 12));
-        jLabel3.setText("Ingrese el código generado por Google Authenticator:");
+        jLabel3.setText("Ingrese el código de autenticación:");
 
         lblImagen.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
@@ -76,7 +76,7 @@ public class PanelCodigo extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(txtCodigo)))
-                .addContainerGap(152, Short.MAX_VALUE))
+                .addContainerGap(261, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(130, 130, 130)

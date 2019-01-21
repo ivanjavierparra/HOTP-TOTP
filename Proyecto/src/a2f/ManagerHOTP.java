@@ -175,7 +175,8 @@ public class ManagerHOTP {
      */
     final String generarOTP(byte[] secreto, int counter) {
         
-        int digitos = this.addChecksum ? (this.nroDigitos + 1) : this.nroDigitos; //si addChekSum es verdadero entonces incrementame nroDigitos, sino devolvemos nroDigitos como esta.
+        //si addChekSum es verdadero entonces incrementame nroDigitos, sino devolvemos nroDigitos como esta.
+        int digitos = this.addChecksum ? (this.nroDigitos + 1) : this.nroDigitos; 
         
         // el valor del counter (pasado como parámetro) se convierte en un arreglo de bytes.
         byte[] text = new byte[8];
@@ -206,6 +207,7 @@ public class ManagerHOTP {
         
         // Paso 3: Calcular el valor de HOTP y asegurarse de que contenga la cantidad de dígitos configurados.
         int otp = binary % DIGITS_POWER[nroDigitos];
+        
         if (addChecksum) {
             otp = (otp * 10) + calcularChecksum(otp, nroDigitos);
         }
@@ -224,7 +226,7 @@ public class ManagerHOTP {
     
     /**
      * Valida si el código ingresado se corresponde con el secreto y el contador que está en el servidor.
-     * Se valida para un window=10, es decir, el usuario ingresa hasta 10 codigos.
+     * Se valida para un window=10, es decir, HOTPcliente debe estar en una ventana de 10 dentro del HOTPservidor.
      * @param secreto: valor del secreto que fue guardado por el service provider.
      * @param counter; valor del contador que fue guarado por el service provider.
      * @param codigo: el valor OTP que fue provisto por el cliente.
@@ -248,7 +250,7 @@ public class ManagerHOTP {
      * Valida si el código ingresado se corresponde con el secreto y el contador que está en el servidor.
      * Se valida para un window=10, es decir, el usuario ingresa hasta 10 códigos.
      * @param secreto: valor del secreto que fue guardado por el service provider.
-     * @param counter; valor del contador que fue guarado por el service provider.
+     * @param counter; valor del contador que fue guardado por el service provider.
      * @param codigo: el valor OTP que fue provisto por el cliente.
      * @return: retorna -1 si no hay coincidencia, sino retorna el contador incrementado tantos lugares como se ha saltado dentro de la ventana.
      */
@@ -369,7 +371,7 @@ public class ManagerHOTP {
                     break;
                 }
                 case 2:{
-                    //genero varios códigos consecutivos, y veo si Google AUthenticator está sincronizado con el servidor.
+                    //genero varios códigos consecutivos, y veo si Google Authenticator está sincronizado con el servidor.
                     System.out.println("Contador: " + 0 + ", Codigo: " + manager.generar(secreto, 0));
                     System.out.println("Contador: " + 1 + ", Codigo: " + manager.generar(secreto, 1));
                     System.out.println("Contador: " + 893 + ", Codigo: " + manager.generar(secreto, 893));

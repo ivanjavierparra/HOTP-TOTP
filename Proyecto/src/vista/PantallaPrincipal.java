@@ -274,8 +274,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     
     private void menuItemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSalirActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this,"Chau!","Mensaje",JOptionPane.INFORMATION_MESSAGE);
-        this.dispose();
+        int resp = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea salir?", "Mensaje", JOptionPane.YES_NO_OPTION);
+        if(resp==0) this.dispose();
     }//GEN-LAST:event_menuItemSalirActionPerformed
 
     public void ocultarItemActivar(){

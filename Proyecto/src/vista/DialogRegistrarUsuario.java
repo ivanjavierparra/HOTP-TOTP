@@ -4,7 +4,10 @@ package vista;
 import encriptacion.HashGenerator;
 import javax.swing.JOptionPane;
 import a2f.SecretGenerator;
+import java.util.ArrayList;
+import java.util.Iterator;
 import modelo.ManagerUsuarioDB;
+import java.util.regex.*;
 
 /**
  *
@@ -251,14 +254,94 @@ public class DialogRegistrarUsuario extends javax.swing.JDialog {
     
     
     private String validarTxt(){
-        if(txtNombre.getText().compareToIgnoreCase("")==0)return "Debe ingresar el nombre.";
-        else if(txtEmail.getText().compareToIgnoreCase("")==0)return "Debe ingresar el email.";
-        else if(txtPassword.getText().compareToIgnoreCase("")==0)return "Debe ingresar el Password.";
-        else{
-            if(txtPassword.getText().compareToIgnoreCase(txtRepetirPassword.getText())!=0)return "Password no coinciden.";
+        ArrayList <String> validaciones = new ArrayList<String>();
+        
+        validaciones.add(verificarNombreVacio());
+        validaciones.add(verificarEmailVacio());
+        validaciones.add(verificarEmailCorrecto());
+        validaciones.add(verificarPasswordVacio());
+        validaciones.add(verificarPasswordsNoCoinciden());
+        validaciones.add(verificarSeguridadPassword());
+        
+        for (Iterator<String> i = validaciones.iterator(); i.hasNext();) {
+            String mensaje_error = i.next();
+            if(!mensaje_error.equals(""))return mensaje_error;
         }
+        
+        
         return "";
     }
+    
+    
+    
+    
+    private String verificarNombreVacio(){
+        if(txtNombre.getText().compareToIgnoreCase("")==0)return "Debe ingresar el nombre.";
+        return "";
+    }
+    
+    private String verificarEmailVacio(){
+        if(txtEmail.getText().compareToIgnoreCase("")==0)return "Debe ingresar el email.";
+        return "";
+    }
+    
+    private String verificarPasswordVacio(){
+        if(txtPassword.getText().compareToIgnoreCase("")==0)return "Debe ingresar el Password.";
+        return "";
+    }
+    
+    
+    /**
+     * Verifica email válido.
+     * https://fluidattacks.com/web/es/defends/java/validar-correo-electronico/
+     * ^ especifica el inicio de la entrada.
+     * ([_a-z0-9-]) primer grupo. Se refiere a la aparición de uno o más caracteres compuestos por guión bajo, letras, números y guiones.
+     * (\\.[_a-z0-9-]) segundo grupo. Puede ser opcional y repetible, se refiere a la aparición de un punto seguido de uno o más caracteres compuestos por guión bajo, letras, números y guiones.
+     * *@ carácter arroba.
+     * ([a-z0-9-]) tercer grupo. Especifica la aparición de uno o más caracteres compuestos por letras, números y guiones.
+     * (\\.[a-z0-9-]) cuarto grupo. Especifica un punto seguido de uno o más caracteres compuestos por letras, números y guiones.
+     * (\\.[a-z]{2,4}) quinto grupo. Especifica un punto seguido de entre 2 y 4 letras, con el fin de considerar dominios terminados, por ejemplo, en .co y .info.
+     * $ especifica el fin de la entrada.
+     * @return 
+     */
+    private String verificarEmailCorrecto(){
+        // comprueba que no empieze por punto o @
+        String emailPattern = "^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@" + "[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$";
+        Pattern p = Pattern.compile(emailPattern);
+        Matcher m = p.matcher(txtEmail.getText());
+        if (!m.matches()) return "Formato no adecuado para una dirección de email.";
+        return "";
+        
+    }
+    
+    private String verificarPasswordsNoCoinciden(){
+        if(txtPassword.getText().compareToIgnoreCase(txtRepetirPassword.getText())!=0)return "Password no coinciden.";
+        return "";
+    }
+    
+    
+    /**
+     * Verifica la seguridad del password a partir de una expresión regular.
+     * https://stackoverflow.com/questions/3802192/regexp-java-for-password-validation
+        ^                 # empezar con un string
+        (?=.*[0-9])       # por lo menos un número
+        (?=.*[a-z])       # por lo menos una letra minúscula
+        (?=.*[A-Z])       # por lo menos una letra mayúscula
+        (?=.*[@#$%^&+=])  # por lo menos un caracter especial
+        (?=\S+$)          # no se permiten espacios en blanco
+        .{8,}             # por lo menos debe tener 8 dígitos
+        $                 # terminar con un string
+    */
+    private String verificarSeguridadPassword(){
+        String mensaje = "El password debe tener al menos 8 dígitos, letras minúsculas, mayúsculas, números y caracteres especiales.";
+        String expresion_regular = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+        Pattern p = Pattern.compile(expresion_regular);
+        Matcher m = p.matcher(txtPassword.getText());
+        if (!m.find()) return mensaje;
+        return "";
+    }
+    
+    
     
     
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

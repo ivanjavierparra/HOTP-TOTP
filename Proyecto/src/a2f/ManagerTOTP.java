@@ -284,7 +284,7 @@ public class ManagerTOTP {
 		return validar(secreto, codigo, System.currentTimeMillis());
 	}
 	
-        
+       
 	/**
 	 * Valida el código TOTP para el intervalo de tiempo actual.
          * 
@@ -435,6 +435,14 @@ public class ManagerTOTP {
                         byte[] secret = SecretGenerator.generar(SecretGenerator.Size.LARGE);
                         String secretC = SecretGenerator.toBase32(secret);
                         System.out.println(secretC);
+                        break;
+                    }
+                    case 4:{
+                        long tiempo_actual = System.currentTimeMillis();
+                        long intervalo_tiempo = (tiempo_actual/1000) / 30;
+                        for (int i = 0; i<=1;i++){
+                            System.out.println("Intervalo de Tiempo: " + (intervalo_tiempo - i));
+                        }
                         break;
                     }
                     default:{
