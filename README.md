@@ -1,5 +1,5 @@
-# Trabajo Final de Administración de Redes y Seguridad: "Autenticación Multifactor"
-## Licenciatura en Sistemas 
+# Trabajo Final: "Autenticación Multifactor"
+## Administración de Redes y Seguridad - Licenciatura en Sistemas 
 ## UNPSJB - Facultad de Ingeniería - Sede Trelew 
 
 Este trabajo tiene como objetivos explicar qué es la autenticación y sus distintos factores, haciendo hincapié en las diferencias entre autenticación simple y autenticación multifactor, por qué es recomendable usarla, y cómo activarla en algunos servicios públicos. 
@@ -15,7 +15,7 @@ Se ha desarrollado una aplicación de escritorio utilizando el lenguaje Java y e
 Cuando el usuario inicia sesión, se le da la posibilidad de habilitar la autenticación multifactor. El segundo factor de autenticación es un factor de posesión. El usuario deberá escanear el código QR a través de alguna app de autenticación, como Duo, la cual generará los códigos OTP. 
 
 ## Pantalla Principal.
-<img src="/Imagenes/principal.png" alt="Pantalla Principal"/>
+<img src="/Imagenes/principal.png" alt="Pantalla Principal" height="42" width="42"/>
 
 ## Registrar Usuario.
 <img src="/Imagenes/registrar_usuario.png" alt="Registrar Usuario"/>
