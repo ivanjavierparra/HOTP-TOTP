@@ -15,7 +15,7 @@ Se ha desarrollado una aplicación de escritorio utilizando el lenguaje Java y e
 Cuando el usuario inicia sesión, se le da la posibilidad de habilitar la autenticación multifactor. El segundo factor de autenticación es un factor de posesión. El usuario deberá escanear el código QR a través de alguna app de autenticación, como Duo, la cual generará los códigos OTP. 
 
 ## Pantalla Principal.
-<img src="/Imagenes/principal.png" alt="Pantalla Principal" height="42" width="42"/>
+<img src="/Imagenes/principal.png" alt="Pantalla Principal" height="461" width="487"/>
 
 ## Registrar Usuario.
 <img src="/Imagenes/registrar_usuario.png" alt="Registrar Usuario"/>
