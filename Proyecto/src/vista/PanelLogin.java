@@ -1,5 +1,8 @@
 package vista;
 
+import java.awt.Font;
+import pruebas.TextPrompt;
+
 /**
  *
  * @author Iván Javier Parra
@@ -9,8 +12,18 @@ public class PanelLogin extends javax.swing.JPanel {
     
     public PanelLogin() {
         initComponents();
+        inicializarPlaceHolders();
     }
 
+    private void inicializarPlaceHolders(){
+        TextPrompt placeholder = new TextPrompt("Ingrese email", txtEmail);
+        placeholder.changeAlpha(0.75f);
+        placeholder.changeStyle(Font.ITALIC);
+        
+        placeholder = new TextPrompt("Ingrese password", txtPassword);
+        placeholder.changeAlpha(0.75f);
+        placeholder.changeStyle(Font.ITALIC);   
+    }
     
     public String getEmail(){
         return txtEmail.getText();
@@ -45,10 +58,6 @@ public class PanelLogin extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
 
         setBackground(java.awt.Color.darkGray);
-
-        txtPassword.setText("kari");
-
-        txtEmail.setText("kari@mail.com");
 
         jLabel4.setFont(new java.awt.Font("Noto Sans", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(123, 234, 12));

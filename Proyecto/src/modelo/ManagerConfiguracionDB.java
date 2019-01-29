@@ -46,7 +46,7 @@ public class ManagerConfiguracionDB {
                configuracion.setDigitos(res.getInt("digitos"));
                configuracion.setContador_hotp(res.getInt("contadorhotp"));
                configuracion.setTiempo_totp(res.getInt("tiempototp"));
-               System.out.println("Existe");
+               System.out.println("Existe la configuración de la cuenta " + configuracion.getEmail() + " en la BD.");
                
                /*
                     //Para recorrer todo hacer:
@@ -57,7 +57,7 @@ public class ManagerConfiguracionDB {
 
             }
         }catch( SQLException e ){
-            System.out.println("Error al buscar un Usuario en la Base: " + e.getMessage()); 
+            System.out.println("Error al buscar la Configuración en la BD: \n" + e.getMessage()); 
         }
         
         mdb.cerrarConexion();
@@ -84,8 +84,8 @@ public class ManagerConfiguracionDB {
             st.execute( s );
 
         }catch( SQLException e ){
-            System.out.println("Error al intentar agregar un Usuario a la Base: " + e.getMessage());  
-            mensaje_error = "Error al intentar agregar un Usuario en la BD.";
+            System.out.println("Error al intentar agregar una Configuración a la BD: " + e.getMessage());  
+            mensaje_error = "Error al intentar agregar una Configuración en la BD.";
             exito = false;
         }
 
@@ -112,10 +112,10 @@ public class ManagerConfiguracionDB {
         try{
             st = (Statement) mdb.getConexion().createStatement();
             st.execute( s );
-            System.out.println("Se ha insertado un registro en la BD.");
+            System.out.println("Se ha insertado una Configuración en la BD.");
 
         }catch( SQLException e ){
-            System.out.println("Error al intentar agregar una Configuracion a la Base: " + e.getMessage());  
+            System.out.println("Error al intentar agregar una Configuracion a la BD: " + e.getMessage());  
             mensaje_error = "Error al intentar agregar la configuracion a la BD.";
             return false;
         }
@@ -144,11 +144,11 @@ public class ManagerConfiguracionDB {
         try{
             st = (Statement) mdb.getConexion().createStatement();
             st.execute( s );
-            System.out.println("Se ha insertado un registro en la BD.");
+            System.out.println("Se ha eliminado la configuración de la BD.");
 
         }catch( SQLException e ){
-            System.out.println("Error al intentar agregar una Configuracion a la Base: " + e.getMessage());  
-            mensaje_error = "Error al intentar agregar la configuracion a la BD.";
+            System.out.println("Error al intentar eliminar una Configuracion en la BD: " + e.getMessage());  
+            mensaje_error = "Error al intentar eliminar una Configuracion en la BD.";
             return false;
         }
         

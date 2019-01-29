@@ -15,6 +15,7 @@ public class ManagerUsuarioDB {
    
     /**
      * Almacena un objeto Usuario en la BD.
+     * https://es.stackoverflow.com/questions/54098/que-algoritmo-de-cifrado-se-puede-usar-para-guardar-datos-en-java
      * @param nombre
      * @param email
      * @param password
@@ -27,13 +28,6 @@ public class ManagerUsuarioDB {
         mensaje_error = mdb.establecerConexion();
         if(mensaje_error.compareToIgnoreCase("")!=0) return false;
         
-        //recibo una password y la encripto usando el algoritmo de Cesar
-        //Encrypter enc = new CesarEncrypter(password);
-        //password = enc.code();
-        //System.out.println("Password encriptado: " + password);
-        
-        //https://es.stackoverflow.com/questions/54098/que-algoritmo-de-cifrado-se-puede-usar-para-guardar-datos-en-java
-        
         String s = "insert into usuario (nombre, email, password, clavesecreta, a2f) ";
         s = s + " values ('"+nombre+"','"+email+"','"+password+"','"+clavesecreta+"','false')";
 
@@ -42,7 +36,7 @@ public class ManagerUsuarioDB {
             st.execute( s );
 
         }catch( SQLException e ){
-            System.out.println("Error al intentar agregar un Usuario a la Base: " + e.getMessage());  
+            System.out.println("Error al intentar agregar un Usuario a la BD: " + e.getMessage());  
             mensaje_error = "Error al intentar agregar un Usuario en la BD.";
             return false;
         }
@@ -85,7 +79,7 @@ public class ManagerUsuarioDB {
                usuario.setPassword(password);
                usuario.setClave_secreta(res.getString("clavesecreta"));
                usuario.setA2f_activado(res.getBoolean("a2f"));
-               System.out.println("Existe");
+               System.out.println("Existe el usuario " + email + " en la BD.");
                
                /*
                     //Para recorrer todo hacer:

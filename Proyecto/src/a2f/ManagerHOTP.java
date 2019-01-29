@@ -226,29 +226,14 @@ public class ManagerHOTP {
     
     /**
      * Valida si el código ingresado se corresponde con el secreto y el contador que está en el servidor.
-     * Se valida para un window=10, es decir, HOTPcliente debe estar en una ventana de 10 dentro del HOTPservidor.
-     * @param secreto: valor del secreto que fue guardado por el service provider.
-     * @param counter; valor del contador que fue guarado por el service provider.
-     * @param codigo: el valor OTP que fue provisto por el cliente.
-     * @return: retorna -1 si no hay coincidencia, sino retorna el contador incrementado tantos lugares como se ha saltado dentro de la ventana.
-     */
-    /*public final int validar(byte[] secreto, int counter, String codigo) {
-        //EXPLICADO EN: https://github.com/speakeasyjs/speakeasy/wiki/General-Usage-for-Counter-Based-Token
-        int i = 0;
-        while (i++ <= window) {
-            if (generar(secreto,counter).equals(codigo)) return counter + i; //¿Será así?
-        }
-        return -1;
-    }*/
-    
-    //     ^                              ^
-    //     |   ver el codigo de arriba    |
-    //
-    
-    
-    /**
-     * Valida si el código ingresado se corresponde con el secreto y el contador que está en el servidor.
-     * Se valida para un window=10, es decir, el usuario ingresa hasta 10 códigos.
+     * Yo implementé un sólo intento de validación, con una ventana de validación de 10 códigos.
+     * La ventana sólo acepta valores menores o iguales al contador del servidor. 
+     * 
+     * Si la validación NO ES EXITOSA, es decir, el contador del usuario está totalmente
+     * desincronizado y sus valores HOTP no caen en la ventana, entonces SE BLOQUE LA CUENTA DEL USUARIO.
+     * 
+     * Si la validación ES EXITOSA, retorna el contador incrementado en uno.
+     * 
      * @param secreto: valor del secreto que fue guardado por el service provider.
      * @param counter; valor del contador que fue guardado por el service provider.
      * @param codigo: el valor OTP que fue provisto por el cliente.

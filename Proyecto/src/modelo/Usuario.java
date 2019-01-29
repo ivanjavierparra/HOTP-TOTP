@@ -3,7 +3,7 @@ package modelo;
 /**
  * Clase que representa un Usuario de una aplicación.
  * 
- * @author Iv+an Javier Parra
+ * @author Iván Javier Parra
  */
 
 public class Usuario {

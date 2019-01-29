@@ -1,5 +1,8 @@
 package vista;
 
+import java.awt.Font;
+import pruebas.TextPrompt;
+
 /**
  *
  * @author Iván Javier Parra
@@ -10,8 +13,14 @@ public class PanelCodigo extends javax.swing.JPanel {
     
     public PanelCodigo() {
         initComponents();
+        inicializarPlaceHolders();
     }
 
+    private void inicializarPlaceHolders(){
+        TextPrompt placeholder = new TextPrompt("Ingrese codigo OTP", txtCodigo);
+        placeholder.changeAlpha(0.75f);
+        placeholder.changeStyle(Font.ITALIC);
+    }
     
     public void setFocusCodigo(){
         txtCodigo.requestFocus();
@@ -45,6 +54,12 @@ public class PanelCodigo extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
 
         setBackground(java.awt.Color.darkGray);
+
+        txtCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoKeyTyped(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Noto Sans", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(123, 234, 12));
@@ -102,6 +117,18 @@ public class PanelCodigo extends javax.swing.JPanel {
                     .addContainerGap(211, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    
+    
+    private boolean isNumber(char ch){
+        return ch >= '0' && ch <= '9';
+    }
+    
+    private void txtCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyTyped
+        // TODO add your handling code here:
+        char ch = evt.getKeyChar();
+        if (!isNumber(ch)) evt.consume();;
+    }//GEN-LAST:event_txtCodigoKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

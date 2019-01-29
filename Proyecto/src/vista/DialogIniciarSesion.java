@@ -22,7 +22,7 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
     GridBagLayout layout = new GridBagLayout();
     PanelLogin panelLogin;
     PanelCodigo panelCodigo;
-    
+    public static int intentos_validacion = 0;
     
     public DialogIniciarSesion(javax.swing.JFrame parent, boolean modal) {
         super(parent, modal);
@@ -145,9 +145,15 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
         if(Main.usuario.getNombre().compareToIgnoreCase("")==0)JOptionPane.showMessageDialog(this,"Email o Password incorrectos","Error en la BD", JOptionPane.ERROR_MESSAGE);
         else{ // El email y el password son correctos.
             if(Main.usuario.isA2f_activado()){ // el usuario tiene activado la doble autenticación.
-                panelCodigo.setVisible(true);
-                panelCodigo.setFocusCodigo();
-                panelLogin.setVisible(false);
+                
+                // Si el usuario no esta bloqueado.
+                if(!verificar_usuario_bloqueado()){
+                    // configuro los paneles
+                    panelCodigo.setVisible(true);
+                    panelCodigo.setFocusCodigo();
+                    panelLogin.setVisible(false);
+                }
+                
             }
             else{ // el usuario tiene desactivado la doble autenticación.
                 iniciarSesion();
@@ -156,6 +162,27 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
         
     }
     
+    
+    /**
+     * Verifico que el usuario no este bloqueado: cuando tiene a2f activado 
+     * pero no hay un registro asociado en la tabla configuraciona2f.
+     * @return 
+     */
+    private boolean verificar_usuario_bloqueado(){
+        ManagerConfiguracionDB mcdb = new ManagerConfiguracionDB();
+        Configuracion configuracion = mcdb.consultarRegistro(Main.usuario.getEmail());
+        //no he encontrado el registro de configuracion del usuario.
+        if(configuracion.getEmail().compareToIgnoreCase("noexisto")==0) { 
+            JOptionPane.showMessageDialog(null, "Su cuenta está bloqueada.", "Mensaje", JOptionPane.ERROR_MESSAGE);
+            return true;
+        }
+        else if ((configuracion.getTipo().equals("HOTP"))&&(configuracion.getContador_hotp()==-1)){
+            JOptionPane.showMessageDialog(null, "Su cuenta está bloqueada.", "Mensaje", JOptionPane.ERROR_MESSAGE);
+            return true;
+        }
+        else return false;
+    }
+            
     
     private void iniciarSesion(){
         JOptionPane.showMessageDialog(this,"Inicio de Sesión correcto!","Mensaje",JOptionPane.INFORMATION_MESSAGE);
@@ -184,7 +211,8 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
         ManagerConfiguracionDB mcdb = new ManagerConfiguracionDB();
         Configuracion configuracion = mcdb.consultarRegistro(Main.usuario.getEmail());
         if(configuracion.getEmail().compareToIgnoreCase("noexisto")==0) { //no he encontrado el registro de configuracion del usuario.
-            JOptionPane.showMessageDialog(this,"Se ha encontrado un problema en la BD: no se encuentra registrado en la tabla configuraciona2f","Error en la BD", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this,"Se ha encontrado un problema en la BD: no se encuentra registrado en la tabla configuraciona2f","Error en la BD", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Su cuenta está bloqueada.", "Mensaje", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -212,10 +240,31 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
                     //... manager = new ManagerTOTP(configuracion.getAlgoritmo(),configuracion.getDigitos(),configuracion.getTiempo_totp());
                     
             // Validamos.
-            boolean valid = manager.validar(secreto, codigo);
-            if(!valid)JOptionPane.showMessageDialog(this,"Código incorrecto.","Error", JOptionPane.ERROR_MESSAGE);
-            else iniciarSesion();
+            //boolean valid = manager.validar(secreto, codigo);
+            //if(!valid)JOptionPane.showMessageDialog(this,"Código incorrecto.","Error", JOptionPane.ERROR_MESSAGE);
+            //else iniciarSesion();
+            
+            if(intentos_validacion!=5){
+                boolean valid = manager.validar(secreto, codigo);
+                if(valid){
+                    intentos_validacion = 0;
+                    iniciarSesion();
+                }
+                else{
+                    intentos_validacion++;
+                    JOptionPane.showMessageDialog(this,"Código incorrecto.","Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }else{
+                intentos_validacion = 0;
+                bloquear_cuenta_totp();
+                JOptionPane.showConfirmDialog(null, "Su cuenta ha sido bloqueada.", "Mensaje", JOptionPane.CLOSED_OPTION);
+            }
         }
+    }
+    
+    private void bloquear_cuenta_totp(){
+        ManagerConfiguracionDB mcdb = new ManagerConfiguracionDB();
+        mcdb.eliminarRegistro(Main.usuario.getEmail());
     }
     
     /**

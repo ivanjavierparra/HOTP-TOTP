@@ -17,7 +17,7 @@ public class Configuracion {
     
     public Configuracion(){
         this.email = "noexisto"; // "noexisto" lo uso para validar en DialogIniciarSesion.
-        this.algoritmo = "HmacSHA1"; //The crypto algorithm (HmacSHA1, HmacSHA256, HmacSHA512).
+        this.algoritmo = "HmacSHA1"; // Algoritmo MAC basado en HASH (HmacSHA1, HmacSHA256, HmacSHA512).
         this.tipo = "TOTP";
         this.digitos = 6;
         this.contador_hotp = 0;
@@ -26,7 +26,7 @@ public class Configuracion {
     
     public Configuracion(String email, String algoritmo, String tipo, int digitos, int contador_hotp, int tiempo_totp){
         this.email = email;
-        this.algoritmo = algoritmo; //The crypto algorithm (HmacSHA1, HmacSHA256, HmacSHA512).
+        this.algoritmo = algoritmo; // Algoritmo MAC basado en HASH (HmacSHA1, HmacSHA256, HmacSHA512).
         this.tipo = tipo;
         this.digitos = digitos;
         this.contador_hotp = contador_hotp;

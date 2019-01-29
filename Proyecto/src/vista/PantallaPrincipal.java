@@ -98,11 +98,16 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         menuItemCerrar = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Exámen Final - Administración de Redes y Seguridad - HOTP - TOTP");
         setBackground(java.awt.Color.darkGray);
         setExtendedState(6);
         setIconImage(getIconImage());
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         pnlFooter.setBackground(java.awt.Color.black);
 
@@ -132,7 +137,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         menuItemRegistrar.setText("Registrar Usuario");
         menuItemRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemRegistrarActionPerformed(evt);
+                menuItemRegistrarUsuarioActionPerformed(evt);
             }
         });
         menuArchivo.add(menuItemRegistrar);
@@ -141,7 +146,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         menuItemIniciar.setText("Iniciar Sesión");
         menuItemIniciar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemIniciarActionPerformed(evt);
+                menuItemIniciarSesionActionPerformed(evt);
             }
         });
         menuArchivo.add(menuItemIniciar);
@@ -201,17 +206,17 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void menuItemIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemIniciarActionPerformed
+    private void menuItemIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemIniciarSesionActionPerformed
         // TODO add your handling code here:
         DialogIniciarSesion dis = new DialogIniciarSesion(this, true);
         dis.setVisible(true);
-    }//GEN-LAST:event_menuItemIniciarActionPerformed
+    }//GEN-LAST:event_menuItemIniciarSesionActionPerformed
 
-    private void menuItemRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemRegistrarActionPerformed
+    private void menuItemRegistrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemRegistrarUsuarioActionPerformed
         // TODO add your handling code here:
         DialogRegistrarUsuario dru = new DialogRegistrarUsuario(this, true);
         dru.setVisible(true);
-    }//GEN-LAST:event_menuItemRegistrarActionPerformed
+    }//GEN-LAST:event_menuItemRegistrarUsuarioActionPerformed
 
     private void menuItemVerQRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemVerQRActionPerformed
         // TODO add your handling code here:
@@ -277,6 +282,12 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         int resp = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea salir?", "Mensaje", JOptionPane.YES_NO_OPTION);
         if(resp==0) this.dispose();
     }//GEN-LAST:event_menuItemSalirActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        int resp = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea salir?", "Mensaje", JOptionPane.YES_NO_OPTION);
+        if(resp==0) this.dispose();
+    }//GEN-LAST:event_formWindowClosing
 
     public void ocultarItemActivar(){
         menuItemActivarA2F.setVisible(false);

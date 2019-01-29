@@ -4,10 +4,12 @@ package vista;
 import encriptacion.HashGenerator;
 import javax.swing.JOptionPane;
 import a2f.SecretGenerator;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Iterator;
 import modelo.ManagerUsuarioDB;
 import java.util.regex.*;
+import pruebas.TextPrompt;
 
 /**
  *
@@ -19,9 +21,27 @@ public class DialogRegistrarUsuario extends javax.swing.JDialog {
     public DialogRegistrarUsuario(javax.swing.JFrame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        inicializarPlaceHolders();
         inicializarDialog();
     }
 
+    private void inicializarPlaceHolders(){
+        TextPrompt placeholder = new TextPrompt("Ingrese nombre", txtNombre);
+        placeholder.changeAlpha(0.75f);
+        placeholder.changeStyle(Font.ITALIC);
+        
+        placeholder = new TextPrompt("Ingrese email", txtEmail);
+        placeholder.changeAlpha(0.75f);
+        placeholder.changeStyle(Font.ITALIC);   
+        
+        placeholder = new TextPrompt("Ingrese contraseña", txtPassword);
+        placeholder.changeAlpha(0.75f);
+        placeholder.changeStyle(Font.ITALIC);
+        
+        placeholder = new TextPrompt("Repita contraseña", txtRepetirPassword);
+        placeholder.changeAlpha(0.75f);
+        placeholder.changeStyle(Font.ITALIC);
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -292,7 +312,7 @@ public class DialogRegistrarUsuario extends javax.swing.JDialog {
     
     
     /**
-     * Verifica email válido.
+     * Verifica email válido a partir de una expresión regular.
      * https://fluidattacks.com/web/es/defends/java/validar-correo-electronico/
      * ^ especifica el inicio de la entrada.
      * ([_a-z0-9-]) primer grupo. Se refiere a la aparición de uno o más caracteres compuestos por guión bajo, letras, números y guiones.

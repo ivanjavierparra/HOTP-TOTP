@@ -34,47 +34,18 @@ public class ManagerTOTP {
 
     
         /**
-         * Intervalo de tiempo por defecto (en segundos) durante el cuál la clave será válida.
+         * Duración del time-step (en segundos) durante el cuál la clave será válida.
+         * La traducción de "time-steps" es "intervalo de tiempo".
          */
         public static final int DEFAULT_INTERVAL = 30;
 	
     
         /**
-         * Default time interval steps to check into past for validity. 
-         * If required, a time correction can be specified to compensate of an out of sync local clock.
-         * When an OTP is generated at the end of a
-         * time-step window, the receiving time most likely falls into the next
-         * time-step window.
-         * 
-         * RFC 6238 Section 5.2 defines the recommended conditions for accepting a TOTP validation code. 
-         * The exact text in the RFC is "We RECOMMEND that at most one time step is
-         * allowed as the network delay."
-         * 
+         * Cantidad de time-steps que voy a aceptar para validar en el pasado.
+         * La RFC recomienda un 1 sola validación, por si se presenta retardos en la red.
          * Explicación: https://github.com/johnnymongiat/oath/blob/master/oath-otp/src/main/java/com/lochbridge/oath/otp/TOTPValidator.java
-         * 
-         * Es un tiempo en segundos usado para sincronización entre el cliente y el servidor.
-         * 
-         * Problema: el cliente genera un código y lo envía al servidor, 
-         * pero cuando llega al servidor, hay un desfasaje de tiempo, por ejemplo, yo cliente 
-         * genero el código a las 2:00 pm y llega ese código al servidor a las 2:10 pm,
-         * entonces cuando el servidor calcule su código para contrastarlo con el cliente, resulta
-         * que el horario no es el mismo, por lo tanto la validación del código será errónea.
-         * 
-         * Solución: con el step lo que hacemos es ir disminuyendo el tiempo del servidor para 
-         * llegar al horario del cliente. El valor del step en este caso es de 1 segundo, por
-         * lo que al tiempo del servidor sólo se le restará 1 segundo.
-         * 
-         * DEFAULT_STEPS se trata de una ventana, un time delay. 
-         *          * 
          * Ver: https://bitbucket.org/devinmartin/otp-sharp/wiki/TOTP
          * 
-         * var window = new VerificationWindow(previous:1, future:1);
-         * This means that the current step, and 1 step prior to the current will be allowed in the match. 
-         * If you wanted to accept 5 steps backward (not recommended in the RFC) then you would change 
-         * the previous parameter to 5.
-         * There is also a parameter called future that allows you to match future codes. This might be 
-         * useful if the client is ahead of the server by just enough 
-         * that the code provided in slightly ahead.
          */
         public static final int DEFAULT_STEPS = 1; //DEFAULT_DELAY_WINDOW
 	
@@ -90,6 +61,13 @@ public class ManagerTOTP {
 	 * Default time 0 for the interval
 	 */
 	public static final int DEFAULT_T0 = 0;
+        
+        
+        /**
+         * Define la cantidad de intentos de validación, para evitar ataques de fuerza bruta.
+         */
+        public static final int DEFAULT_INTENTOS_VALIDACION = 5;
+        
         
         
                     /* *********** FIN CONSTANTES ************ */
@@ -110,6 +88,8 @@ public class ManagerTOTP {
 	private final int steps;
 	
 	private final int t0;
+        
+        public static int intentos_validacion = 0;
 	
 	
                     /* ************* FIN VARIABLES ********** */
@@ -207,6 +187,8 @@ public class ManagerTOTP {
                
         
         
+        
+        
 	/**
 	 * @return el algoritmo usado.
 	 */
@@ -286,7 +268,8 @@ public class ManagerTOTP {
 	
        
 	/**
-	 * Valida el código TOTP para el intervalo de tiempo actual.
+	 * Valida el código TOTP para el intervalo de tiempo actual y, si es
+         * necesario, con el intevalo de tiempo anterior (por si hay retardos en la red).
          * 
 	 * @param secreto: la clave secreta.
 	 * @param codigo: el código a validar.
@@ -298,13 +281,18 @@ public class ManagerTOTP {
 		int steps = getSteps();
 		long intervalo_tiempo = getTimeInterval(tiempo);
 		
-		for (int i = 0; i <= steps; i++) {
-			boolean result = validarOTP(secreto, intervalo_tiempo - i, codigo);
-			if (result) {
-				return true;
-			}
-		}
-
+                // Se realiza una validación con el time-step actual
+                // y si no coinciden, se realiza una validación con
+                // el time-step anterior.
+                for (int i = 0; i <= steps; i++) {
+                    // intervalo_tiempo - 0 = intervalo de tiempo actual.
+                    // intervalo_tiempo - 1 = intervalo de tiempo anterior.
+                    boolean result = validarOTP(secreto, intervalo_tiempo - i, codigo);
+                    if (result) {
+                            return true;
+                    }
+                }
+                
 		return false;
 	}
 	
@@ -356,9 +344,8 @@ public class ManagerTOTP {
         /**
          * Esta fórmula surge de RFC 6238. 
          * T = (Current Unix time - T0) / X
-         * For example, with T0 = 0 and Time Step X = 30, T = 1 if the current
-         * Unix time is 59 seconds, and T = 2 if the current Unix time is
-         * 60 seconds.
+         * Current_Unix_Time=59; T0=0; X=30  ===> T=1
+         * Current_Unix_Time=60; T0=0; X=30  ===> T=2
          * @param time: el tiempo en milisegundos.
          * @return intervalo de tiempo en segundos.
          */

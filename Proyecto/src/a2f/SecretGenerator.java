@@ -20,7 +20,7 @@ public abstract class SecretGenerator {
 	public enum Size {
 		DEFAULT(20),// Seed for HMAC-SHA1 - 20 bytes
 		MEDIUM(32),// Seed for HMAC-SHA256 - 32 bytes
-		LARGE(64);//Seed for HMAC-SHA512 - 64 bytes
+		LARGE(64);// Seed for HMAC-SHA512 - 64 bytes
 		
 		private int size;
 		

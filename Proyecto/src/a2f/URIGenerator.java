@@ -17,7 +17,9 @@ public abstract class URIGenerator {
 
 	
     /**
-     * Genera una URI para el algoritmo TOTP, con los parámetros recomendados por la RFC.
+     * Genera una URI para TOTP con los parámetros proporcionados por OATH.
+     * Nota: esta URI no contiene todos los parámetros, solo contiene los parámetros
+     * por defecto.
      * @param email
      * @param nombre
      * @param clave_secreta
@@ -30,7 +32,9 @@ public abstract class URIGenerator {
         
     
     /**
-     * Genera una URI para el algoritmo HOTP, con los parámetros recomendados por la RFC.
+     * Genera una URI para HOTP con los parámetros proporcionados por OATH.
+     * Nota: esta URI no contiene todos los parámetros, solo contiene los parámetros
+     * por defecto.
      * @param email
      * @param nombre
      * @param clave_secreta: en base32
@@ -44,8 +48,9 @@ public abstract class URIGenerator {
 
 
     /**
-     * Genera una URI para el algoritmo HOTP/TOTP, con TODOS los parámetros posibles, 
-     * pero algunos de ellos no son reconocidos por apps como Google Authenticator, DUO, entre otros.
+     * Genera una URI para el algoritmo HOTP/TOTP, con TODOS los parámetros posibles.
+     * Nota: no todos estos parámetros son reconocidos por todas las apps móviles de 
+     * autenticación (DUO, Latch, Google Authenticator, LastPass), por lo que hay que tener cuidado.
      * https://github.com/google/google-authenticator/wiki/Key-Uri-Format
      * @param nombre
      * @param secret
