@@ -114,7 +114,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Noto Sans", 3, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(123, 234, 12));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Ivàn Javier Parra - 2018");
+        jLabel1.setText("Ivàn Javier Parra - 2019");
         pnlFooter.add(jLabel1);
 
         getContentPane().add(pnlFooter, java.awt.BorderLayout.PAGE_END);

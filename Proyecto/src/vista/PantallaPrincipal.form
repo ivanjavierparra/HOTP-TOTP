@@ -145,7 +145,7 @@
               <Color blue="c" green="ea" red="7b" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Iv&#xe0;n Javier Parra - 2018"/>
+            <Property name="text" type="java.lang.String" value="Iv&#xe0;n Javier Parra - 2019"/>
           </Properties>
         </Component>
       </SubComponents>

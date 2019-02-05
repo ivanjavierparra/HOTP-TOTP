@@ -70,6 +70,11 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Iniciar Sesión");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         pnlHeader.setBackground(java.awt.Color.black);
 
@@ -120,7 +125,14 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
         else validarCodigo();
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
-    
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        intentos_validacion = 0;
+    }//GEN-LAST:event_formWindowClosing
+
+    /**
+     * Si el usuario es válido, entonces se inicia sesión.
+     */
     private void validarUsuario(){
         // Obtenemos los datos.
         String email = panelLogin.getEmail();
@@ -140,12 +152,10 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
         ManagerUsuarioDB mdb = new ManagerUsuarioDB();
         Main.usuario = mdb.consultarRegistro(email, password_encriptado);
         
-        
         // Valido usuario y password, Verifico si tiene activado a2f.
         if(Main.usuario.getNombre().compareToIgnoreCase("")==0)JOptionPane.showMessageDialog(this,"Email o Password incorrectos","Error en la BD", JOptionPane.ERROR_MESSAGE);
         else{ // El email y el password son correctos.
             if(Main.usuario.isA2f_activado()){ // el usuario tiene activado la doble autenticación.
-                
                 // Si el usuario no esta bloqueado.
                 if(!verificar_usuario_bloqueado()){
                     // configuro los paneles
@@ -153,13 +163,11 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
                     panelCodigo.setFocusCodigo();
                     panelLogin.setVisible(false);
                 }
-                
             }
             else{ // el usuario tiene desactivado la doble autenticación.
                 iniciarSesion();
             }
         }
-        
     }
     
     
@@ -185,12 +193,12 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
             
     
     private void iniciarSesion(){
-        JOptionPane.showMessageDialog(this,"Inicio de Sesión correcto!","Mensaje",JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this,"Inicio de Sesión Correcto!","Mensaje",JOptionPane.INFORMATION_MESSAGE);
         Main.pantallaPrincipal.mostrarSesion();
         this.dispose();
     }
     
-    
+
     private void validarCodigo(){
         // Obtenemos el código ingresado por el usuario.
         String codigo = panelCodigo.getCodigo();
@@ -225,10 +233,10 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
             
                     //... manager = new ManagerHOTP(configuracion.getAlgoritmo(),configuracion.getContador_hotp(),configuracion.getDigitos());
             
-            System.out.println("El valor del contador en var configuracion es: "+configuracion.getContador_hotp());
+            System.out.println("El valor del contador en variable configuracion es: "+configuracion.getContador_hotp());
             int valid = manager.validar(secreto, configuracion.getContador_hotp(), codigo);
             actualizarContador(valid);
-            if(valid==-1) bloquearCuenta(valid);
+            if(valid==-1) bloquear_cuenta_hotp();
             else iniciarSesion();
             
         }
@@ -257,26 +265,45 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
             }else{
                 intentos_validacion = 0;
                 bloquear_cuenta_totp();
-                JOptionPane.showConfirmDialog(null, "Su cuenta ha sido bloqueada.", "Mensaje", JOptionPane.CLOSED_OPTION);
+                //JOptionPane.showConfirmDialog(this, "Su cuenta ha sido bloqueada.", "Mensaje", JOptionPane.CLOSED_OPTION);
             }
         }
     }
     
+    /**
+     * Protocolo de bloqueo de cuenta para TOTP.
+     */
     private void bloquear_cuenta_totp(){
         ManagerConfiguracionDB mcdb = new ManagerConfiguracionDB();
         mcdb.eliminarRegistro(Main.usuario.getEmail());
+        mostrarMensajeCuentaBloqueada();
     }
     
     /**
-     * Implementar algún protocolo de bloqueo de cuenta.
+     * Implementar algún protocolo de bloqueo de cuenta para HOTP.
      * @param contador 
      */
-    private void bloquearCuenta(int contador){
-        JOptionPane.showMessageDialog(this,"Problema de sincronización con el contador. Contador = " + contador,"Error", JOptionPane.ERROR_MESSAGE);
+    private void bloquear_cuenta_hotp(){
+        //JOptionPane.showMessageDialog(this,"Problema de sincronización con el contador. Contador = " + contador,"Error", JOptionPane.ERROR_MESSAGE);
+        //JOptionPane.showConfirmDialog(this, "Su cuenta ha sido bloqueada.", "Mensaje", JOptionPane.CLOSED_OPTION);
+        mostrarMensajeCuentaBloqueada();
+    }
+    
+    /**
+     * Crear un JDIalogInfo para mostrar un mensaje.
+     */
+    private void mostrarMensajeCuentaBloqueada(){
+        String mensaje = "Su cuenta ha sido bloqueada \n debido a problemas de sincronización \n con el servidor.";
+        DialogInfo dialogInfo = new DialogInfo(this,true);
+        dialogInfo.describirProblema(mensaje);
+        dialogInfo.setVisible(true);
         this.dispose();
     }
     
-    
+    /**
+     * actualiza el contador en el servidor.
+     * @param counter 
+     */
     private void actualizarContador(int counter){
         ManagerConfiguracionDB mcdb = new ManagerConfiguracionDB();
         mcdb.actualizarRegistro(Main.usuario.getEmail(), counter);
