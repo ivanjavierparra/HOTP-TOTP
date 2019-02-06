@@ -37,8 +37,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     
     
     private void itemsInicializar(){
-        jMenuBar1.add(Box.createHorizontalGlue());
-        jMenuBar1.add(menuSesion);
+        menuBarPrincipal.add(Box.createHorizontalGlue());
+        menuBarPrincipal.add(menuSesion);
         menuSesion.setVisible(false);
         
         menuItemVerQR.setVisible(false);
@@ -80,10 +80,13 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         pnlFooter = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        lblImagenDITBody = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        lblImagenDITFooter = new javax.swing.JLabel();
+        pnlBody = new javax.swing.JPanel();
         lblUsuario = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        menuBarPrincipal = new javax.swing.JMenuBar();
         menuArchivo = new javax.swing.JMenu();
         menuItemRegistrar = new javax.swing.JMenuItem();
         separadorRegistrarUsuario = new javax.swing.JPopupMenu.Separator();
@@ -110,17 +113,31 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         });
 
         pnlFooter.setBackground(java.awt.Color.black);
+        pnlFooter.setLayout(new java.awt.BorderLayout());
 
-        jLabel1.setFont(new java.awt.Font("Noto Sans", 3, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(123, 234, 12));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Ivàn Javier Parra - 2019");
-        pnlFooter.add(jLabel1);
+        jPanel1.setBackground(java.awt.Color.darkGray);
+
+        lblImagenDITBody.setFont(new java.awt.Font("Tahoma", 3, 13)); // NOI18N
+        lblImagenDITBody.setForeground(new java.awt.Color(123, 234, 12));
+        jPanel1.add(lblImagenDITBody);
+
+        pnlFooter.add(jPanel1, java.awt.BorderLayout.PAGE_START);
+
+        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
+
+        lblImagenDITFooter.setFont(new java.awt.Font("Noto Sans", 3, 12)); // NOI18N
+        lblImagenDITFooter.setForeground(new java.awt.Color(123, 234, 12));
+        lblImagenDITFooter.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblImagenDITFooter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/DIT2.png"))); // NOI18N
+        lblImagenDITFooter.setText("Ivàn Javier Parra - 2019");
+        jPanel2.add(lblImagenDITFooter);
+
+        pnlFooter.add(jPanel2, java.awt.BorderLayout.PAGE_END);
 
         getContentPane().add(pnlFooter, java.awt.BorderLayout.PAGE_END);
 
-        jPanel2.setBackground(java.awt.Color.darkGray);
-        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 100, 100));
+        pnlBody.setBackground(java.awt.Color.darkGray);
+        pnlBody.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 100, 100));
 
         lblUsuario.setFont(new java.awt.Font("Noto Sans", 1, 18)); // NOI18N
         lblUsuario.setForeground(new java.awt.Color(123, 234, 12));
@@ -128,9 +145,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         lblUsuario.setText("Bienvenido Usuario!!!");
         lblUsuario.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblUsuario.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        jPanel2.add(lblUsuario);
+        pnlBody.add(lblUsuario);
 
-        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
+        getContentPane().add(pnlBody, java.awt.BorderLayout.CENTER);
 
         menuArchivo.setText("Archivo");
 
@@ -160,7 +177,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         });
         menuArchivo.add(menuItemSalir);
 
-        jMenuBar1.add(menuArchivo);
+        menuBarPrincipal.add(menuArchivo);
 
         menuSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/sesion_usuario2.png"))); // NOI18N
         menuSesion.setText("Iván Parra");
@@ -199,9 +216,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         });
         menuSesion.add(menuItemCerrar);
 
-        jMenuBar1.add(menuSesion);
+        menuBarPrincipal.add(menuSesion);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(menuBarPrincipal);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -343,12 +360,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JLabel lblImagenDITBody;
+    private javax.swing.JLabel lblImagenDITFooter;
     private javax.swing.JLabel lblUsuario;
     private javax.swing.JMenu menuArchivo;
+    private javax.swing.JMenuBar menuBarPrincipal;
     private javax.swing.JMenuItem menuItemActivarA2F;
     private javax.swing.JMenuItem menuItemCerrar;
     private javax.swing.JMenuItem menuItemDesactivarA2F;
@@ -357,6 +376,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemSalir;
     private javax.swing.JMenuItem menuItemVerQR;
     private javax.swing.JMenu menuSesion;
+    private javax.swing.JPanel pnlBody;
     private javax.swing.JPanel pnlFooter;
     private javax.swing.JPopupMenu.Separator separadorIniciarSesion;
     private javax.swing.JPopupMenu.Separator separadorQR;

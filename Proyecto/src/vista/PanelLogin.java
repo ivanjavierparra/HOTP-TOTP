@@ -20,7 +20,7 @@ public class PanelLogin extends javax.swing.JPanel {
         placeholder.changeAlpha(0.75f);
         placeholder.changeStyle(Font.ITALIC);
         
-        placeholder = new TextPrompt("Ingrese password", txtPassword);
+        placeholder = new TextPrompt("Ingrese contraseña", txtPassword);
         placeholder.changeAlpha(0.75f);
         placeholder.changeStyle(Font.ITALIC);   
     }
