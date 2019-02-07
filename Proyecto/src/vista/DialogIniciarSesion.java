@@ -1,6 +1,6 @@
 package vista;
 
-import encriptacion.HashGenerator;
+import hashing.HashGenerator;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JOptionPane;

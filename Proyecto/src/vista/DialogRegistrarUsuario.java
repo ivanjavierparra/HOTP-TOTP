@@ -1,7 +1,7 @@
 package vista;
 
 
-import encriptacion.HashGenerator;
+import hashing.HashGenerator;
 import javax.swing.JOptionPane;
 import a2f.SecretGenerator;
 import java.awt.Font;

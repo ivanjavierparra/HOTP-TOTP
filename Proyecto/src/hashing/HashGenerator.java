@@ -1,4 +1,4 @@
-package encriptacion;
+package hashing;
 
 /**
  * Clase que genera hash a partir de la función hash pasada 
