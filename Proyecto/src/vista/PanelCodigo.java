@@ -17,7 +17,7 @@ public class PanelCodigo extends javax.swing.JPanel {
     }
 
     private void inicializarPlaceHolders(){
-        TextPrompt placeholder = new TextPrompt("Ingrese codigo OTP", txtCodigo);
+        TextPrompt placeholder = new TextPrompt("Ingrese código OTP", txtCodigo);
         placeholder.changeAlpha(0.75f);
         placeholder.changeStyle(Font.ITALIC);
     }

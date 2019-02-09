@@ -15,13 +15,13 @@ public abstract class Encrypter
     /**
      *  El alfabeto base aceptado.
      */
-    public static final String ALFABETO = " ABCDEFGHIJKLMN�OPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz.,;:?!0123456789";
+    public static final String ALFABETO = " ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz.,;:?!0123456789";
     
     protected String mensaje;     // el mensaje abierto (mensaje a encriptar)
     protected String encriptado;  // el mensaje encriptado
     
     /**
-     *  Inicializa el encriptador con un mensaje abierto tomado como par�metro. Si el par�metro es null, el 
+     *  Inicializa el encriptador con un mensaje abierto tomado como parámetro. Si el par�metro es null, el 
      *  mensaje a encriptar se inicializa como una cadena vac�a (""), lo cual deber�a provocar que el m�todo 
      *  code() retorne null. El constructor tambi�n inicia como cadena vac�a el mensaje encriptado (que se 
      *  obtiene con getEncrypted()) y esto tambi�n deber�a provocar que el m�todo decode() retorne null.
@@ -118,5 +118,25 @@ public abstract class Encrypter
       }    
       return true;
     }
+
+    
+    /**
+     * Retorna el mensaje encriptado.
+     * @return 
+     */
+    public String getEncriptado() {
+        return encriptado;
+    }
+
+    
+    /**
+     * Permite setear el mensaje encriptado.
+     * @param encriptado 
+     */
+    public void setEncriptado(String encriptado) {
+        this.encriptado = encriptado;
+    }
+    
+    
 }
 

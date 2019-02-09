@@ -176,7 +176,7 @@ public class ManagerHOTP {
     final String generarOTP(byte[] secreto, int counter) {
         
         //si addChekSum es verdadero entonces incrementame nroDigitos, sino devolvemos nroDigitos como esta.
-        int digitos = this.addChecksum ? (this.nroDigitos + 1) : this.nroDigitos; 
+        //int digitos = this.addChecksum ? (this.nroDigitos + 1) : this.nroDigitos; 
         
         // el valor del counter (pasado como parámetro) se convierte en un arreglo de bytes.
         byte[] text = new byte[8];
@@ -185,49 +185,59 @@ public class ManagerHOTP {
             counter >>= 8; // arithmetic shift right
         }
         
-        // Paso 1: Generar el hash HMAC-SHA-1.
+        // Paso 1: Generar el hash_result del HMAC-SHA-1.
         HMAC hmac = new HMAC();
         hmac.setAlgoritmo(this.getAlgoritmo());
-        byte[] hash = hmac.getShaHash(secreto, text);
+        byte[] hmac_result = hmac.getShaHash(secreto, text);
 
         // Paso 2: Truncamiento dinámico según la sección 5.3 de RFC 4226.
-        int offset = hash[hash.length - 1] & 0xf;
-        /*
+        // offset va a tener el valor que está en la última posición de hmac_result.
+        // el valor del offset me va a indicar a partir de que byte de hmac_result voy a formar el binary_code.
+        int offset = hmac_result[hmac_result.length - 1] & 0xf;
+       
+        
+        /* Si el truncationOffset que YO DEFINI esta entre 0 y 15 (20-4=16), entonces el offset va a tomar el valor de truncationOffset.
             if ((0 <= this.truncationOffset) &&
-                (this.truncationOffset < (hash.length - 4))) {
+                (this.truncationOffset < (hmac_result.length - 4))) {
             offset = truncationOffset;
         }
         */
-        int binary =
-                ((hash[offset] & 0x7f) << 24)
-                        | ((hash[offset + 1] & 0xff) << 16)
-                        | ((hash[offset + 2] & 0xff) << 8)
-                        | (hash[offset + 3] & 0xff);
+        
+        
+        /* Sacamos 4 bytes del hmac_result a partir del valor de offset.
+        Por ejemplo, como está en la RFC, binary_code=0x50ef7f19
+        */
+        int binary_code =
+                ((hmac_result[offset] & 0x7f) << 24)
+                        | ((hmac_result[offset + 1] & 0xff) << 16)
+                        | ((hmac_result[offset + 2] & 0xff) << 8)
+                        | (hmac_result[offset + 3] & 0xff);
         
         
         // Paso 3: Calcular el valor de HOTP y asegurarse de que contenga la cantidad de dígitos configurados.
-        int otp = binary % DIGITS_POWER[nroDigitos];
+        // Por ejemplo, si binary_code=0x50ef7f19 (hexadecimal), en decimal es 1357872921, lo divido por 1.000.000 y el resto es hotp="872921".
+        int otp = binary_code % DIGITS_POWER[nroDigitos];
         
-        if (addChecksum) {
+        /*if (addChecksum) {
             otp = (otp * 10) + calcularChecksum(otp, nroDigitos);
-        }
+        }*/
         
-        // Si el String "resultado" tiene una longitud menor a "digitos", agrego ceros a "resultado" para completar.
-        String resultado = Integer.toString(otp);
-        while (resultado.length() < digitos) {
-            resultado = "0" + resultado;
+        // Si el String "hotp" tiene una longitud menor a "digitos", agrego ceros a la izquierda en "hotp" para completar.
+        String hotp = Integer.toString(otp);
+        while (hotp.length() < this.nroDigitos) {
+            hotp = "0" + hotp;
         }
         //Todo el código anterior se puede reemplazar por:
         //String hotp = Strings.padStart(Integer.toString(otp), digits, '0');
         
-        return resultado;
+        return hotp;
     }
     
     
     /**
      * Valida si el código ingresado se corresponde con el secreto y el contador que está en el servidor.
      * Yo implementé un sólo intento de validación, con una ventana de validación de 10 códigos.
-     * La ventana sólo acepta valores menores o iguales al contador del servidor. 
+     * La ventana sólo acepta valores mayores o iguales al contador del servidor. 
      * 
      * Si la validación NO ES EXITOSA, es decir, el contador del usuario está totalmente
      * desincronizado y sus valores HOTP no caen en la ventana, entonces SE BLOQUE LA CUENTA DEL USUARIO.
@@ -237,13 +247,13 @@ public class ManagerHOTP {
      * @param secreto: valor del secreto que fue guardado por el service provider.
      * @param counter; valor del contador que fue guardado por el service provider.
      * @param codigo: el valor OTP que fue provisto por el cliente.
-     * @return: retorna -1 si no hay coincidencia, sino retorna el contador incrementado tantos lugares como se ha saltado dentro de la ventana.
+     * @return retorna -1 si no hay coincidencia, sino retorna el contador incrementado tantos lugares como se ha saltado dentro de la ventana.
      */
     public final int validar(byte[] secreto, int counter, String codigo) {
         //EXPLICADO EN: https://github.com/speakeasyjs/speakeasy/wiki/General-Usage-for-Counter-Based-Token
         int i = 0;
         while (i++ <= window) {
-            if (generar(secreto,counter).equals(codigo)) return counter + 1; //¿Será así?
+            if (generar(secreto,counter).equals(codigo)) return counter + 1; 
             else counter = counter + 1;
         }
         return -1;
@@ -258,8 +268,9 @@ public class ManagerHOTP {
      * 
      * @param num: the number to calculate the checksum for.
      * @param digits: number of significant places in the number.
-     * @return: the checksum of num. 
+     * @return the checksum of num. 
      */
+    /*
     private static int calcularChecksum(long num, int digits) {
         boolean doubleDigit = true;
         int total = 0;
@@ -278,6 +289,7 @@ public class ManagerHOTP {
         }
         return result;
     }
+    */
 
     public String getAlgoritmo() {
         return algoritmo;
@@ -319,9 +331,6 @@ public class ManagerHOTP {
         String secretoCodificado = SecretGenerator.toBase32(secreto);
         String qr = URIGenerator.getQRUrlHOTP("hotpexample@mail.com","example", secretoCodificado,893);
         System.out.println(qr); //Imprime el enlace al codigo QR.
-        //NOTA: Copiando el "secretoCodificado" que aparece en el QR, lo ponemos todo en 
-        //minuscula en google authenticator manualmente y funciona, sin tener que 
-        //leer el QR.
         //http://www.asaph.org/2016/04/google-authenticator-2fa-java.html
         
                
@@ -334,7 +343,7 @@ public class ManagerHOTP {
             System.out.println("1.Ingresar codigo.");
             System.out.println("2.Mostrar codigos.");
             System.out.println("3.Jugando con Google Authenticator.");
-            System.out.println("5.Jugando con HOTP.");
+            System.out.println("4.Jugando con HOTP.");
             System.out.println("5.Salir.");
             opcion = scanner.nextInt();
             switch(opcion){

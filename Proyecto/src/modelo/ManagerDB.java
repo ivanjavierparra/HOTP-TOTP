@@ -14,6 +14,9 @@ public class ManagerDB {
     private Connection conexion;
     private String mensaje_error;
     
+    private static final String URL = "jdbc:postgresql://localhost:5432/logina2f";
+    private static final String USUARIO = "postgres";
+    private static final String PASSWORD = "postgres";
     
     /**
      * Permite conectarse a una BD PostgreSQL.
@@ -21,13 +24,10 @@ public class ManagerDB {
      */
     public String establecerConexion(){
         if (conexion != null)return "";
-        String url = "jdbc:postgresql://localhost:5432/logina2f";
-        String usuario = "postgres";
-        String password = "postgres";
         mensaje_error = "";
         try{
             Class.forName("org.postgresql.Driver");
-            conexion = DriverManager.getConnection(url,usuario,password);
+            conexion = DriverManager.getConnection(URL,USUARIO,PASSWORD);
             if (conexion !=null)System.out.println("Conexión a base de datos ... Ok");
             else System.out.println("Conexión a base de datos ... Error");
            
@@ -45,6 +45,7 @@ public class ManagerDB {
           try
           {
              conexion.close();
+             System.out.println( "Sesión cerrada correctamente. " ) ;  
           }
           catch( Exception e )
           {

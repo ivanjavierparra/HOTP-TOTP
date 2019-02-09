@@ -47,6 +47,7 @@ public abstract class SecretGenerator {
 	/**
 	 * Genera una clave secreta aleatoria cuyo tamaño es pasado por paràmetro.
          * 
+         * @param size
 	 * @return la clave secreta.
 	 */
 	public static final byte[] generar(Size size) {

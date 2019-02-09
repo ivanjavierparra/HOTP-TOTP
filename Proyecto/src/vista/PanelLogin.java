@@ -15,6 +15,7 @@ public class PanelLogin extends javax.swing.JPanel {
         inicializarPlaceHolders();
     }
 
+    
     private void inicializarPlaceHolders(){
         TextPrompt placeholder = new TextPrompt("Ingrese email", txtEmail);
         placeholder.changeAlpha(0.75f);
@@ -24,6 +25,7 @@ public class PanelLogin extends javax.swing.JPanel {
         placeholder.changeAlpha(0.75f);
         placeholder.changeStyle(Font.ITALIC);   
     }
+    
     
     public String getEmail(){
         return txtEmail.getText();
@@ -37,7 +39,7 @@ public class PanelLogin extends javax.swing.JPanel {
     
     public String validarTxt(){
         if(txtEmail.getText().compareToIgnoreCase("")==0)return "Debe ingresar el email.";
-        else if(txtPassword.getText().compareToIgnoreCase("")==0)return "Debe ingresar el password";
+        else if(txtPassword.getText().compareToIgnoreCase("")==0)return "Debe ingresar la contraseña.";
         else return "";
     }
     

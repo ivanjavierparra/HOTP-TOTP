@@ -89,8 +89,6 @@ public class ManagerTOTP {
 	
 	private final int t0;
         
-        public static int intentos_validacion = 0;
-	
 	
                     /* ************* FIN VARIABLES ********** */
                     /* --------------------------------------- */
@@ -311,19 +309,26 @@ public class ManagerTOTP {
 		
                 HMAC hmac = new HMAC();
                 hmac.setAlgoritmo(this.getAlgoritmo());
-		byte[] hash = hmac.getShaHash(secreto, message);
+		byte[] hmac_result = hmac.getShaHash(secreto, message);
                 
                 // Paso 2: Truncamiento. 
-		int offset = hash[hash.length-1] & 0xf;
-		int binary = ((hash[offset] & 0x7f) << 24) | ((hash[offset + 1] & 0xff) << 16) | ((hash[offset + 2] & 0xff) << 8) | (hash[offset + 3] & 0xff);
+                // offset va a tener el valor que está en la última posición de hmac_result.
+                // el valor del offset me va a indicar a partir de que byte de hmac_result voy a formar el binary_code.
+		int offset = hmac_result[hmac_result.length-1] & 0xf;
+                /* Sacamos 4 bytes del hmac_result a partir del valor de offset.
+                Por ejemplo, como está en la RFC, binary_code=0x50ef7f19
+                */
+		int binary_code = ((hmac_result[offset] & 0x7f) << 24) | ((hmac_result[offset + 1] & 0xff) << 16) | ((hmac_result[offset + 2] & 0xff) << 8) | (hmac_result[offset + 3] & 0xff);
 
                 // Paso 3: Calcular el código TOTP y asegurarse de que contenga la cantidad de dígitos configurados.
-		int otp = binary % DIGITS_POWER[getLongitudCodigo()]; // código TOTP = TOTP mod 10^d, where d is the desired number of digits of the one-time password.
-		String result = Integer.toString(otp);
-		while (result.length() < getLongitudCodigo()) {
-			result = "0" + result;
+                // Por ejemplo, si binary_code=0x50ef7f19 (hexadecimal), en decimal es 1357872921, lo divido por 1.000.000 y el resto es hotp="872921".
+		int otp = binary_code % DIGITS_POWER[getLongitudCodigo()];
+		String totp = Integer.toString(otp);
+                // Si el String "totp" tiene una longitud menor a "digitos", agrego ceros a la izquierda en "totp" para completar.
+		while (totp.length() < getLongitudCodigo()) {
+			totp = "0" + totp;
 		}
-		return result;
+		return totp;
 	}
 	
         

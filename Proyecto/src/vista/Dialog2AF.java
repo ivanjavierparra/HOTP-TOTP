@@ -126,6 +126,9 @@ public class Dialog2AF extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
     
+    /**
+     * Muestra PanelHOTP o PanelTOTP según la elección del usuario.
+     */
     private void mostrarPanelConfiguracion(){
         String algoritmo = panelEleccion.getEleccion();
         panelEleccion.setVisible(false);
@@ -134,6 +137,9 @@ public class Dialog2AF extends javax.swing.JDialog {
     }
     
     
+    /**
+     * Obtiene parámetros de configuración HOTP.
+     */
     private void crearHOTP(){
         String algoritmo = panelHOTPConfig.getAlgoritmo();
         int digitos = panelHOTPConfig.getDigitos();
@@ -144,16 +150,27 @@ public class Dialog2AF extends javax.swing.JDialog {
     }
     
     
+    /**
+     * Obtiene parámetros de configuración TOTP.
+     */
     private void crearTOTP(){
         String algoritmo = panelTOTPConfig.getAlgoritmo();
         int digitos = panelTOTPConfig.getDigitos();
         int tiempo = panelTOTPConfig.getTiempo();
         
         insertarConfiguracion(Main.usuario.getEmail(),algoritmo,"TOTP",digitos,-1,tiempo);
-        
     }
     
     
+    /**
+     * Registra un objeto configuración en la BD.
+     * @param email
+     * @param algoritmo
+     * @param tipo
+     * @param digitos
+     * @param contador
+     * @param tiempo 
+     */
     private void insertarConfiguracion(String email, String algoritmo, String tipo, int digitos, int contador, int tiempo ){
         Configuracion configuracion = new Configuracion(email,algoritmo,tipo,digitos,contador,tiempo);
         ManagerConfiguracionDB mcdb = new ManagerConfiguracionDB();
@@ -177,11 +194,12 @@ public class Dialog2AF extends javax.swing.JDialog {
     }
     
     
+    /**
+     * Activa 2af del usuario en la BD.
+     */
     private void actualizarA2Fusuario(){
-        
         ManagerUsuarioDB mudb = new ManagerUsuarioDB();
         mudb.actualizarA2F(Main.usuario.getEmail(), true);
-        
     }
     
     

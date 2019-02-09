@@ -24,6 +24,10 @@ public class DialogInfo extends javax.swing.JDialog {
     }
     
     
+    /**
+     * Recibe un mensaje y lo muestra en un JTextArea.
+     * @param mensaje 
+     */
     public void describirProblema(String mensaje){
         this.txtProblema.setText(mensaje);
     }

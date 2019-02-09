@@ -148,48 +148,31 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
         //encripto password con SHA1
         String password_encriptado = HashGenerator.getHash(password, "SHA1");
         
-        //consultamos a la bd
+        //consultamos a la bd para obtener el usuario.
         ManagerUsuarioDB mdb = new ManagerUsuarioDB();
         Main.usuario = mdb.consultarRegistro(email, password_encriptado);
         
-        // Valido usuario y password, Verifico si tiene activado a2f.
+        // Valido usuario y password.
         if(Main.usuario.getNombre().compareToIgnoreCase("")==0)JOptionPane.showMessageDialog(this,"Email o Password incorrectos","Error en la BD", JOptionPane.ERROR_MESSAGE);
         else{ // El email y el password son correctos.
-            if(Main.usuario.isA2f_activado()){ // el usuario tiene activado la doble autenticación.
-                // Si el usuario no esta bloqueado.
-                if(!verificar_usuario_bloqueado()){
-                    // configuro los paneles
+            if(Main.usuario.isCuenta_activada()){ // Usuario con cuenta activada
+                if(Main.usuario.isA2f_activado()){ // Usuario tiene activado la doble autenticación.
                     panelCodigo.setVisible(true);
                     panelCodigo.setFocusCodigo();
                     panelLogin.setVisible(false);
                 }
+                else{ // el usuario tiene desactivado la doble autenticación.
+                    iniciarSesion();
+                }
             }
-            else{ // el usuario tiene desactivado la doble autenticación.
-                iniciarSesion();
+            else{ // el usuario tiene cuenta desactivada.
+                JOptionPane.showMessageDialog(this,"Su cuenta está bloqueada.","Mensaje",JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
     
     
-    /**
-     * Verifico que el usuario no este bloqueado: cuando tiene a2f activado 
-     * pero no hay un registro asociado en la tabla configuraciona2f.
-     * @return 
-     */
-    private boolean verificar_usuario_bloqueado(){
-        ManagerConfiguracionDB mcdb = new ManagerConfiguracionDB();
-        Configuracion configuracion = mcdb.consultarRegistro(Main.usuario.getEmail());
-        //no he encontrado el registro de configuracion del usuario.
-        if(configuracion.getEmail().compareToIgnoreCase("noexisto")==0) { 
-            JOptionPane.showMessageDialog(null, "Su cuenta está bloqueada.", "Mensaje", JOptionPane.ERROR_MESSAGE);
-            return true;
-        }
-        else if ((configuracion.getTipo().equals("HOTP"))&&(configuracion.getContador_hotp()==-1)){
-            JOptionPane.showMessageDialog(null, "Su cuenta está bloqueada.", "Mensaje", JOptionPane.ERROR_MESSAGE);
-            return true;
-        }
-        else return false;
-    }
+    
             
     
     private void iniciarSesion(){
@@ -219,22 +202,19 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
         ManagerConfiguracionDB mcdb = new ManagerConfiguracionDB();
         Configuracion configuracion = mcdb.consultarRegistro(Main.usuario.getEmail());
         if(configuracion.getEmail().compareToIgnoreCase("noexisto")==0) { //no he encontrado el registro de configuracion del usuario.
-            //JOptionPane.showMessageDialog(this,"Se ha encontrado un problema en la BD: no se encuentra registrado en la tabla configuraciona2f","Error en la BD", JOptionPane.ERROR_MESSAGE);
-            JOptionPane.showMessageDialog(null, "Su cuenta está bloqueada.", "Mensaje", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Falló la consulta.", "Error en la BD", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         //he encontrado el registro. Consultamos que tipo de validación tiene: HOTP/TOTP.
         if(configuracion.getTipo().compareToIgnoreCase("HOTP")==0){ // El usuario ha elegido HOTP.
-            System.out.println("Estoy en HOTP.");
             // Acá seteamos los atributos HOTP que estan en el objeto "configuracion" en el objeto ManagerHOTP.
             ManagerHOTP manager = new ManagerHOTP();
-            //manager.setContador(configuracion.getContador());
+
+                    // Acá seteamos los atributos HOTP que estan en el objeto "configuracion" en el objeto manager....
+                    //ManagerHOTP manager = new ManagerHOTP(configuracion.getAlgoritmo(),configuracion.getContador_hotp(),configuracion.getDigitos());
             
-                    //... manager = new ManagerHOTP(configuracion.getAlgoritmo(),configuracion.getContador_hotp(),configuracion.getDigitos());
-            
-            System.out.println("El valor del contador en variable configuracion es: "+configuracion.getContador_hotp());
-            int valid = manager.validar(secreto, configuracion.getContador_hotp(), codigo);
+            int valid = manager.validar(secreto, configuracion.getContador_hotp(), codigo); //el contador es del servidor!, no del cliente.
             actualizarContador(valid);
             if(valid==-1) bloquear_cuenta_hotp();
             else iniciarSesion();
@@ -243,15 +223,10 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
         else{ // El usuario ha elegido TOTP.
             ManagerTOTP manager = new ManagerTOTP();
             
-            // Acá seteamos los atributos TOTP que estan en el objeto "configuracion". manager.set....etc.
-            
-                    //... manager = new ManagerTOTP(configuracion.getAlgoritmo(),configuracion.getDigitos(),configuracion.getTiempo_totp());
+                    // Acá seteamos los atributos TOTP que estan en el objeto "configuracion" en el objeto manager....
+                    // ManagerTOTP manager = new ManagerTOTP(configuracion.getAlgoritmo(),configuracion.getDigitos(),configuracion.getTiempo_totp());
                     
             // Validamos.
-            //boolean valid = manager.validar(secreto, codigo);
-            //if(!valid)JOptionPane.showMessageDialog(this,"Código incorrecto.","Error", JOptionPane.ERROR_MESSAGE);
-            //else iniciarSesion();
-            
             if(intentos_validacion!=5){
                 boolean valid = manager.validar(secreto, codigo);
                 if(valid){
@@ -262,43 +237,59 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
                     intentos_validacion++;
                     JOptionPane.showMessageDialog(this,"Código incorrecto.","Error", JOptionPane.ERROR_MESSAGE);
                 }
-            }else{
+            }else{ // Superé el límite de intentos de verificación.
                 intentos_validacion = 0;
                 bloquear_cuenta_totp();
-                //JOptionPane.showConfirmDialog(this, "Su cuenta ha sido bloqueada.", "Mensaje", JOptionPane.CLOSED_OPTION);
             }
         }
     }
     
-    /**
-     * Protocolo de bloqueo de cuenta para TOTP.
-     */
-    private void bloquear_cuenta_totp(){
-        ManagerConfiguracionDB mcdb = new ManagerConfiguracionDB();
-        mcdb.eliminarRegistro(Main.usuario.getEmail());
-        mostrarMensajeCuentaBloqueada();
-    }
     
     /**
      * Implementar algún protocolo de bloqueo de cuenta para HOTP.
+     * Los contadores del cliente y del servidor no están sincronizados.
      * @param contador 
      */
     private void bloquear_cuenta_hotp(){
-        //JOptionPane.showMessageDialog(this,"Problema de sincronización con el contador. Contador = " + contador,"Error", JOptionPane.ERROR_MESSAGE);
-        //JOptionPane.showConfirmDialog(this, "Su cuenta ha sido bloqueada.", "Mensaje", JOptionPane.CLOSED_OPTION);
+        ManagerUsuarioDB mudb = new ManagerUsuarioDB();
+        mudb.actualizar_activacion(Main.usuario.getEmail(), false);
+        eliminar_configuracion();
         mostrarMensajeCuentaBloqueada();
     }
+    
+    
+    /**
+     * Protocolo de bloqueo de cuenta para TOTP.
+     * Los relojes del cliente y del servidor no están sincronizados.
+     */
+    private void bloquear_cuenta_totp(){
+        ManagerUsuarioDB mudb = new ManagerUsuarioDB();
+        mudb.actualizar_activacion(Main.usuario.getEmail(), false);
+        eliminar_configuracion();
+        mostrarMensajeCuentaBloqueada();
+    }
+    
+    
+    /**
+     * Elimina una configuración asociada a un usuario.
+     */
+    private void eliminar_configuracion(){
+        //ManagerConfiguracionDB mcdb = new ManagerConfiguracionDB();
+        //mcdb.eliminarRegistro(Main.usuario.getEmail());
+    }
+    
     
     /**
      * Crear un JDIalogInfo para mostrar un mensaje.
      */
     private void mostrarMensajeCuentaBloqueada(){
-        String mensaje = "Su cuenta ha sido bloqueada \n debido a problemas de sincronización \n con el servidor.";
+        String mensaje = "Su cuenta ha sido bloqueada \ndebido a problemas de sincronización \ncon el servidor.";
         DialogInfo dialogInfo = new DialogInfo(this,true);
         dialogInfo.describirProblema(mensaje);
         dialogInfo.setVisible(true);
         this.dispose();
     }
+    
     
     /**
      * actualiza el contador en el servidor.
