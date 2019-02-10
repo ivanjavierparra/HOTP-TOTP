@@ -3,16 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Codigo/HOTP-TOTP/Proyecto/src/vista/DialogIniciarSesion.java</file>
             <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Codigo/HOTP-TOTP/Proyecto/src/encriptacion/Principal.java</file>
             <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Codigo/HOTP-TOTP/Proyecto/src/a2f/HMAC.java</file>
             <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Codigo/HOTP-TOTP/Proyecto/src/a2f/ManagerHOTP.java</file>
             <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Codigo/HOTP-TOTP/Proyecto/src/encriptacion/Cifrador.java</file>
-            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Codigo/HOTP-TOTP/Proyecto/src/vista/DialogInfo.java</file>
             <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Codigo/HOTP-TOTP/Proyecto/src/a2f/ManagerTOTP.java</file>
             <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Codigo/HOTP-TOTP/Proyecto/src/a2f/SecretGenerator.java</file>
-            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Codigo/HOTP-TOTP/Proyecto/src/vista/Dialog2AF.java</file>
             <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Codigo/HOTP-TOTP/Proyecto/src/modelo/ManagerUsuarioDB.java</file>
-            <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Codigo/HOTP-TOTP/Proyecto/src/a2f/URIGenerator.java</file>
             <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Codigo/HOTP-TOTP/Proyecto/src/encriptacion/Encrypter.java</file>
             <file>file:/D:/universidad/unpsjb/2016/---%202do%20Cuatrimestre%20---/---%20Administracion%20de%20Redes%20y%20Seguridad%20---/Final/Codigo/HOTP-TOTP/Proyecto/src/encriptacion/CesarEncrypter.java</file>
         </group>

@@ -127,7 +127,8 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        intentos_validacion = 0;
+        ManagerHOTP.INTENTO_ACTUAL = 0;
+        ManagerTOTP.INTENTO_ACTUAL = 0;
     }//GEN-LAST:event_formWindowClosing
 
     /**
@@ -210,36 +211,56 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
         if(configuracion.getTipo().compareToIgnoreCase("HOTP")==0){ // El usuario ha elegido HOTP.
             // Acá seteamos los atributos HOTP que estan en el objeto "configuracion" en el objeto ManagerHOTP.
             ManagerHOTP manager = new ManagerHOTP();
-
-                    // Acá seteamos los atributos HOTP que estan en el objeto "configuracion" en el objeto manager....
-                    //ManagerHOTP manager = new ManagerHOTP(configuracion.getAlgoritmo(),configuracion.getContador_hotp(),configuracion.getDigitos());
+                    
+                    /*
+                    
+                        Acá seteamos los atributos HOTP que estan en el objeto "configuracion" en el objeto manager....
+                        ManagerHOTP manager = new ManagerHOTP(configuracion.getAlgoritmo(),configuracion.getContador_hotp(),configuracion.getDigitos());
+            
+                    */
             
             int valid = manager.validar(secreto, configuracion.getContador_hotp(), codigo); //el contador es del servidor!, no del cliente.
-            actualizarContador(valid);
-            if(valid==-1) bloquear_cuenta_hotp();
-            else iniciarSesion();
-            
+            if(valid==-1){ // El código es incorrecto.
+
+                if (ManagerHOTP.INTENTO_ACTUAL < ManagerHOTP.MAX_INTENTOS){
+                    ManagerHOTP.INTENTO_ACTUAL++;
+                    JOptionPane.showMessageDialog(this, "Código incorrecto. Ingrese otro.", "Mensaje", JOptionPane.ERROR_MESSAGE);
+                }
+                else{ // Se pasó la cantidad de intentos.
+                    ManagerHOTP.INTENTO_ACTUAL = 0;
+                    bloquear_cuenta_hotp();
+                }
+            }
+            else{ // El código es correcto.
+                ManagerHOTP.INTENTO_ACTUAL = 0;
+                actualizarContador(valid);
+                iniciarSesion();
+            }
         }
         else{ // El usuario ha elegido TOTP.
             ManagerTOTP manager = new ManagerTOTP();
             
-                    // Acá seteamos los atributos TOTP que estan en el objeto "configuracion" en el objeto manager....
-                    // ManagerTOTP manager = new ManagerTOTP(configuracion.getAlgoritmo(),configuracion.getDigitos(),configuracion.getTiempo_totp());
+                    /*
+                        Acá seteamos los atributos TOTP que estan en el objeto "configuracion" en el objeto manager....
+                        ManagerTOTP manager = new ManagerTOTP(configuracion.getAlgoritmo(),configuracion.getDigitos(),configuracion.getTiempo_totp());
+            
+                    */
                     
             // Validamos.
-            if(intentos_validacion!=5){
-                boolean valid = manager.validar(secreto, codigo);
-                if(valid){
-                    intentos_validacion = 0;
-                    iniciarSesion();
+            boolean valid = manager.validar(secreto, codigo);
+            if(valid){ // El TOTP es válido
+                ManagerTOTP.INTENTO_ACTUAL = 0;
+                iniciarSesion();
+            }
+            else{
+                if (ManagerTOTP.INTENTO_ACTUAL < ManagerTOTP.MAX_INTENTOS){
+                    ManagerTOTP.INTENTO_ACTUAL++;
+                    JOptionPane.showMessageDialog(this, "Código incorrecto. Ingrese otro.", "Mensaje", JOptionPane.ERROR_MESSAGE);
                 }
-                else{
-                    intentos_validacion++;
-                    JOptionPane.showMessageDialog(this,"Código incorrecto.","Error", JOptionPane.ERROR_MESSAGE);
+                else{ // Superé el límite de intentos de verificación.
+                    ManagerTOTP.INTENTO_ACTUAL = 0;
+                    bloquear_cuenta_totp();
                 }
-            }else{ // Superé el límite de intentos de verificación.
-                intentos_validacion = 0;
-                bloquear_cuenta_totp();
             }
         }
     }

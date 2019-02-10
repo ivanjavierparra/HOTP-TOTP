@@ -70,6 +70,19 @@ public class ManagerTOTP {
         
         
         
+        /**
+        * Cantidad máxima de intentos de autenticación posibles.
+        */
+       public static final int MAX_INTENTOS = 5;
+
+
+        /**
+        * Intento de autenticación actual.
+        */
+       public static int INTENTO_ACTUAL = 0;
+       
+        
+        
                     /* *********** FIN CONSTANTES ************ */
                     /* --------------------------------------- */
 	

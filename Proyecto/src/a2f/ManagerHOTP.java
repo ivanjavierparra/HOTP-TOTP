@@ -90,6 +90,19 @@ public class ManagerHOTP {
     public static final int DEFAULT_WINDOW = 10;
     
     
+    /**
+     * Cantidad máxima de intentos de autenticación posibles.
+     */
+    public static final int MAX_INTENTOS = 2;
+    
+    
+    /**
+     * Intento de autenticación actual.
+     */
+    public static int INTENTO_ACTUAL = 0;
+    
+    
+    
                     /* *********** FIN CONSTANTES ************ */
                     /* --------------------------------------- */
     
