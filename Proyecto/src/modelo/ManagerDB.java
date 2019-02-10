@@ -45,7 +45,7 @@ public class ManagerDB {
           try
           {
              conexion.close();
-             System.out.println( "Sesión cerrada correctamente. " ) ;  
+             System.out.println( "Conexión a la base de datos cerrada correctamente ... " ) ;  
           }
           catch( Exception e )
           {
