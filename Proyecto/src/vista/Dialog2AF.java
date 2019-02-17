@@ -186,8 +186,8 @@ public class Dialog2AF extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this,"Configuración registrada correctamente!","Mensaje",JOptionPane.INFORMATION_MESSAGE);
             panelHOTPConfig.setVisible(false);
             panelTOTPConfig.setVisible(false);
-            panelQR.mostrarQR();
-            //panelQR.mostrarQR(configuracion);
+            //panelQR.mostrarQR();
+            panelQR.mostrarQR(configuracion);
             panelQR.setVisible(true);
             Main.pantallaPrincipal.ocultarItemActivar();
         }

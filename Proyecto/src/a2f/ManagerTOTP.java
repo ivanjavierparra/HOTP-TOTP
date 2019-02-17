@@ -73,7 +73,7 @@ public class ManagerTOTP {
         /**
         * Cantidad máxima de intentos de autenticación posibles.
         */
-       public static final int MAX_INTENTOS = 5;
+       public static final int MAX_INTENTOS = 3;
 
 
         /**
@@ -330,6 +330,8 @@ public class ManagerTOTP {
 		int offset = hmac_result[hmac_result.length-1] & 0xf;
                 /* Sacamos 4 bytes del hmac_result a partir del valor de offset.
                 Por ejemplo, como está en la RFC, binary_code=0x50ef7f19
+                Operacion left-shift
+                X*2^24 + X*2^16+ X*2^8 + X
                 */
 		int binary_code = ((hmac_result[offset] & 0x7f) << 24) | ((hmac_result[offset + 1] & 0xff) << 16) | ((hmac_result[offset + 2] & 0xff) << 8) | (hmac_result[offset + 3] & 0xff);
 

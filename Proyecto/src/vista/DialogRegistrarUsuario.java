@@ -220,7 +220,11 @@ public class DialogRegistrarUsuario extends javax.swing.JDialog {
         //Hacer las validaciones 
         String mensaje_validacion = validarTxt();
         if(mensaje_validacion.compareToIgnoreCase("")!=0){
-            JOptionPane.showMessageDialog(this,mensaje_validacion,"Mensaje",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "<html><body><p style='width: 200px;'>"+mensaje_validacion+"</p></body></html>",
+                    "Mensaje",
+                    JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         
@@ -335,7 +339,7 @@ public class DialogRegistrarUsuario extends javax.swing.JDialog {
     }
     
     private String verificarPasswordsNoCoinciden(){
-        if(txtPassword.getText().compareToIgnoreCase(txtRepetirPassword.getText())!=0)return "Password no coinciden.";
+        if(txtPassword.getText().compareToIgnoreCase(txtRepetirPassword.getText())!=0)return "Contraseñas no coinciden.";
         return "";
     }
     
@@ -353,7 +357,7 @@ public class DialogRegistrarUsuario extends javax.swing.JDialog {
         $                 # terminar con un string
     */
     private String verificarSeguridadPassword(){
-        String mensaje = "El password debe tener al menos 8 dígitos, letras minúsculas, mayúsculas, números y caracteres especiales.";
+        String mensaje = "La contraseña debe tener al menos 8 dígitos, letras minúsculas, mayúsculas, números y caracteres especiales.";
         String expresion_regular = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
         Pattern p = Pattern.compile(expresion_regular);
         Matcher m = p.matcher(txtPassword.getText());

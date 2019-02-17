@@ -21,7 +21,7 @@ Cuando el usuario inicia sesión, se le da la posibilidad de habilitar la autent
 <img src="/Imagenes/registrar_usuario.png" alt="Registrar Usuario"/>
 
 ## Primer Factor de Autenticación: solicitud de contraseña.
-<img src="/Imagenes/registrar_usuario.png" alt="1er factor"/>
+<img src="/Imagenes/iniciar_sesion.png" alt="1er factor"/>
 
 ## Segundo Factor de Autenticación: solicitud de OTP.
 <img src="/Imagenes/solicitud_otp.png" alt="2do factor"/>

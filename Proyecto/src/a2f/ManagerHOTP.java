@@ -93,7 +93,7 @@ public class ManagerHOTP {
     /**
      * Cantidad máxima de intentos de autenticación posibles.
      */
-    public static final int MAX_INTENTOS = 2;
+    public static final int MAX_INTENTOS = 1;
     
     
     /**
@@ -219,6 +219,8 @@ public class ManagerHOTP {
         
         /* Sacamos 4 bytes del hmac_result a partir del valor de offset.
         Por ejemplo, como está en la RFC, binary_code=0x50ef7f19
+        Operacion left-shift:
+                X*2^24 + X*2^16+ X*2^8 + X
         */
         int binary_code =
                 ((hmac_result[offset] & 0x7f) << 24)
@@ -442,6 +444,26 @@ public class ManagerHOTP {
                     break;
                 }
                 case 5:{
+                    byte[] text = new byte[8];
+                    int counter = 10;
+                    for (int i = text.length - 1; i >= 0; i--) {
+                        text[i] = (byte) (counter & 0xff);
+                        counter >>= 8; // arithmetic shift right
+                    }
+                    
+                    HMAC hmac = new HMAC();
+                    hmac.setAlgoritmo("HmacSHA1");
+                    byte[] hmac_result = hmac.getShaHash(SecretGenerator.fromBase32("GSIRVUGBCPMLENHB4NZCGSTM5ARF6TJV"), text);
+                    for(int i=0;i<hmac_result.length;i++){
+                        System.out.println("hmac  [" + i + "]" + hmac_result[i]);
+                        System.out.println("hmac  [" + i + "]" + (hmac_result[i] & 0xf));
+                    }
+                    // Paso 2: Truncamiento dinámico según la sección 5.3 de RFC 4226.
+                    // offset va a tener el valor que está en la última posición de hmac_result.
+                    // el valor del offset me va a indicar a partir de que byte de hmac_result voy a formar el binary_code.
+                    int offset = hmac_result[hmac_result.length - 1] & 0xf;
+                    System.out.println("hmac: " + hmac_result[hmac_result.length - 1]);
+                    System.out.println("offset: " + offset);
                     System.out.println("Chau.");
                     break;
                 }
@@ -450,7 +472,7 @@ public class ManagerHOTP {
                     break;
                 }
             }
-        }while(opcion != 5);
+        }while(opcion != 6);
     }
     
     

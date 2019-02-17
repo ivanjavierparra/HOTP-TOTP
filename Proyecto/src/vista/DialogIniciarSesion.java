@@ -177,7 +177,7 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
             
     
     private void iniciarSesion(){
-        JOptionPane.showMessageDialog(this,"Inicio de Sesión Correcto!","Mensaje",JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this,"Inicio de sesión correcto!","Mensaje",JOptionPane.INFORMATION_MESSAGE);
         Main.pantallaPrincipal.mostrarSesion();
         this.dispose();
     }
@@ -194,8 +194,11 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
             return;
         }
         
-        // Obtenemos la clave secreta del usuario.
+        
+        // Obtenemos la clave secreta del usuario: la decodificamos de BASE32 a bytes.
         byte[] secreto = SecretGenerator.fromBase32(Main.usuario.getClave_secreta());
+        
+        
         
         System.out.println("El secreto es: " + Main.usuario.getClave_secreta());
         
@@ -210,14 +213,14 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
         //he encontrado el registro. Consultamos que tipo de validación tiene: HOTP/TOTP.
         if(configuracion.getTipo().compareToIgnoreCase("HOTP")==0){ // El usuario ha elegido HOTP.
             // Acá seteamos los atributos HOTP que estan en el objeto "configuracion" en el objeto ManagerHOTP.
-            ManagerHOTP manager = new ManagerHOTP();
+            //ManagerHOTP manager = new ManagerHOTP();
                     
-                    /*
                     
-                        Acá seteamos los atributos HOTP que estan en el objeto "configuracion" en el objeto manager....
+                    
+                        //Acá seteamos los atributos HOTP que estan en el objeto "configuracion" en el objeto manager....
                         ManagerHOTP manager = new ManagerHOTP(configuracion.getAlgoritmo(),configuracion.getContador_hotp(),configuracion.getDigitos());
             
-                    */
+                    
             
             int valid = manager.validar(secreto, configuracion.getContador_hotp(), codigo); //el contador es del servidor!, no del cliente.
             if(valid==-1){ // El código es incorrecto.
@@ -238,13 +241,13 @@ public class DialogIniciarSesion extends javax.swing.JDialog {
             }
         }
         else{ // El usuario ha elegido TOTP.
-            ManagerTOTP manager = new ManagerTOTP();
+            //ManagerTOTP manager = new ManagerTOTP();
             
-                    /*
-                        Acá seteamos los atributos TOTP que estan en el objeto "configuracion" en el objeto manager....
+                    
+                        //Acá seteamos los atributos TOTP que estan en el objeto "configuracion" en el objeto manager....
                         ManagerTOTP manager = new ManagerTOTP(configuracion.getAlgoritmo(),configuracion.getDigitos(),configuracion.getTiempo_totp());
             
-                    */
+                    
                     
             // Validamos.
             boolean valid = manager.validar(secreto, codigo);

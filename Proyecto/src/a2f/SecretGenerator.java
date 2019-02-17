@@ -108,5 +108,23 @@ public abstract class SecretGenerator {
                 ret[i] = bArray[i+1];
             return ret;
 	}
+        
+        
+        
+        public static void main(String [] args){
+            byte[] secreto_20 = SecretGenerator.generar();
+            byte[] secreto_32 = SecretGenerator.generar(SecretGenerator.Size.MEDIUM);
+            byte[] secreto_64 = SecretGenerator.generar(SecretGenerator.Size.LARGE);
+            
+            System.out.println("Clave secreta para SHA-1: " + SecretGenerator.toBase32(secreto_20));
+            //System.out.println("Clave secreta para SHA-1: " + SecretGenerator.toBase32(secreto_20).replaceAll("=", ""));
+            System.out.println("Clave secreta para SHA-256: " + SecretGenerator.toBase32(secreto_32));
+            //System.out.println("Clave secreta para SHA-1: " + SecretGenerator.toBase32(secreto_32).replaceAll("=", ""));
+            System.out.println("Clave secreta para SHA-512: " + SecretGenerator.toBase32(secreto_64));
+            //System.out.println("Clave secreta para SHA-1: " + SecretGenerator.toBase32(secreto_64).replaceAll("=", ""));
+            
+           
+
+        }
 	
 }

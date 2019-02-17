@@ -37,8 +37,8 @@ public class ManagerUsuarioDB {
         mensaje_error = mdb.establecerConexion();
         if(mensaje_error.compareToIgnoreCase("")!=0) return false;
         
-        String clave_secreta_encriptada = encriptar_clave_secreta(clavesecreta);
-        //String clave_secreta_encriptada = encriptar_AES(clavesecreta);
+        //String clave_secreta_encriptada = encriptar_clave_secreta(clavesecreta);
+        String clave_secreta_encriptada = encriptar_AES(clavesecreta);
         
         String s = "insert into usuario (nombre, email, password, clavesecreta, a2f, activada) ";
         s = s + " values ('"+nombre+"','"+email+"','"+password+"','"+clave_secreta_encriptada+"','false','true')";
@@ -140,8 +140,8 @@ public class ManagerUsuarioDB {
                usuario.setEmail(email);
                usuario.setPassword(password);
                
-               String clave_secreta_desencriptada = desencriptar_clave_secreta(res.getString("clavesecreta"));
-               //String clave_secreta_desencriptada = desencriptar_AES(res.getString("clavesecreta"));
+               //String clave_secreta_desencriptada = desencriptar_clave_secreta(res.getString("clavesecreta"));
+               String clave_secreta_desencriptada = desencriptar_AES(res.getString("clavesecreta"));
                
                usuario.setClave_secreta(clave_secreta_desencriptada);
                usuario.setA2f_activado(res.getBoolean("a2f"));

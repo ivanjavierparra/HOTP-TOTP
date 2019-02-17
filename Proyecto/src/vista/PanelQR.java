@@ -27,7 +27,7 @@ public class PanelQR extends javax.swing.JPanel {
         mostrarQR(configuracion);
     }
     
-    
+       
     /**
      * Genera un QR solamente con los parámetros que acepta Google Authenticator y DUO.
      * https://github.com/google/google-authenticator/wiki/Key-Uri-Format.
@@ -39,6 +39,7 @@ public class PanelQR extends javax.swing.JPanel {
         
         String text = "";
         
+        /*
         if(configuracion.getTipo().compareToIgnoreCase("HOTP")==0) {
             //obtengo url de configuracion
             text = URIGenerator.getQRUrlHOTP(configuracion.getEmail(),Main.usuario.getNombre(),Main.usuario.getClave_secreta(),configuracion.getContador_hotp());
@@ -47,6 +48,10 @@ public class PanelQR extends javax.swing.JPanel {
             //obtengo url de configuracion
             text = URIGenerator.getQRUrlTOTP(configuracion.getEmail(),Main.usuario.getNombre(),Main.usuario.getClave_secreta());
         }
+        */
+        
+        text = URIGenerator.getQRUrlConfiguracion(Main.usuario.getNombre(),Main.usuario.getClave_secreta(),configuracion);
+        
         
         //genero el qr con los datos de la configuracion
         byte [] qr;
